@@ -20,6 +20,14 @@ main {
 
 img {
     width: 100%;
+    margin: 10px;
 }
+
+.combined {
+    margin: 15px;
+    width: 25%;
+    display: inline;
+}
+
 
 
