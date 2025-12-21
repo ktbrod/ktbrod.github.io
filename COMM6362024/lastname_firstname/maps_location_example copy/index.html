@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FedEx Location Finder</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFVSSIZk-svi6rZkv-g-yemkgf_eKlTXE&libraries=places&v=beta"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #autocomplete {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h3>Find Nearest FedEx Location</h3>
+    <input id="autocomplete" type="text" placeholder="Enter your location">
+    <div id="map"></div>
+
+    <script>
+        let map, service, autocomplete;
+
+        const mediaArtSpace = { lat: 35.9132, lng: -79.0558 }; // Coordinates for Media Art Space
+
+        function initMap() {
+            // Initialize the map
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 35.9132, lng: -79.0558 },
+                zoom: 10,
+            });
+
+            // Initialize autocomplete
+            const input = document.getElementById("autocomplete");
+            autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['geocode'], // Suggest only addresses
+                componentRestrictions: { country: 'us' },
+            });
+
+            // Listener for address selection
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+
+        function onPlaceChanged() {
+            const place = autocomplete.getPlace();
+
+            if (!place.geometry) {
+                alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            const userLocation = {
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng(),
+            };
+
+            // Center the map on the user's location
+            map.setCenter(userLocation);
+            map.setZoom(10);
+
+            // Calculate the midpoint between the user's location and Media Art Space
+            const midpoint = {
+                lat: (mediaArtSpace.lat + userLocation.lat) / 2,
+                lng: (mediaArtSpace.lng + userLocation.lng) / 2,
+            };
+
+            // Display markers for Media Art Space, User's Location, and Midpoint
+            addMarker(mediaArtSpace, 'Media Art Space', 'blue');
+            addMarker(userLocation, 'Your Location', 'green');
+            addMarker(midpoint, 'Midpoint', 'purple');
+
+            // Search for FedEx locations near the midpoint
+            searchFedEx(midpoint);
+        }
+
+        function addMarker(position, title, color) {
+            const markerContent = document.createElement('div');
+            markerContent.style.color = color;
+            markerContent.innerHTML = `<b>${title}</b>`;
+
+            new google.maps.marker.AdvancedMarkerElement({
+                map: map,
+                position: position,
+                title: title,
+                content: markerContent,
+            });
+        }
+
+        function searchFedEx(midpoint) {
+            service = new google.maps.places.PlacesService(map);
+            const request = {
+                location: midpoint,
+                radius: 10000, // 10 km radius
+                keyword: 'FedEx',
+            };
+
+            service.nearbySearch(request, (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    results.forEach((place) => {
+                        const markerContent = document.createElement('div');
+                        markerContent.style.color = 'red';
+                        markerContent.innerHTML = `<b>${place.name}</b>`;
+
+                        new google.maps.marker.AdvancedMarkerElement({
+                            map: map,
+                            position: place.geometry.location,
+                            title: place.name,
+                            content: markerContent,
+                        });
+                    });
+                } else {
+                    alert("No FedEx locations found near the midpoint.");
+                }
+            });
+        }
+
+        // Initialize the map and autocomplete when the page loads
+        window.onload = initMap;
+    </script>
+</body>
+</html>

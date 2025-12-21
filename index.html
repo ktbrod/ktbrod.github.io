@@ -25,7 +25,7 @@
             flex-direction: row;
             background-color: black;
             margin: 0;
-            padding: 20px 20px 0px;
+            
         }
 
         img {
@@ -36,15 +36,9 @@
             display: grid;
             border: 1px solid black;
             font-size: .5em;
-            margin: 5%;
-        }
-
-         #portfolio{
-            display: grid;
-            grid-template-columns: auto auto;
-            border: 1px solid black;
-            font-size: .5em;
-            margin: 5%;
+            margin: 5% 5% 15% 5%;
+            width: 80%;
+            
         }
 
         .course {
@@ -54,6 +48,29 @@
             padding: .25% .25% 1% 1%;
         }
 
+        .coursename{
+            border: 1px solid black;
+            margin: 10px 5px;
+            padding: 10px 5px;
+        }
+
+        .student {
+            border: 1px solid black;
+            margin: 5px;
+            
+            padding: 5px 5px 5px 50px;
+            color: black;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .student:hover {
+            background-color: yellow;
+        }
+
         .portfolioitem {
             border: 1px solid black;
             font-size: .5em;
@@ -61,13 +78,16 @@
             padding: .25% .25% 1% 1%;
             height: 200px;
         }
-
+        header {
+            top: 0px;
+        }
         footer{
             left: 0px;
             bottom: 0px;
             position: fixed;
             width: 100%;
             font-size: 14px;
+            height: 75px;
             
         }
         .flexitem {
@@ -75,6 +95,7 @@
             text-align: center;
             
         }
+
         @media screen and (max-width: 600px){
             header, footer{
                 flex-direction: column;
@@ -93,27 +114,31 @@ Student Web Projects
 </header>
 <div id="courses">
 <div class="course">
-<p>Fall 2025: COMM 150: Introduction to New Media</p>
-<p><a href="Santiago_Amari/index.html">Santiago Amari</a></p>
-<p><a href="Crouse_Aiden_Billionaire_Playground/index.html">Aiden Crouse</a></p>
-<p><a href="DucatteDylanRedFlagsQuiz/index.html">Dylan Ducatte</a></p>
-<p><a href="Firestein_Talya_WhosInControl/">Talya Firestein</a></p>
-<p><a href="alyssa_hall_finalweb/index.html">Alyssa Hall</a></p>
-<p><a href="Han_Sydney/index.html">Sydney Han</a></p>
-<p><a href="Harutunian_Claire_NewMedium/">Claire Hurutunian</a></p>
-<p><a href="Key_Julia_FrogFrenzy/index 2.html">Julia Key</a></p>
-<p><a href="Kutchens_Lauren_DigitalFortuneTeller/">Lauren Kutchens</a></p>
-<p><a href="LaraMorales_Darlene/index.html">Darlene Lara-Morales</a></p>
-<p><a href="prendivillekatie_72650_13569444_Prendiville,Katie - The Ethics of Data Center Development/index.html">Katie Prendiville</a></p>
-<p><a href="Ortiz_Davi/index.html">Davi Ortiz</a></p>
-<p><a href="Rothwell_Grace_Viewports/index.html">Grace Rothwell</a></p>
-<p><a href="Ross_Kate_MelodyMachine/index.html">Kate Ross</a></p>
-<p><a href="Souders_Riley_DayInTheLife/start-page.html">Riley Sounders</a></p>
-<p><a href="Tanner_AnnaClayton/index.html">Anna Clayton Tanner</a></p>
-<p><a href="Wu_Meiqian_Cyborg Boundary Lab/index.html">Meiqian Wu</a></p>
+<p class="coursename">Fall 2025, COMM 150: Introduction to New Media</p>
+<p class="student"> <a href="COMM150Fall2025/Santiago_Amari/">Santiago Amari</a></p>
+<p class="student"><a href="COMM150Fall2025/Crouse_Aiden_Billionaire_Playground/">Aiden Crouse</a></p>
+<p class="student"><a href="COMM150Fall2025/DucatteDylanRedFlagsQuiz/index.html">Dylan Ducatte</a></p>
+<p class="student"><a href="COMM150Fall2025/Firestein_Talya_WhosInControl/index.html">Talya Firestein</a></p>
+<p class="student"> <a href="COMM150Fall2025/alyssa_hall_finalweb/index.html">Alyssa Hall</a></p>
+<p class="student"><a href="COMM150Fall2025/Han_Sydney/index.html">Sydney Han</a></p>
+<p class="student"><a href="COMM150Fall2025/Harutunian_Claire_NewMedium/index.html">Claire Hurutunian</a></p>
+<p class="student"><a href="COMM150Fall2025/Key_Julia_FrogFrenzy/index 2.html">Julia Key</a></p>
+<p class="student"><a href="COMM150Fall2025/Kutchens_Lauren_DigitalFortuneTeller/index.html">Lauren Kutchens</a></p>
+<p class="student"><a href="COMM150Fall2025/Kutchens_Lauren_DigitalFortuneTeller/index.html">Darlene Lara-Morales</a></p>
+<p class="student"><a href="COMM150Fall2025/prendivillekatie_72650_13569444_Prendiville,Katie - The Ethics of Data Center Development/">Katie Prendiville</a></p>
+<p class="student"><a href="COMM150Fall2025/Ortiz_Davi/index.html">Davi Ortiz</a></p>
+<p class="student"><a href="COMM150Fall2025/Rothwell_Grace_Viewports/index.html">Grace Rothwell</a></p>
+<p class="student"><a href="COMM150Fall2025/Ross_Kate_MelodyMachine/index.html">Kate Ross</a></p>
+<p class="student"><a href="COMM150Fall2025/Souders_Riley_DayInTheLife/start-page.html">Riley Sounders</a></p>
+<p class="student"><a href="COMM150Fall2025/Tanner_AnnaClayton/index.html">Anna Clayton Tanner</a></p>
+<p class="student"><a href="COMM150Fall2025/Wu_Meiqian_Cyborg Boundary Lab/index.html">Meiqian Wu</a></p>
 </div>
 <div class="course">
-    <p>Fall 2024: COMM 636: Interactive Media Fall</p>
+    <p class="coursename">Fall 2024, COMM 636: Interactive Media</p>
+    <p class="student"><a href="COMM6362024/Zoe/index.html">Zoe Anderson</a></p>
+    <p class="student"><a href="COMM6362024/GUO-Shanshan.github.io/index.html">Guo Shanshan</a></p>
+    
+
 </div>
 <footer>
 <div class="flexitem">
