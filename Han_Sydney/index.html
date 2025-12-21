@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zen Garden – From Seed to Plant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <div class="logo-area">
+        <span class="logo-leaf">🌿</span>
+        <span class="logo-text">Zen Garden</span>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Garden</a>
+        <a href="seeds.html">Seed Inventory</a>
+      </nav>
+    </header>
+
+    <main class="app-wrapper">
+      <div class="banner-bar">From Seed to Plant</div>
+
+      <h1 class="main-title">ZEN GARDEN</h1>
+
+    
+      <div class="top-controls">
+        <button class="inventory-btn" onclick="goToSeeds()">
+          Inventory of Seeds!
+        </button>
+
+        <button class="theme-btn" onclick="toggleTheme()">
+          Toggle Garden Theme
+        </button>
+        <!-- additional skill! (JS dark theme toggle button)-->
+      </div>
+
+      <section class="garden-layout">
+        <aside class="info-panel">
+          <h2>Care Instructions:</h2>
+          <p id="careText">
+            Click a plant on the shelves to learn how to care for it.
+          </p>
+
+          <p class="water-counter">
+            Times watered today: <span id="waterCount">0</span>
+          </p>
+          <button class="water-btn" onclick="waterGarden()">
+            Water the Garden
+          </button>
+        </aside>
+          <section class="garden-panel">
+
+ 
+  <div class="shelf large-shelf">
+    <img 
+      src="images/olive_seed.png" class="item plant"
+      data-images="images/olive_seed.png,images/olive2.png,images/olive3.png"
+      alt="Olive Tree"
+      onclick="cyclePlantImages(this, 'Olive Tree')"/>
+
+    <img 
+      src="images/tulip_seeds_cut.png" class="item plant"
+      data-images="images/tulip_seeds_cut.png,images/tulip_2_cut.png,images/tulip_3_cut.png"
+      alt="Tulip"
+      onclick="cyclePlantImages(this, 'Tulip')" />
+
+    <img 
+      src="images/sun_seeds.png" class="item plant"
+      data-images="images/sun_seeds.png,images/sun2.png,images/sun3.png,images/sun4.png,images/sun5.png"
+      alt="Sunflower"
+      onclick="cyclePlantImages(this, 'Sunflower')" />
+  </div>
+
+  
+  <div class="shelf large-shelf">
+    <img 
+      src="images/red_seeds.png" class="item plant"
+      data-images="images/red_seeds.png,images/red_2.png,images/red_3.png,images/red_4.png"
+      alt="Red Carnation"
+      onclick="cyclePlantImages(this, 'Red Carnation')" />
+
+    <img 
+      src="images/green_seeds_cut.png" class="item plant"
+      data-images="images/green_seeds_cut.png,images/green_2_cut.png,images/green_3_cut.png"
+      alt="Basil Plant"
+      onclick="cyclePlantImages(this, 'Basil Plant')" />
+
+    <img 
+      src="images/hyd_seed.png" class="item plant"
+      data-images="images/hyd_seed.png,images/hyd_2.png,images/hyd_3.png"
+      alt="Hydrangea"
+      onclick="cyclePlantImages(this, 'Hydrangea')" />
+  </div>
+
+</section>
+</main>
+
+    <footer class="site-footer">
+      <p>Zen Garden • A Calming Web Game</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

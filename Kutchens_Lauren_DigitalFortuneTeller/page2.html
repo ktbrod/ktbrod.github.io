@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page 2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>What do you want to know?</h1>
+  
+   <textarea id="question" placeholder="Type your question for the Digital Fortune Teller..."></textarea>
+  <br>
+  
+  <button onclick="saveQuestion();">Reveal Your Fortune</button>
+
+  <script>
+    /* Additional skill #4: local storage to save question */ 
+    function saveQuestion() {
+      let userQuestion = document.getElementById("question").value;
+      localStorage.setItem("fortuneQuestion", userQuestion);
+      location.href = "page3.html";
+    }
+  </script>
+
+
+</body>
+</html>

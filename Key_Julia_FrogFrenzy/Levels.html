@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frog Frenzy</title>
+    <link rel="stylesheet" href="styles.css">
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Fugaz+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(139, 63, 193);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .controls-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .level-button {
+            position: relative;
+            flex: 0 1 auto;
+        }
+
+        .level-button.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .level-button.locked button {
+            pointer-events: none;
+        }
+
+        .level-button.locked::after {
+            content: '🔒';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+        }
+
+        .level-button.unlocked::after {
+            content: '✓';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #0de517;
+        }
+
+        /* Media query for mobile devices */
+        @media screen and (max-width: 768px) {
+            .controls-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .level-button {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .level-button button {
+                width: 100%;
+                font-size: 20pt;
+            }
+
+            h1 {
+                font-size: 48px !important;
+            }
+        }
+
+        /* Media query for very small mobile devices */
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 36px !important;
+            }
+
+            .level-button button {
+                font-size: 18pt;
+                padding: 0.8em 1.2em;
+            }
+
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+
+
+    </style>
+</head>
+
+<body>
+    <h1>Frog Frenzy</h1>
+    <div class="top-buttons">
+        <a href="HomePage.html">
+            <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Home Page</button>
+        </a>
+        <a href="LeaderBoard.html">
+            <button data-ico="🏆" style="--slist: #f9d423, #ff4e50;">Leaderboard</button>
+        </a>
+    </div>
+    <div class="controls-container">
+        <div class="level-button unlocked" id="level1">
+            <a href="index 2.html">
+                <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Level 1</button>
+            </a>
+        </div>
+        <div class="level-button locked" id="level2">
+            <a>
+                <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Level 2</button>
+            </a>
+        </div>
+
+        <div class="level-button locked" id="level3">
+            <a>
+                <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Level 3</button>
+            </a>
+        </div>
+
+        <div class="level-button locked" id="level4">
+            <a>
+                <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Level 4</button>
+            </a>
+        </div>
+
+        <div class="level-button locked" id="level5">
+            <a>
+                <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Level 5</button>
+            </a>
+        </div>
+    </div>
+    <script>
+        // Check which levels are unlocked
+        let playerData = JSON.parse(localStorage.getItem('playerData'));
+
+        if (!playerData) {
+            // No player data - redirect to name entry
+            window.location.href = 'PlayerName.html';
+        } else {
+            // Unlock levels based on player progress
+            const unlockedLevels = playerData.unlockedLevels || 1;
+
+            for (let i = 2; i <= unlockedLevels && i <= 5; i++) {
+                const levelDiv = document.getElementById(`level${i}`);
+                levelDiv.classList.remove('locked');
+                levelDiv.classList.add('unlocked');
+
+                // Add the correct href
+                const link = levelDiv.querySelector('a');
+                if (i === 2) link.href = 'Level2.html';
+                else if (i === 3) link.href = 'Level3.html';
+                else if (i === 4) link.href = 'Level4.html';
+                else if (i === 5) link.href = 'Level5.html';
+            }
+        }
+    </script>
+
+    <div class="footer">
+        <p>
+            Frog Frenzy
+        </p>
+        <p>Created for COMM 150 by Claire Key</p>
+        <p>
+            2025
+        </p>
+    </div>
+</body>
+
+</html>

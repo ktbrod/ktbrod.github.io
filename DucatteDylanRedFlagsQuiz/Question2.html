@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Big of a Red Flag Are You? – Home</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <header>
+        <h1>How Big of a Red Flag Are You?</h1>
+        <p class="subtitle">Let's be honest now...</p>
+    </header>
+
+    <section class="intro">
+        <h2>When I'm on the sidewalk, I usually walk...</h2>
+    </section>
+
+    <style>
+        /* --- CARD FLIP ADD-ON --- */
+        .flag-card {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flag-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .card-back {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #c2002f;
+            transform: rotateY(180deg);
+        }
+
+        /* --- SCORE DISPLAY STYLE --- */
+        .score-box {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .score-btn {
+            background: #ba1a1a;
+            color: white;
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .score-btn:hover {
+            background: #fe6d88;
+            transform: translateY(-2px);
+        }
+
+        .score-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- QUESTION -->
+    <section id="samples" class="question-section">
+        <h2 class="question-title"></h2>
+
+        <div class="card-grid">
+
+            <!-- Option 1 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="righthandside.jpg" alt="">
+                        </div>
+                        <h3>On the very left side where I am supposed to</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">1</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Option 2 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="rightinthemiddle.jpg" alt="">
+                        </div>
+                        <h3>Right in the middle, so no one can pass me</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">2</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Option 3 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="chestbump.jpg" alt="">
+                        </div>
+                        <h3>On the right side so I am head on with pedestrians</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">3</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Option 4 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="sprintingguym.jpg" alt="">
+                        </div>
+                        <h3>I sprint cause I have that hustle culture mindset</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">4</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEXT PAGE BUTTON -->
+    <div class="btn-wrapper">
+        <a href="Question3.html" class="next-btn">Next→</a>
+    </div>
+
+    <!-- SCORE DISPLAY -->
+    <div class="score-box">
+        Score: <span id="scoreDisplay">0</span>
+        <br>
+        <button class="score-btn" onclick="addPoint()">Score</button>
+    </div>
+
+    <!-- JS -->
+    <script>
+        // Flip card interaction
+        document.querySelectorAll(".flag-card").forEach(card => {
+            card.addEventListener("click", () => {
+                card.classList.toggle("flipped");
+            });
+        });
+
+        // SCORE SYSTEM  
+        function addPoint() {
+            let score = Number(localStorage.getItem("score")) || 0;
+            score++;
+            localStorage.setItem("score", score);
+            document.getElementById("scoreDisplay").innerText = score;
+        }
+
+        // Display existing score on page load
+        document.getElementById("scoreDisplay").innerText =
+            localStorage.getItem("score") || 0;
+    </script>
+
+</body>
+</html>

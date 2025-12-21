@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frog Frenzy - Leaderboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Fugaz+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: rgb(139, 63, 193);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .leaderboard-container {
+            background: linear-gradient(to bottom right, #ffda5f, #f9376b);
+            padding: 30px;
+            border-radius: 20px;
+            border: 5px solid #076020;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+            min-width: 600px;
+        }
+
+        .leaderboard-container h2 {
+            font-family: "Fugaz One", sans-serif;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .leaderboard-table {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .leaderboard-entry {
+            font-family: "Fugaz One", sans-serif;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .leaderboard-entry.top3 {
+            background: linear-gradient(to right, #ffd700, #ffed4e);
+            font-weight: bold;
+        }
+
+        .rank {
+            width: 50px;
+            font-weight: bold;
+        }
+
+        .name {
+            flex: 1;
+        }
+
+        .score {
+            width: 100px;
+            text-align: right;
+            font-weight: bold;
+        }
+        .navigation-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.navigation-buttons a {
+    text-decoration: none;
+}
+
+/* Mobile adjustment */
+@media screen and (max-width: 768px) {
+    .navigation-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .navigation-buttons button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+    </style>
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    
+    <div class="leaderboard-container">
+        <a href="index 2.html"><h2>Level 1</h2></a>
+        <div id="level1Leaderboard" class="leaderboard-table"></div>
+    </div>
+
+    <div class="leaderboard-container">
+        <a href="Level2.html"><h2>Level 2</h2></a>
+        <div id="level2Leaderboard" class="leaderboard-table"></div>
+    </div>
+
+    <div class="leaderboard-container">
+        <a href="Level3.html"><h2>Level 3</h2></a>
+        <div id="level3Leaderboard" class="leaderboard-table"></div>
+    </div>
+
+    <div class="leaderboard-container">
+        <a href="Level4.html"><h2>Level 4</h2></a>
+        <div id="level4Leaderboard" class="leaderboard-table"></div>
+    </div>
+
+    <div class="leaderboard-container">
+        <a href="Level5.html"><h2>Level 5</h2></a>
+        <div id="level5Leaderboard" class="leaderboard-table"></div>
+    </div>
+<div class="navigation-buttons">
+    <a href="HomePage.html">
+        <button data-ico="🏠" style="--slist: #ffda5f, #f9376b;">Home </button>
+    </a>
+     <a href="Levels.html">
+            <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Levels </button>
+        </a>
+</div>
+    <script>
+        function displayLeaderboard(level) {
+            const leaderboard = JSON.parse(localStorage.getItem(`leaderboard_level${level}`)) || [];
+            const container = document.getElementById(`level${level}Leaderboard`);
+            
+            if (leaderboard.length === 0) {
+                container.innerHTML = '<p style="text-align: center;">No scores yet!</p>';
+                return;
+            }
+            
+            let html = '';
+            leaderboard.forEach((entry, index) => {
+                const topClass = index < 3 ? 'top3' : '';
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+                html += `
+                    <div class="leaderboard-entry ${topClass}">
+                        <span class="rank">${medal} #${index + 1}</span>
+                        <span class="name">${entry.name}</span>
+                        <span class="score">${entry.score} pts</span>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Display all leaderboards
+        for (let i = 1; i <= 5; i++) {
+            displayLeaderboard(i);
+        }
+    </script>
+</body>
+</html>

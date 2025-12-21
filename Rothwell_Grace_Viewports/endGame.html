@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
+    <title>EndGame</title>
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+            <h1 class="title">Viewports</h1>
+        </div>
+        <div class="game-page">
+            <div class="notebook-page" id="end-game-page">
+                <div id="page-1">
+                    <h2>Did Viewports capture every aspect of this person's life? Can <i>images</i> capture every aspect of anyone's life?</h2>
+                <h3>Consider these quotes:</h3>
+                <blockquote>
+                    <p class="end-game-paragraph">"While many people in non industrialized countries still feel apprehensive when being photographed, divining it be some kind of trespess, an act of disrespect, a sublimated looting of the personality or the culture, people in industrialized countries seek to have their photographs taken--<b>feel that they are images, and are made of photographs."</b> (pg. 126)</p> 
+                    <p class="end-game-paragraph">"Photographs are a way of imprisoning reality, understood as recalcitrant, inaccessible; of making it stand still. Or they enlarge a reality that is felt to be shrunk, hollowed out, perishable, remote. <b>One can't posess reality, one can possess (and be possessed by) images [...] one can't possess the present but on can possess the past."</b> (pg 127-128)</p>
+                    <p class="end-game-paragraph">"What the photograph-record confirms is, more modestly, <b>simply that the subject exists;</b> therefore, one can never have too many." (pg. 129)</p>
+                    <p class="end-game-paragraph">"Cameras implement an aesthetic view of reality by being a machine-toy that extends to everyone <b>the possibility of making disinterested judgements about importance, interest, beauty."</b> (pg. 138)</p>
+                    <cite>Sontag, Susan. “The Image-World.” On Photography, RosettaBooks, 2005, pp. 126–138.</cite>
+                </blockquote></div>
+                <button onclick="nextPage()" class="exit-button" id="continue-button">Continue</button>
+                <div id="page-2" style="display: none;">
+                    <h2>Now ask yourself:</h2>
+                    <ul>
+                        <li>Do you feel as if you trespassed on this character's life?</li>
+                        <li>If this desk is improsined in its fragment of time, can we judge the character by its contents? How harshly should we judge each other by the images we present (chosen or not?) How long until those images are considered to be a part of time that is outdated? In other words, how long until they expire? Who gets to decide that?</li>
+                        <li>Is it enough to see this image of this character's desk to feel as if you know them, or is the transformation of it into an image object (something you can interact with) what makes this character real to you?</li>
+                        <li>Do you feel alien to this character's world? Why? Why not?</li>
+                        <li>Is the only way this desk is important or interesting to you, as the user, because it's aestheticized in the photographic medium?</li>
+                    </ul>
+                    <h3>If you'd like, you may explore the viewports of her world again...</h3>
+                    <button onclick="previousPage()"  id="back-button">Back</button>
+                </div>
+            </div>
+        </div>
+        <div class="bottom" id="end-game-bottom">
+            <h3 id="end-game-dialogue" style="display: none;">Click the button below to play again</h3>
+            <button onclick="backToIndex()" id="play-again-button" style="display: none;">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        function previousPage(){
+            const page_1 = document.getElementById("page-1");
+            const page_2 = document.getElementById("page-2");
+            const back_button = document.getElementById("back-button");
+            const continue_button = document.getElementById("continue-button");
+            page_1.style.display = 'block';
+            page_2.style.display = 'none';
+            back_button.style.display = 'none';
+            continue_button.style.display = 'block';
+        }
+        function nextPage(){
+            const page_1 = document.getElementById("page-1");
+            const page_2 = document.getElementById("page-2");
+            const dialogue = document.getElementById("end-game-dialogue");
+            const play_again = document.getElementById("play-again-button");
+            const continue_button = document.getElementById("continue-button");
+            const back_button = document.getElementById("back-button");
+            page_1.style.display = 'none';
+            page_2.style.display = 'block';
+            dialogue.style.display = 'block';
+            play_again.style.display = 'block';
+            continue_button.style.display='none';
+            back_button.style.display='block';
+        }
+        function backToIndex(){
+            localStorage.clear();
+            window.location.href='index.html';
+        }
+    </script>
+</body>
+</html>

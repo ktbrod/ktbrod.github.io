@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+
+     <link rel="stylesheet" href="styles.css">
+     <script src="scripts.js"></script>
+    <style>
+        .next-button {
+        background-color: rgb(255, 130, 159); 
+        color: rgb(8, 8, 8);
+        border: none;
+        border-radius: 35px;
+        padding: 15px 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: Verdana;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        z-index: 2;
+        }
+
+        .next-button:hover {
+        background-color: rgb(199, 0, 66);
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .color {
+        background-color: rgb(255, 130, 159); 
+        color: rgb(8, 8, 8);
+        border: none;
+        border-radius: 400px;
+        padding: 15px 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: Verdana;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        z-index: 2;
+        }
+
+        .color:hover {
+        background-color: rgb(199, 0, 66);
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .box_example {
+            display: block;
+            background-color: rgb(255, 130, 159);
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+
+        #grid {
+             display: grid; 
+             grid-template-columns: auto auto; 
+             position: static; 
+             
+        }
+        .box_example_flex {
+            display: inline;
+            width: 50%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        
+            border: 1px solid rgb(237, 255, 190) ;
+            position: static;
+            animation: firstanimation;
+            animation-duration: 4s;
+            animation-iteration-count: 5;
+                
+        }
+
+        
+        .box_example_flex {
+            display: inline;
+            width: 15%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid black;
+            justify-content: center;   
+        }
+
+        #flex {
+             display: flex; 
+             flex-direction: row; 
+             position: static; 
+             justify-content: center;   
+        }
+
+  </style>
+</head>
+
+
+<button class="color" onclick="changeBackgroundColor()">Click for a New Board Game Color</button>
+
+
+<button class="next-button" onclick="window.location.href='index.html'">Home Page</button>
+
+<div class="box_example">
+<p>"The medium is the message." -Marshall McLuhan</p><p>Calculate your score below:</p>
+</div>
+<div id = "flex">
+    <div class ="box_example_flex"><p>0-1 questions correct:</p><p>You're human to your core. Maybe memorizing lectures wasn't your #1 priority this semester, but at least you didn't Google the answers. Feel free to scroll through Canvas files and try again.</p></div>
+    <div class ="box_example_flex"> <p>3 questions correct:</p><p>The middle isn't a bad place to be. You clearly learned some concepts in class, but certain topics stuck more than others. Be honest — did you use ChaptGPT for this game? (No, an em-dash doesn't mean this is AI-generated.)</p></div>
+    <div class ="box_example_flex"> <p>4 questions correct:</p><p>So close! Your memory is strong, but one question held you back from that A+. Don't worry though, you still displayed both real-world and digitalized qualities. Humans make mistakes, and so do machines.</p></div>
+    <div class ="box_example_flex"> <p>5 questions correct:</p><p>Are you a human or a machine? A perfect score means you were paying attention this semester. Don't worry, you won't be accused of using AI just for being correct. Make sure to bring up this win at family dinners and maybe even on your next LinkedIn post.</p></div>
+</div>
+
+<div class="box_example">
+<p>Thank you for playing! Now read a physical book or go on a walk without headphones. It's good for you.</p>
+</div>

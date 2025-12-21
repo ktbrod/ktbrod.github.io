@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Q7 — Decision</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page">
+  <audio id="bgAudio" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f6cefd573.mp3?filename=ambient-hum-21966.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="clickAudio">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2ec52ffb62.mp3?filename=soft-click-21968.mp3" type="audio/mpeg">
+  </audio>
+
+  <main class="question-stage">
+    <div class="top-note">A DECISION MUST BE MADE</div>
+
+    <div class="question-card">
+      <h2 class="question">An intelligent assistant suggests hiding photos that might hurt your future prospects. Do you:</h2>
+      <div class="choices">
+        <button class="choice-btn" onclick="choose('machine','q8.html')">
+          Let it hide them automatically. Cleaning your profile is efficient.
+        </button>
+        <button class="choice-btn" onclick="choose('human','q8.html')">
+          Review personally. You decide what to keep or remove.
+        </button>
+      </div>
+      <div class="system-line">SYSTEM: Reputation pruning preference logged.</div>
+    </div>
+
+    <section class="slider-bottom">
+      <div class="slider-labels"><span>Human</span><span>Machine</span></div>
+      <div class="slider-track"><div id="sliderMarker" class="slider-marker"></div></div>
+      <div id="sliderNumber" class="slider-number">Lean: 50% Machine</div>
+    </section>
+  </main>
+
+  <!-- Background ambient audio -->
+    <audio id="bgAudio" loop preload="auto">
+        <source src="bg-ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+  <script src="scripts.js"></script>
+</body>
+</html>

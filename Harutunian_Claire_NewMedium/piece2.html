@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="styles.css">
+     <script src="scripts.js"></script>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    .next-button {
+      background-color: rgb(255, 130, 159); 
+      color: rgb(8, 8, 8);
+      border: none;
+      border-radius: 35px;
+      padding: 15px 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: Verdana;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .next-button:hover {
+      background-color: rgb(199, 0, 66);
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .box_example {
+            display: block;
+            background-color: rgb(255, 130, 159);
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid black;
+            text-align: center;
+    }
+        .box_example_flex {
+            display: inline;
+            width: 50%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        
+            border: 1px solid rgb(237, 255, 190) ;
+            position: static;
+            animation: firstanimation;
+            animation-duration: 4s;
+            animation-iteration-count: 5;
+           
+        }
+
+        .box_example_flex {
+            display: inline;
+            width: 15%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid black;
+            justify-content: center;   
+            aspect-ratio: 1 / 1;
+        }
+
+        #flex {
+             display: flex; 
+             flex-direction: row; 
+             position: static; 
+             justify-content: center;   
+        }
+
+        #jpegimg {
+            justify-content: center;
+            text-align: center;
+            margin: auto;
+        }
+
+  </style>
+</head>
+
+<body class="flipphone-cursor">
+</body>
+
+  <div class="question-box">
+
+<button class="next-button" onclick="window.location.href='index.html'">Home Page</button>
+    
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1 style="text-align: center;">Flip Phone</h1>
+
+
+<div class="box_example">
+<p>You chose flip phone!</p>
+</div>
+
+<div  id="jpegimg">
+<img
+  src= "flipphone.jpeg"  height="250" 
+      alt="Sketch of a a flip phone"
+>
+</div>
+
+<div class="box_example">
+<p class="fade-in-text">Select Squares 1 through 5 to make your way across the board:</p>
+</div>
+
+<div id = "flex">
+    <div class ="box_example_flex"> <a href="square1.html" ><p onclick="keepScore()">Square 1</p></a></div>
+    <div class ="box_example_flex"> <a href="square2.html" ><p onclick="keepScore()">Square 2</p></a></div>
+    <div class ="box_example_flex"> <a href="square3.html" ><p onclick="keepScore()">Square 3</p></a></div>
+    <div class ="box_example_flex"> <a href="square4.html" ><p onclick="keepScore()">Square 4</p></a></div>
+    <div class ="box_example_flex"> <a href="square5.html" ><p onclick="keepScore()">Square 5</p></a></div>
+</div>
+
+</script>
+  </html>

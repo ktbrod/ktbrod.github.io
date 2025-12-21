@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page 4</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Your Fortune Awaits...</h1>
+  <p id="userQuestion" class="question-text"></p>
+  <div id="displayFortune"></div>  
+  
+
+<div class= "button-container">
+  <button onclick="location.href='page2.html'"> Ask Another Question</button>
+  <button onclick="location.href='index.html'"> Return to Start</button>
+</div>
+
+   <script>
+
+    /* Additional skill #4: local storage to save question */ 
+    let question = localStorage.getItem("fortuneQuestion");
+
+    let fortunes = [
+      "Good things are coming your way!",
+      "Be cautious, not everything is as it seems.",
+      "A pleasant surprise will brighten your week.",
+      "A new opportunity is on the horizon.",
+      "An unexpected event will bring you joy.",
+      "Change is coming!",
+    ];
+
+    let randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+    
+    document.getElementById("userQuestion").innerText = "You asked: " + question;
+
+    document.getElementById("displayFortune").innerText =
+      "The Digital Fortune Teller predicts... \n\n" +
+      randomFortune;
+    
+      function askAnother() {
+      localStorage.removeItem("fortuneQuestion");
+      location.href = "page2.html";
+    }
+    </script>
+
+    

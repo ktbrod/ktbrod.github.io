@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+  <script>
+    function HarawayCyborg() {
+    const seed = document.getElementById('seedPrompt').value;
+    localStorage.setItem("chatSeed", seed);
+    window.location.href = 'chatbot.html';
+  }
+   window.addEventListener('load', () => {
+      const popup = document.getElementById('popup');
+      const sound = document.getElementById('popup-sound');
+
+      function activate() {
+        // unlock sound
+        sound.play().catch(() => {});
+        sound.currentTime = 0;
+
+        // show popup
+        popup.classList.add('animate');
+
+        // hide after 2 seconds
+        setTimeout(() => {
+          popup.style.bottom = '-200px';
+          popup.style.opacity = '0';
+        }, 2000);
+
+        // only happens once
+        document.removeEventListener('keydown', activate);
+      }
+      
+      document.addEventListener('keydown', activate);
+    });
+  </script>
+</head>
+<body class="windows_1">
+  <header>
+  </header>
+  <main class="screen">
+    <div class="icons-container">
+      <div class="icons">
+        <img src="images/aim.png">
+        <p>Aim</p>
+      </div>
+      <div class="icons">
+        <img src="images/computer.png">
+        <p>My computer</p>
+      </div>
+      <div class="icons">
+        <img src="images/files.png">
+        <p>Files</p>
+      </div>
+      <div class="icons">
+        <img src="images/ie.png">
+        <p>Internet Explorer</p>
+      </div>
+      <div class="icons">
+        <img src="images/recycling.png">
+        <p>Recycling</p>
+      </div>
+      <div class="icons">
+        <img src="images/solitaire.png">
+        <p>Solitaire</p>
+      </div>
+    </div>
+    <div class="stacked-images">
+      <div class="aim">
+        <img src="images/windows_aim_login.png">
+      </div>
+      <div class="haraway_container">
+        <img src="images/haraway-1.png" id="haraway-1-image">
+        <div class="cyborg-launcher">
+        <input type="text" id="seedPrompt" placeholder="type something..." />
+        <button id="enterBtn" onclick="HarawayCyborg()"></button>
+    </div>
+      </div>
+      <div class="buddy_list_container">
+        <img src="images/buddylist.png" class="buddy_list">
+      </div>
+    </div>
+
+    <!-- Animation here -->
+
+    <img id="popup" src="images/dsync1-signon.png" alt="popup image">
+    <audio id="popup-sound" src="audio/aimonline.mp3"> </audio>
+  <footer>
+    <div class="taskbar">
+      <div class="left">
+        <img src="images/left_taskbar.png">
+      </div>
+      <div class="middle">
+        <img src="images/middle_taskbar.png">
+      </div>
+      <div class="right">
+        <img src="images/right_taskbar.png">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

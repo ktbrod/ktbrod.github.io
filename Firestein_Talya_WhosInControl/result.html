@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Result — Who's In Control?</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="page">
+
+  <main class="result-stage">
+
+    <div id="resultCard" class="result-card">
+      <h1 id="resultTitle" class="result-title">ANALYZING...</h1>
+      <p id="resultText" class="result-text">
+        Finalizing outcome — patterns are being reconciled.
+      </p>
+
+      <div class="result-actions">
+        <button class="control" onclick="resetAll()">Play Again</button>
+        <button class="control" onclick="downloadReport()">Download Report</button>
+      </div>
+    </div>
+
+    <!-- slider always visible -->
+    <section class="slider-bottom">
+      <div class="slider-labels"><span>Human</span><span>Machine</span></div>
+      <div class="slider-track"><div id="sliderMarker" class="slider-marker"></div></div>
+      <div id="sliderNumber" class="slider-number">Lean: 50% Machine</div>
+    </section>
+
+  </main>
+
+  <script src="scripts.js"></script>
+
+</body>
+</html>
+

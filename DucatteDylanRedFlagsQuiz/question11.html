@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Big of a Red Flag Are You? – Group Project</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <header>
+        <h1>Almost There</h1>
+        <p class="subtitle"></p>
+    </header>
+
+    <section class="intro">
+        <h2>I missed by friend's message from last night! I will...</h2>
+    </section>
+
+    <style>
+        /* --- CARD FLIP --- */
+        .flag-card { perspective: 1000px; }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flag-card.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 22px;
+            overflow: hidden;
+        }
+        .card-back {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #c2002f;
+            transform: rotateY(180deg);
+        }
+
+        /* --- SCORE DISPLAY --- */
+        .score-box { font-size: 1.3rem; font-weight: 600; margin-top: 20px; }
+        .score-btn {
+            background: #ba1a1a;
+            color: white;
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        .score-btn:hover { background: #fe6d88; transform: translateY(-2px); }
+        .score-btn:active { transform: translateY(1px); }
+    </style>
+</head>
+
+<body>
+
+    <!-- QUESTION CARDS -->
+    <section id="samples" class="question-section">
+        <div class="card-grid">
+
+            <div class="flag-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="img-box"><img src="apology.jpg" alt=""></div>
+                        <h3>Apologize for missing the text, proceed to check in on them.</h3>
+                    </div>
+                    <div class="card-back"><span class="card-number">3</span></div>
+                </div>
+            </div>
+
+            <div class="flag-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="img-box"><img src="friendsenjoying.jpg" alt=""></div>
+                        <h3>Not apologize, proceed to text them like nothing ever happened.</h3>
+                    </div>
+                    <div class="card-back"><span class="card-number">3</span></div>
+                </div>
+            </div>
+
+            <div class="flag-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="img-box"><img src="cryingandtexting.jpg" alt=""></div>
+                        <h3>Not apologize, and immediately switch the subject back to me.</h3>
+                    </div>
+                    <div class="card-back"><span class="card-number">4</span></div>
+                </div>
+            </div>
+
+            <div class="flag-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="img-box"><img src="ghost.jpg" alt=""></div>
+                        <h3>Ghost, I'll get back to them in the next 3-5 business days</h3>
+                    </div>
+                    <div class="card-back"><span class="card-number">2</span></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEXT BUTTON -->
+    <div class="btn-wrapper">
+        <a href="Results.html" class="next-btn">Next→</a>
+    </div>
+
+    <!-- SCORE DISPLAY -->
+    <div class="score-box">
+        Score: <span id="scoreDisplay">0</span>
+        <br>
+        <button class="score-btn" onclick="addPoint()">Score</button>
+    </div>
+
+    <script>
+        // Flip cards
+        document.querySelectorAll(".flag-card").forEach(card => {
+            card.addEventListener("click", () => {
+                card.classList.toggle("flipped");
+            });
+        });
+
+        // Score system
+        function addPoint() {
+            let score = Number(localStorage.getItem("score")) || 0;
+            score++;
+            localStorage.setItem("score", score);
+            document.getElementById("scoreDisplay").innerText = score;
+        }
+
+        // Display previous score
+        document.getElementById("scoreDisplay").innerText = localStorage.getItem("score") || 0;
+    </script>
+
+</body>
+</html>

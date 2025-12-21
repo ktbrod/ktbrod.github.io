@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fast Construction — Scroll Story</title>
+   <link rel="stylesheet" href="style.css" />
+</head>
+<body class="choiceb">
+  <header id="top">
+    <div class="card">
+      <h1>Fast Construction: The Only Path</h1>
+      <p class="center">Scroll to see how the “unethical way” plays out — from untouched countryside to server farm.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="card">
+      <h2>1) Countryside</h2>
+      <img src="data center pics/2.untouched countryside.jpg" alt="Open countryside road and fields">
+      <p><strong>It began here —</strong> open fields, quiet mornings, and birds that didn’t yet hum in sync with cooling fans.</p>
+         <div class="reactions">
+        <p class="feel-question">How does this make you feel?</p>
+        <span class="emoji" onclick="showFeeling(this)">🙂</span>
+        <span class="emoji" onclick="showFeeling(this)">😐</span>
+        <span class="emoji" onclick="showFeeling(this)">🙁</span>
+        <div class="feel-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>2) Opposition</h2>
+      <img src="data center pics/2.zdata-centers-sign.webp" alt="Community protest sign about data centers">
+      <p><strong>Resistance rises.</strong> “Save our farmland,” they say — but the paperwork’s already signed.</p>
+        <div class="reactions">
+        <p class="feel-question">How does this make you feel?</p>
+        <span class="emoji" onclick="showFeeling(this)">🙂</span>
+        <span class="emoji" onclick="showFeeling(this)">😐</span>
+        <span class="emoji" onclick="showFeeling(this)">🙁</span>
+        <div class="feel-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>3) Clearing</h2>
+      <img src="data center pics/3.deforestation_.jpg" alt="Cleared land and tree stumps">
+      <p><strong>Then came progress.</strong> Bulldozers spoke the universal language of ROI.</p>
+         <div class="reactions">
+        <p class="feel-question">How does this make you feel?</p>
+        <span class="emoji" onclick="showFeeling(this)">🙂</span>
+        <span class="emoji" onclick="showFeeling(this)">😐</span>
+        <span class="emoji" onclick="showFeeling(this)">🙁</span>
+        <div class="feel-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>4) Design & Plan</h2>
+      <img src="data center pics/4.data center plan.jpg" alt="Large site plan and utilities for a data center campus">
+      <p><strong>The blueprints looked clean —</strong> every acre accounted for, every shadow optimized.</p>
+        <div class="reactions">
+        <p class="feel-question">How does this make you feel?</p>
+        <span class="emoji" onclick="showFeeling(this)">🙂</span>
+        <span class="emoji" onclick="showFeeling(this)">😐</span>
+        <span class="emoji" onclick="showFeeling(this)">🙁</span>
+        <div class="feel-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>5) Development</h2>
+      <img src="data center pics/5. development of data center.jpg" alt="Construction site for a data center">
+      <p><strong>The town meetings were held.</strong> The PowerPoints were powerful. The community’s voice… less so.</p>
+        <div class="reactions">
+        <p class="feel-question">How does this make you feel?</p>
+        <span class="emoji" onclick="showFeeling(this)">🙂</span>
+        <span class="emoji" onclick="showFeeling(this)">😐</span>
+        <span class="emoji" onclick="showFeeling(this)">🙁</span>
+        <div class="feel-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>6) Finished Product</h2>
+      <img src="data center pics/6.finished DC.webp" alt="Finished data center exterior">
+      <p><strong>You did it.</strong> The servers hum. The lights glow. The countryside remembers.</p>
+         <div class="reactions">
+        <p class="feel-question">How does this make you feel?</p>
+        <span class="emoji" onclick="showFeeling(this)">🙂</span>
+        <span class="emoji" onclick="showFeeling(this)">😐</span>
+        <span class="emoji" onclick="showFeeling(this)">🙁</span>
+        <div class="feel-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card center">
+      <h2>Result</h2>
+      <p><strong>You built the cloud. You drained the ground.</strong><br>
+      Congratulations — you’ve completed the unethical way, the only way we seem to know how.</p>
+
+      <a class="btn" href="#top">Play Again ↑</a>
+
+<p style="margin-top:10px;">
+  <a class="link" href="index.html">← Back to Choices</a>
+</p>
+
+    </div>
+  </section>
+
+  <footer class="center" style="color:var(--muted); padding:40px 16px;">
+    © 2025 Ethical Real Estate Project
+  </footer>
+ <script>
+    function showFeeling(emoji) {
+      const resultBox = emoji.parentElement.querySelector(".feel-result");
+
+      const percent = Math.floor(Math.random() * 71) + 20;
+
+      let text = "";
+      if (emoji.textContent === "🙂") text = "This seems fine. Does not seem to affect me.";
+      if (emoji.textContent === "😐") text = "unsure about this...will it be okay in the future?";
+      if (emoji.textContent === "🙁") text = "Concerned about this... is it too late?";
+
+      resultBox.innerHTML = `Approx. <strong>${percent}%</strong> of viewers felt <em>${text}</em>.`;
+    }
+  </script>
+</body>
+</html>

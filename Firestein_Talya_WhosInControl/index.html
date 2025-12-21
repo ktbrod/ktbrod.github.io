@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WHO'S IN CONTROL? — Title</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="page">
+
+  <main class="center-stage">
+    
+    <div class="title-card gradient-bg">
+      <h1 class="title main">WHO'S IN CONTROL?</h1>
+
+      <div id="systemInit" class="system-init"></div>
+
+      <p class="subtle-hint">
+        Enter the simulation and make decisions. The system is watching.
+      </p>
+
+      <button class="glow-button start" onclick="startSimulation()">
+        START SIMULATION HERE
+      </button>
+    </div>
+
+    <!-- hint text -->
+    <div class="hint-above-slider">
+      Will you notice the pattern or fall into it?
+    </div>
+
+    <!-- required image element -->
+    <!-- additional skill! image element inserted for visual identity -->
+    <img src="bgimage.png" alt="system symbol" class="intro-image">
+
+    <!-- Persistent slider -->
+    <section class="slider-bottom">
+      <div class="slider-labels">
+        <span>Human</span><span>Machine</span>
+      </div>
+      <div class="slider-track">
+        <div id="sliderMarker" class="slider-marker"></div>
+      </div>
+      <div id="sliderNumber" class="slider-number">
+        Lean: 50% Machine
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Reset choices on title page -->
+  <script>
+    localStorage.setItem("wic_choices", JSON.stringify([]));
+  </script>
+
+  <!-- Main game logic -->
+  <script src="scripts.js"></script>
+
+</body>
+</html>

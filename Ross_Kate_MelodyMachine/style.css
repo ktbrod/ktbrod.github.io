@@ -1,0 +1,258 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: rgb(232, 229, 235)
+}
+
+#main-header {
+  background-color: rgb(181, 123, 239);
+  height: 75px; 
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  text-shadow: 5px 5px 10px rgb(132, 176, 213);
+}
+
+.topnav {
+  background-color: rgb(89, 14, 155);
+  overflow: hidden;
+  height: 30px;
+}
+
+.topnav a {
+  float: none;
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 24px;
+  color: white
+}
+
+.topnav a:hover{
+  background-color: rgb(174, 207, 246);
+  color: black;
+}
+
+.topnav a.active{ /* additional skill! */
+  background-color:rgb(174, 207, 246);
+  color: black;
+}
+
+.footer {
+  position: fixed;
+  left: 10px;
+  bottom: 0;
+  width: 100%;
+
+}
+#welcome {
+  text-align: center;
+  font-size: 45px;
+  /* background-color: lightblue; */
+  opacity: 0.5;
+  color: rgb(125, 41, 181);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-shadow: 2px 2px rgb(75, 0, 128);
+  -webkit-text-stroke-color: 2px black;
+}
+
+#about {
+  text-align: center;
+  font-size: 40px;
+  padding: 20px;
+  color: black;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.intro {
+  margin: auto;
+  width: 50%;
+  font-size: 30px;
+  text-align: center;
+}
+
+.game {
+  background-color: rgb(174, 207, 246);
+  width: 90%;
+  max-width: 600px;
+  margin: 100px auto 0;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.game h2 {
+  font-size: 20px;
+  color: black;
+  font-weight: 600;
+  border-bottom: 1.5px solid rgb(89, 14, 155);
+  padding: 20px;
+}
+
+.quiz {
+  padding: none;
+}
+
+#question {
+  padding: 10px;
+  font-size: 22px;
+}
+
+.audio-container {
+  width: 55%;
+  margin: auto;
+  padding: 15px;
+}
+
+.quiz h3 {
+  font-size: 20px;
+  color: black;
+  font-weight: 500;
+  text-align: center;
+}
+.quiz img{
+  cursor: pointer;
+  width: 90%;
+  max-width: 200px;
+  max-height: 200px;
+  margin: 20px;
+  padding: 10px;
+}
+
+.btn {
+  background: white;
+  width: 100%;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius:4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn:hover { /* additional skill! */
+  background: rgb(219, 215, 247);
+}
+
+#start-button{
+  border: 1px;
+  color: rgb(0, 0, 0);
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  padding: none;
+  border-radius: 5%;
+  text-align: center;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  animation-name: playAnimation;
+  animation-duration: 30s;
+}
+
+#start-button a {
+  color: black;
+  display: block;
+  padding: 80px 80px;
+}
+
+#ready-text {
+  font-size: 50px;
+  text-align: center;
+  margin-top: 30px;
+  margin: auto;
+  padding-top: 30px;
+}
+
+@keyframes playAnimation {
+  from {background-color: lightblue;}
+  to {background-color: rgb(122, 12, 195);}
+}
+
+.results {
+  margin: auto;
+  font-size: 50px;
+  font-weight: 500;
+  text-align: center;
+  padding: 20px;
+}
+
+.results p {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  font-size: 50px;
+}
+
+#scoredisplay {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  text-align: center;
+  padding: 20px;
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.replay {
+  margin: auto;
+  margin-top: 20px;
+  width: 50%;
+  border: 2px solid rgb(123, 30, 180);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: 65px;
+  width: 250px;
+  font-size: 40px;
+  cursor:pointer;
+  background-color: rgb(174, 207, 246);
+}
+
+#howto {
+  font-size: 50px;
+  text-align: center;
+  margin: 25px;
+  color: black;
+  text-shadow: 5px 5px 10px lightblue;
+}
+
+#steps {
+  font-size: 30px;
+  text-align: justify;
+  margin-left: 20%;
+  margin-bottom: 65px;
+
+}
+
+#helpful-hints {
+  font-size: 50px;
+  text-align: center;
+  margin: 25px;
+  color: black;
+  text-shadow: 5px 5px 10px lightblue;
+}
+
+#hints {
+  margin-left: 30px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 2cm;
+}
+
+@media (max-width: 600px) {
+  .intro {padding: 20px 20px}; 
+}
+
+
+
+
+

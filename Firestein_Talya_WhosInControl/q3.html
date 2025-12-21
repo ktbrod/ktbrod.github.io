@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Q3 — Decision</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="page">
+
+  <main class="question-stage">
+    <div class="top-note">A DECISION MUST BE MADE</div>
+
+    <div class="question-card">
+      <h2 class="question">
+        You notice recommended content that perfectly matches a private interest you never shared. Do you:
+      </h2>
+
+      <div class="choices">
+        <button class="choice-btn" onclick="choose('human','q4.html')">
+          Investigate privacy settings and clean potential trackers.
+        </button>
+
+        <button class="choice-btn" onclick="choose('machine','q4.html')">
+          Follow the recommendation — convenient and curated is better.
+        </button>
+      </div>
+
+      <div class="system-line">SYSTEM: Curiosity modules flagged.</div>
+    </div>
+
+    <!-- Slider always visible -->
+    <section class="slider-bottom">
+      <div class="slider-labels"><span>Human</span><span>Machine</span></div>
+      <div class="slider-track"><div id="sliderMarker" class="slider-marker"></div></div>
+      <div id="sliderNumber" class="slider-number">Lean: 50% Machine</div>
+    </section>
+
+  </main>
+
+  <script src="scripts.js"></script>
+
+</body>
+</html>
+

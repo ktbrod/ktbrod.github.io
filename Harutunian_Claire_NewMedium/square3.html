@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="styles.css">
+     <script src="scripts.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    .next-button {
+      background-color: rgb(255, 130, 159); 
+      color: rgb(8, 8, 8);
+      border: none;
+      border-radius: 35px;
+      padding: 15px 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: Verdana;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .next-button:hover {
+      background-color: rgb(199, 0, 66);
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .box_example {
+            display: block;
+            background-color: rgb(255, 130, 159);
+            margin: 125px;
+            padding: 15px;
+            border: 1px solid black;
+           
+    }
+        .box_example_flex {
+            display: inline;
+            width: 50%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        
+            border: 1px solid rgb(237, 255, 190) ;
+            position: static;
+            animation: firstanimation;
+            animation-duration: 4s;
+            animation-iteration-count: 5;
+           
+        }
+
+
+  </style>
+</head>
+<body>
+  <div class="question-box">
+
+<button class="next-button" onclick="history.back()">Return to Board</button>
+    
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</style>
+</head>
+
+<body>
+  <div class="box_example">
+<p>According to Caroline Sinders, design can be used to defeat disinformation. Which of the following is NOT a real effort?</p>
+<p>A. Apple began requiring a “nutritional label” featuring the information each app collects</p>
+<p>B. Microsoft started a “clear windows” campaign focused on transparency of data use</p>
+<p>C. Facebook created privacy guidelines, including requiring “comprehensiveness” in privacy notifications</p>
+</div>
+
+<div id="myDIV">
+</div>
+</body>
+
+<div class="box_example">
+<p id="demo">Double click to reveal the answer.</p>
+</div>
+<script>
+document.getElementById("demo").ondblclick = function() {myFunction()};
+
+function myFunction() {
+  document.getElementById("demo").innerHTML = "B. Microsoft started a “clear windows” campaign focused on transparency of data use";
+}
+
+
+  </script>
+  </html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
+    <title>Agenda</title>
+</head>
+<body>
+    <div class = "container">
+         <div class="top">
+            <h1 class = "subpage-name" id="subpage-name">Wonder what she has to do...</h1>
+        </div>
+        <div class = "game-page" id = "agenda-gamepage">
+            <button onclick="mondayButton()" class="agenda-button" id="monday"></button>
+            <button onclick="tuesdayButton()" class="agenda-button" id="tuesday"></button>
+            <div class="notebook, display-agenda" id="agenda-page" style="display: none;">
+                <p class="notebook-page-text" id="agenda-text" style="display: none;"></p>
+                <button class="exit-button" onclick="exitPage()">EXIT</button>
+            </div>
+            <div class = "notebook-page" id ="next-dialogue" style="display: none;">
+                <p class = "notebook-page-text">You've seen all she has to do, it's time to keep exploring the viewports of her world...</p>
+            </div>
+        </div>
+        <div class = "bottom">
+            <p class = "instructions" id = "agenda-instructions">Click to see her to-do list.</p>
+        </div>
+    </div>
+
+    <script>
+        function setVisited(key, value) { localStorage.setItem(key, value ? 'true' : 'false'); }
+        // state
+        const explored = {
+            monday: false,
+            tuesday: false,
+        };
+
+        // optional: persist across reloads
+        const PERSIST_KEY = 'daysExplored';
+        function loadPersisted() {
+            try {
+            const json = localStorage.getItem(PERSIST_KEY);
+            if (json) Object.assign(explored, JSON.parse(json));
+            } catch (e) { /* ignore */ }
+        }
+        function persist() {
+            try { localStorage.setItem(PERSIST_KEY, JSON.stringify(explored)); } catch (e) {}
+        }
+
+        function markExplored(day) {
+            if (!['monday','tuesday'].includes(day)) return;
+            if (explored[day]) return; // already counted
+            explored[day] = true;
+            persist();
+            //updateExploredUI(color);
+            checkAllExplored();
+        }
+
+        function checkAllExplored() {
+            const all = explored.monday && explored.tuesday;
+            if (all) onAllExplored();
+        }
+
+        function onAllExplored() {
+            const next_dialogue = document.getElementById('next-dialogue');
+            const game_page = document.getElementById('agenda-gamepage');
+            const subpage_name = document.getElementById('subpage-name');
+            const instruction = document.getElementById('agenda-instructions');
+
+            const PAGE_MS = 3000;
+            
+            pageTimer = setTimeout(() =>{
+                game_page.style.background = 'black';
+                subpage_name.style.color = 'black';
+                instruction.style.color = 'black';
+                next_dialogue.style.display = 'block';
+                localStorage.setItem('agenda_visited', 'true');
+                setTimeout(() =>{
+                    window.location.href = 'index.html';
+                }, PAGE_MS);
+            }, PAGE_MS);
+
+
+            // 3) fire a custom event so other code can react
+            // const evt = new CustomEvent('notebooks:allExplored', { detail: { explored: {...explored} }});
+            // document.dispatchEvent(evt);
+        }
+
+        // function resetExplored() {
+        //     explored.purple = explored.white = explored.blue = false;
+        //     persist();
+        //     // ['purple','white','blue'].forEach(c => {
+        //     // const b = document.getElementById(`${c}-notebook`);
+        //     // if (b) { b.classList.remove('explored'); b.removeAttribute('aria-pressed'); }
+        //     // });
+        //     const instructions = document.getElementById('notebooks-instructions');
+        //     if (instructions) instructions.innerText = "It's her notebooks...";
+        // }
+
+        function exitPage(){
+            const notebook_page = document.getElementById("agenda-page");
+            notebook_page.style.display = 'none';
+        }
+
+
+       
+        function mondayButton(){
+            const button = document.getElementById('monday');
+            const agenda_page = document.getElementById("agenda-page");
+            const text = document.getElementById("agenda-text");
+            agenda_page.style.display = 'block';
+            text.style.display = 'block';
+            text.innerHTML = "<ul><li>Spanish homework</li><li>doctor's appointment(skip?)</li><li>group project</li></ul>";
+            agenda_page.classList.add('display-agenda');
+            button.classList.add('explored');
+            markExplored('monday');
+        }
+        function tuesdayButton(){
+            const button = document.getElementById('tuesday');
+            const agenda_page = document.getElementById("agenda-page");
+            const text = document.getElementById("agenda-text");
+            agenda_page.style.display = 'block';
+            text.style.display = 'block';
+            text.innerHTML = "<ul><li>clean the room</li><li>the talk :/</li><li>group project(skip?)</li><li>math quiz</li></ul>"; 
+            button.classList.add('explored');   
+            markExplored('tuesday');    
+        }
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Big of a Red Flag Are You? – Home</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // Reset score when entering home page
+        localStorage.setItem("score", 0);
+    </script>
+
+    <style>
+        /* --- CARD FLIP ADD-ON (minimal & non-destructive) --- */
+
+        .flag-card {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flag-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .card-back {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #c2002f;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER / INTRO -->
+    <header>
+        <h1>How Big of a Red Flag Are You?</h1>
+        <p class="subtitle">A Personality Test You Probably Don’t Want the Results Of 🚩</p>
+    </header>
+
+    <section class="intro">
+        <h2>What Even *Is* a Red Flag? 🤔</h2>
+        <p>
+            A <b>red flag</b> is a questionable trait, habit, or behavior  
+            that makes people go,  
+            <i>“Huh… that’s a little suspicious (and maybe irritating).”</i>  
+        </p>
+        <p>
+            Don’t worry — we have some samples. 
+            This quiz will measure just <b>how terrible</b> you truly are.
+            Scroll down for a sample question ⬇️
+        </p>
+
+        <p class="scroll-note">
+            <br>
+            <a href="#samples" class="scroll-link"> Click on the card to reveal a number. Then click the score button that number of times - let's interact Harraway style. ⬇</a>
+        </p>
+    </section>
+
+
+    <!-- SAMPLE CARD QUESTIONS
+         (NOW FLIPPING!) -->
+    <section id="samples" class="question-section">
+        <h2 class="question-title">Sample Questions</h2>
+
+        <div class="card-grid">
+
+            <!-- Sample 1 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="longtextmessage.jpg" alt="">
+                        </div>
+                        <h3>You say I'm fine but proceed to send multiple paragraphs</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">1</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sample 2 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="astrologymen.jpg" alt="">
+                        </div>
+                        <h3>Your astrology sign is your Personality</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">2</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sample 3 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="weball.jpg" alt="">
+                        </div>
+                        <h3>You say "We ball" unironically</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">3</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sample 4 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="beyonce.jpg" alt="">
+                        </div>
+                        <h3>Your red flag is thinking you have no red flags</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">4</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEXT PAGE -->
+    <div class="btn-wrapper">
+        <a href="Question2.html" class="next-btn">Next→</a>
+    </div>
+
+    <!-- JS -->
+    <script>
+        document.querySelectorAll(".flag-card").forEach(card => {
+            card.addEventListener("click", () => {
+                card.classList.toggle("flipped");
+            });
+        });
+
+        // SCORE SYSTEM  
+        function addPoint() {
+            let score = Number(localStorage.getItem("score")) || 0;
+            score++;
+            localStorage.setItem("score", score);
+            document.getElementById("scoreDisplay").innerText = score;
+        }
+
+        // Display score on page load
+        document.getElementById("scoreDisplay").innerText =
+            localStorage.getItem("score") || 0;
+    </script>
+
+</body>
+</html>

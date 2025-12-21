@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+   <style>
+    #veil {
+      position: fixed;
+      inset: 0;
+      background: black;
+      opacity: 1;
+      pointer-events: all;
+      z-index: 9999;
+    }
+  </style>
+  <script>
+    function aim() {
+      window.location.href = 'aim.html';
+    }
+     window.addEventListener('load', () => {
+      const veil = document.getElementById('veil');
+      veil.addEventListener('click', () => {
+        const audio = document.getElementById('ghostsound');
+        audio.muted = false;
+        audio.play();
+        veil.style.opacity = '0';
+        veil.style.pointerEvents = 'none'
+      }, { once: true });
+    });
+  </script>
+</head>
+<body class="windows">
+    <div id="veil">  
+   <audio id="ghostsound" src="audio/windowsxp_on.mp3" autoplay muted></audio>
+  </div>
+  <header>
+  </header>
+  <main class="content">
+      <div class="highlight , icons" onclick="aim()">
+        <img src="images/aim.png">
+        <p>Aim</p>
+      </div>
+      <div class="icons">
+        <img src="images/computer.png">
+        <p>My computer</p>
+      </div>
+      <div class="icons">
+        <img src="images/files.png">
+        <p>Files</p>
+      </div>
+      <div class="icons">
+        <img src="images/ie.png">
+        <p>Internet Explorer</p>
+      </div>
+      <div class="icons">
+        <img src="images/recycling.png">
+        <p>Recycling</p>
+      </div>
+      <div class="icons">
+        <img src="images/solitaire.png">
+        <p>Solitaire</p>
+      </div>
+  </main>
+  <footer>
+    <div class="taskbar">
+      <div class="left">
+        <img src="images/left_taskbar.png">
+      </div>
+      <div class="middle">
+        <img src="images/middle_taskbar.png">
+      </div>
+      <div class="right">
+        <img src="images/right_taskbar.png">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

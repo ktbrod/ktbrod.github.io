@@ -1,0 +1,509 @@
+  @import url('https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Henny+Penny&display=swap');
+
+  html {
+      box-sizing: border-box;
+      
+  }
+
+  #jstest {
+      background: transparent;
+      padding: 10px 10px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      position: absolute;
+      font-size: 35pt;
+      z-index: 10;
+  }
+
+/* Ripple animation container */
+#jstest::before,
+#jstest::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: ripple 2s infinite ease-out;
+}
+
+#jstest::after {
+    animation-delay: 1s; /* Second ripple starts halfway through */
+}
+
+@keyframes ripple {
+    0% {
+        width: 60px;
+        height: 60px;
+        opacity: 1;
+        border-width: 6px;
+    }
+    50% {
+        width: 120px;
+        height: 120px;
+        opacity: 0.5;
+        border-width: 5px;
+    }
+    100% {
+        width: 180px;
+        height: 180px;
+        opacity: 0;
+        border-width: 3px;
+    }
+}
+
+/* Pixelated effect for retro look */
+#jstest::before,
+#jstest::after {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+#frogcontainer {
+    border-radius: 30px;
+    background: linear-gradient(to bottom right, #ffda5f, #f9376b);
+    margin: 0 auto 100px;
+    position: relative;
+    width: 800px;
+    height: 500px;
+    padding: 25px;
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 218, 95, 0.4),
+        0 8px 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Inner aqua background */
+#frogcontainer::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    bottom: 25px;
+     background: radial-gradient(circle at center, #35e0f6, #068a8f);
+    overflow: hidden;
+    border-radius: 15px;
+    z-index: 0;
+}
+
+/* Individual water waves - subtle ripples */
+.water-wave {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    animation: water-ripple 4s ease-out infinite;
+}
+
+.water-wave:nth-child(1) {
+    top: 30%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.water-wave:nth-child(2) {
+    top: 60%;
+    left: 70%;
+    animation-delay: 1.5s;
+}
+
+.water-wave:nth-child(3) {
+    top: 40%;
+    left: 45%;
+    animation-delay: 3s;
+}
+
+.water-wave:nth-child(4) {
+    top: 75%;
+    left: 25%;
+    animation-delay: 2s;
+}
+
+.water-wave:nth-child(5) {
+    top: 30%;
+    left: 80%;
+    animation-delay: 3.5s;
+}
+
+@keyframes water-ripple {
+    0% {
+        width: 20px;
+        height: 20px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.4;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
+}
+
+.corner-decoration {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 2;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+  .h1 {
+      font-family: "Henny Penny", system-ui;
+      font-weight: 400;
+      font-style: normal;
+      color: rgb(12, 110, 5)
+  }
+
+  .Fugaz-One {
+      font-family: "Fugaz One", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+  }
+
+  a {
+      text-decoration: none;
+  }
+
+  h1 {
+      font-family: "Henny Penny", cursive;
+      font-size: 72px;
+      background: linear-gradient(to bottom, #2ef538, #0a9128);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin: 20px 0;
+      text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  button {
+      border: solid .25em transparent;
+      padding: 1em 1.5em;
+      border-radius: 9em;
+      margin-bottom: 5px;
+      background: linear-gradient(to right bottom, var(--slist)) border-box;
+      font-family: "Henny Penny", cursive;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+  }
+
+  button::after {
+      content: attr(data-ico);
+  }
+
+  button:hover {
+      opacity: 0.9;
+      background: linear-gradient(to right bottom, #0de517, #076020) border-box;
+  }
+
+  #displayclicks {
+      transition: transform 0.2s ease;
+      border: solid .25em transparent;
+      padding: 0.3em 0.8em;
+      margin-bottom: 10px;
+      border-radius: 9em;
+      background: linear-gradient(to right bottom, #ffda5f, #f9376b) border-box;
+      font-family: "Fugaz One", sans-serif;
+      font-size: 35pt;
+      text-align: center;
+      color: white;
+      line-height: 1;
+      display: inline-block;
+      margin-right: 10px;
+      margin-left: 10px
+  }
+
+  .controls-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      gap: 20px;
+  }
+
+  .controls-container a {
+      text-decoration: none;
+  }
+
+  #timer {
+      border: solid .25em transparent;
+      padding: 0.3em 0.8em;
+      margin-bottom: 10px;
+      border-radius: 9em;
+      background: linear-gradient(to right bottom, #e70a0e, #f237f9) border-box;
+      font-family: "Fugaz One", sans-serif;
+      font-size: 35pt;
+      text-align: center;
+      color: white;
+      line-height: 1;
+      display: inline-block;
+  }
+
+  #gameOverDialog {
+    background: linear-gradient(to bottom left, #ffda5f, #f9376b);
+    padding: 40px 60px;
+    border-radius: 20px;
+    border: 5px solid #076020;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+#gameOverDialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#gameOverDialog h2 {
+    font-family: "Fugaz One", cursive;
+    font-size: 48px;
+    color: white;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+#gameOverDialog p {
+    font-family: "Fugaz One", sans-serif;
+    font-size: 36px;
+    color: white;
+    margin: 20px 0;
+}
+
+#gameOverDialog button {
+    font-size: 24px;
+    margin: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+.footer {
+  position: fixed;
+  display: flex;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #5d1ee7;
+  color: white;
+  padding: 15px 30px;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Fugaz-One";
+    font-size: 14px;
+}
+
+.footer p {
+    margin: 0;
+    flex: 1;  /* Each paragraph takes equal space */
+}
+
+.footer p:nth-child(1) {
+    text-align: left;
+}
+
+.footer p:nth-child(2) {
+    text-align: center;
+}
+
+.footer p:nth-child(3) {  /* Fixed typo from .footert */
+    text-align: right;
+}
+
+/* Mobile responsive footer */
+@media screen and (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .footer p {
+        text-align: center !important;
+        margin: 5px 0;
+    }
+}
+
+.top-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.top-buttons a {
+    text-decoration: none;
+}
+
+/* Mobile adjustment */
+@media screen and (max-width: 768px) {
+    .top-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .top-buttons button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+#bonusTurtle {
+    background: transparent;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    font-size: 35pt;
+    z-index: 10;
+}
+
+/* Bonus turtle sparkle animation */
+#bonusTurtle::before,
+#bonusTurtle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgba(255, 215, 0, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 1.5s infinite ease-out;
+}
+
+#bonusTurtle::after {
+    animation-delay: 0.75s;
+}
+
+@keyframes sparkle {
+    0% {
+        width: 50px;
+        height: 50px;
+        opacity: 1;
+        border-width: 4px;
+    }
+    50% {
+        width: 90px;
+        height: 90px;
+        opacity: 0.5;
+        border-width: 3px;
+    }
+    100% {
+        width: 130px;
+        height: 130px;
+        opacity: 0;
+        border-width: 2px;
+    }
+}
+
+#rulesDialog {
+    background: linear-gradient(to bottom right, #ffda5f, #f9376b);
+    padding: 40px 50px;
+    border-radius: 20px;
+    border: 5px solid #076020;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+}
+
+#rulesDialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#rulesDialog h2 {
+    font-family: "Fugaz One", cursive;
+    font-size: 36px;
+    color: white;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.rules-content {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.rules-content p {
+    font-family: "Fugaz One", sans-serif;
+    font-size: 18px;
+    color: #333;
+    margin: 15px 0 5px 0;
+}
+
+.rules-content ul {
+    font-family: "Fugaz One";
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0 15px 20px;
+    line-height: 1.6;
+}
+
+.rules-content li {
+    margin: 8px 0;
+}
+
+.rules-content strong {
+    color: #076020;
+}
+
+#rulesDialog button {
+    font-size: 24px;
+    width: 100%;
+}
+
+#gameboard {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(circle at center, #4dd0e1, #006064);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.pond-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none; /* ✅ IMPORTANT */
+    z-index: 1;
+}
+
+.Rocks, .rock, .lily {
+    position: absolute;
+    opacity: 0.9;
+}
+
+.rock-left {
+    left: -180px;
+    bottom: -100px;
+    width: 500px;
+}
+
+.lily-bottom {
+    right: -20px;
+    bottom: -30px;
+    width: 200px;
+}
+
+.rock-top {
+    right: -280px;
+    top: -220px;
+    width: 500px;
+}
+
+.lily-top {
+    left: 110px;
+    top: -10px;
+    transform: translateX(-50%);
+    width: 200px;
+}

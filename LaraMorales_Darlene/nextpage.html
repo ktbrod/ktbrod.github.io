@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Question One</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+  <script>
+    
+    function addOption(optionNumber) {
+      
+      let clicks = JSON.parse(localStorage.getItem("clicks")) || {option1:0, option2:0, option3:0, option4:0};
+      
+      
+      clicks["option" + optionNumber]++;
+      
+      
+      localStorage.setItem("clicks", JSON.stringify(clicks));
+      
+      
+      window.location.href = "page3.html";
+    }
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #c8f7c5;
+      font-family: 'Fredoka One', cursive;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .question-box {
+      background-color: rgb(17, 75, 42);
+      border: 5px solid #ffffff;
+      border-radius: 20px;
+      padding: 40px 60px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      max-width: 700px;
+    }
+
+    h1 {
+      color: #2c8a4b;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+    }
+
+    .question-count {
+      color: white;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .option {
+      display: inline-block;
+      margin: 15px;
+      cursor: pointer;
+    }
+
+    .option img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 4px solid #c6ec66;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .option img:hover {
+      transform: scale(1.1);
+      border-color: #ffe643;
+    }
+
+    .option p {
+      color: white;
+      margin-top: 10px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="question-box">
+    <div class="question-count">question 1 of 4</div>
+    <h1>Question One</h1>
+    <p>Which one of my stuffed animals would you pick to sleep with at a sleepover?</p>
+
+    <div class="option" onclick="addOption(1)">
+      <img src="capy.png" alt="Skeleton Capybara">
+      <p>Skeleton Capybara</p>
+    </div>
+
+    <div class="option" onclick="addOption(2)">
+      <img src="good.png" alt="Good in Bed Pillow">
+      <p>Good in Bed Pillow</p>
+    </div>
+
+    <div class="option" onclick="addOption(3)">
+      <img src="cat.png" alt="Patriotic Cat">
+      <p>Patriotic Cat</p>
+    </div>
+
+    <div class="option" onclick="addOption(4)">
+      <img src="banana.png" alt="Banana">
+      <p>Banana</p>
+    </div>
+  </div>
+</body>
+</html>

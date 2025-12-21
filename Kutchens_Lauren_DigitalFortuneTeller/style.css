@@ -1,0 +1,144 @@
+/*Additional skill #5: google fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Russo+One&family=Poppins:wght@400;600&display=swap');
+
+body {
+  background-color: #2e004f; 
+  color: #ffff66;            
+  font-size: 22px;
+  font-family: 'Russo One', sans-serif;
+  text-align: center;
+  padding-top: 100px;
+  margin: 0;
+
+  /*flexbox layout*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+h1,h2,h3 {
+  font-family: 'Pacifico', cursive;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 8px #ffff66, 0 0 12px #ffcc00;
+
+}
+
+
+button {
+  background-color: #ffff66;
+  color: #2e004f;
+  border: none;
+  padding: 20px 32px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  /* Additional skill #1: CSS transition for the hover effect*/
+  transition: transform 0.2s, background-color 0.2s;
+  margin: 20px;
+}
+
+/* Additional skill #1: CSS transition for the hover effect*/
+button:hover {
+  background-color: #ffff66;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px #ffff66, 0 0 20px #ff009d;
+}
+
+textarea {
+      width: 70%;
+      max-width: 600px;
+      height: 150px;
+      font-size: 18px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid white;
+      background-color: #3b0066;
+      color: #ffff66;
+      resize: none;
+      margin: 20px 0;;
+      
+    }
+
+    textarea::placeholder {
+      color: #cccc99;
+    }
+
+.crystal-ball {
+  display: block;               
+  margin: 50px auto;          
+  width: 250px;                  
+  height: auto;  
+  /* Additional skill #2: glow effect */
+  animation: glow 3s infinite ease-in-out;              
+  filter: drop-shadow(0 0 20px #ffff66);
+}
+
+/* Additional skill #2: glow effect */
+@keyframes glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 20px #ffff66); 
+  }
+  50% { 
+    filter: drop-shadow(0 0 35px #f2fe0b); 
+  }
+}
+
+#displayQuestion, #displayFortune {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid #ffffcc;
+  border-radius: 12px;
+  padding: 20px;
+  width: 80%;
+  max-width: 700px;
+  margin: 20px auto;
+  white-space: pre-line;
+  line-height: 1.6;
+  box-shadow: 0 0 20px #ff66ff33;
+}
+
+.question-text {
+  font-size: 22px;
+  color: #ffffcc;
+  text-shadow: 0 0 10px #ff66ff;
+  margin-bottom: 20px;
+  white-space: pre-line;
+  max-width: 12000px;
+}
+
+#userQuestion {
+  text-align: center; 
+}
+
+canvas {
+  display: block;
+  margin: 30px auto;
+  border-radius: 15px;
+  background: radial-gradient(ellipse at center, #1a0033 0%, #000 80%);
+  box-shadow: 0 0 25px 8px rgba(180, 100, 255, 0.4);
+
+}
+
+/*Grid layout for buttons on page 4*/
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/*Making both buttons the same size and overriding the original*/
+.button-container button {
+  width: 260px !important;
+  height: 70px !important;
+  padding: 10px !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+  white-space: normal;
+  font-size: 20px;
+  line-height: 1.2;
+}

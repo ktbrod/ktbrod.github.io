@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Connection Playlist</title>
+  <script 
+  src ="script.js"></script>
+    </script>
+<link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ee83c7, #b40057); 
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      font-family: 'Fredoka One', cursive;
+    } 
+
+    h1 {
+      font-size: 3.5rem;
+      color: #f65415;
+      text-shadow: 2px 2px 6px #f4029753, 2px 2px 10px rgba(255, 255, 255, 0.5);
+      margin-bottom: 40px;
+      z-index: 2;
+    }
+
+    .btn {
+      background-color: #e975bc;
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 30px;
+      padding: 15px 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      margin: 10px;
+      z-index: 2;
+    }
+
+    .btn:hover {
+      background-color: #ef7d13;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgb(241, 237, 237);
+    }
+
+    .star {
+      position: absolute;
+      width: 50px;
+      opacity: 0.8;
+      z-index: 1;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+   
+  </style>
+</head>
+
+<body>
+
+  <h1>Bedroom Playlist</h1>
+
+  <button id="scoreBtn" class="btn" onclick="keepScore()">click to score</button>
+  <button class="btn" onclick="window.location.href='nextpage.html'">start</button>
+
+  
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" class="star" style="top: 10%; left: 5%;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" class="star" style="bottom: 15%; right: 10%;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" class="star" style="top: 25%; right: 25%;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" class="star" style="bottom: 20%; left: 15%;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" class="star" style="top: 50%; left: 40%;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" class="star" style="top: 70%; right: 30%;">
+
+ <script>
+  
+  localStorage.setItem("score", 0);
+  let x = 0;
+
+
+  document.getElementById("scoreBtn").style.display = "none";
+
+  function keepScore() {
+    x++;
+    localStorage.setItem("score", x);
+    console.log("Score:", x);
+  }
+
+  const stars = document.querySelectorAll('.star');
+
+  setInterval(() => {
+    stars.forEach(star => {
+      const x = Math.random() * 10 - 5;
+      const y = Math.random() * 10 - 5;
+      star.style.transform = `translate(${x}px, ${y}px) scale(${1 + Math.random() * 0.2})`;
+    });
+  }, 3000);
+</script>
+
+</body>
+</html>
+<!--extra skill: gradient with the pink and hover over button changing color-->

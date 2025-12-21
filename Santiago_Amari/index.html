@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Windows xp login</title>
+  <style>
+    #veil {
+      position: fixed;
+      inset: 0;
+      background: black;
+      opacity: 1;
+      pointer-events: all;
+      z-index: 9999;
+    }
+  </style>
+  <script>
+    function poweroff() {
+    const overlay = document.getElementById('overlay');
+    overlay.style.pointerEvents = 'auto'; 
+    overlay.style.opacity = '1'; 
+    }
+    function windowsscreen() {
+      window.location.href = 'windows-screen.html';
+    }
+    window.addEventListener('load', () => {
+      const veil = document.getElementById('veil');
+      veil.addEventListener('click', () => {
+        const audio = document.getElementById('ghostsound');
+        audio.muted = false;
+        audio.play();
+        veil.style.opacity = '0';
+        veil.style.pointerEvents = 'none'
+      }, { once: true });
+    });
+  </script>
+</head>
+<body>
+  <div id="veil">  
+   <audio id="ghostsound" src="audio/startup.m4a" autoplay muted></audio>
+  </div>
+  <header class="top-margin">
+  </header>
+  <main class="container">
+    <div id="overlay"></div>
+    <div class="container">
+      <div class="left-side">
+        <h1 class="logo">Microsoft Windows xp</h1>
+        <p class="instruction">To begin, click your user name</p>
+      </div>
+      <div class="right-side">
+        <div class="users">
+          <div class="user">
+            <img src="images/duck_icon.jpg" alt="Administrator" onclick="windowsscreen()">
+            <p>Administrator</p>
+          </div>
+          <div class="user">
+            <img src="images/chess_icon.jpg" alt="Tim">
+            <p>Tim</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="bottom-margin">
+    <button class="power-btn" type="button" onclick="poweroff()">
+    </button>
+    <p>Turn off computer</p>
+  </footer>
+</body>
+</html>

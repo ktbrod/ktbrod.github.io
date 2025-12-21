@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
+    <title>Desk</title>
+</head>
+
+<body>
+    <div class = "container">
+        <div class = "top" id="index-top">
+            <button id="how-to-button" onclick="how_to_page()">?</button>
+            <h1 class="title">Viewports</h1>
+        </div>
+  
+        <div class = "game-page">  
+            
+            <div id="viewport">
+                <div id = 'img-wrap'>
+                    <img id="background-image" src="images/viewport-background.png" alt="viewport-background">
+                    <div id="area-sensor" class="area-sensor"></div>
+                </div>
+               
+            </div>
+            <div id="target-frame"></div>
+            
+        </div>
+
+        <div class="notebook-page" id="game-instructions" style="display: none;" >
+                <h2>Objective</h2>
+                <h3>Viewports is an exploration based game. There are no points, and no time limit. Simply navigate to each part of the desk, and discover what you can about the person who inhabits it through the images provided.</h3>
+                <ul>
+                    <li>The aim of Viewports is to position certain objects within a certain sized game box frame. These items are marked with a slight gray overlay.</li>
+                    <li>When you have the object positioned properly within the viewport, you will be redirected to a page where you may interact with the objects (i.e reading the contents of the pages)</li>
+                </ul>
+                <h2>How to Play:</h2>
+                <ul>
+                    <li>Use the bottom right corner of the viewport to resize to the target frame (the dashed white box). When your viewport is the right size the target frame will pulse blue and you will no longer be able to resize.</li>
+                    <li>Click and drag on the image to move it around within the viewport. When you have the image object positioned properly within your viewport, its overlay will briefly flash blue before navigating you to the next page.</li>
+                    <li>When on the next page, follow the instructions in the footer. In order to be redirected back to the home page, and continue your exploration, you must interact with all available buttons
+                        <ul>
+                            <li>Note that there is a 3 second delay before navigation</li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="exit-button" style="font-size: 18px;" onclick="close_how_to_page()">Close</button>
+            </div>
+        
+        <div class = "bottom" id="index-bottom">
+            <p class ="instructions" id="index-instructions">Resize the viewport to the proper size and scroll to find the corresponding frame.</p>
+            <button id = "reset-button" onclick="reset()">Reset viewports</button>
+        </div>
+    </div>
+    
+
+    <script>
+        function how_to_page(){
+            const how_to = document.getElementById('game-instructions');
+            how_to.style.display = 'flex';
+        }
+
+        function close_how_to_page(){
+            const how_to = document.getElementById('game-instructions');
+            how_to.style.display = 'none';
+        }
+        
+        function reset(){
+            localStorage.clear();
+            // additional skill! setTimeout is used throughout viewports to stall certain functions for an amount of time, this allows the DOM to reload so the user can see changes
+            setTimeout(() =>{
+                window.location.reload();
+                unfreezeViewport();
+            }, 0);
+        
+        }
+
+        function createAlignController({ targetId = 'area-sensor', rootId = 'viewport', url, stableMs = 200 }) {
+        const area = document.getElementById(targetId);
+        const root = document.getElementById(rootId);
+        if (!area) throw new Error('target not found');
+
+        let navigated = false;
+        let stableTimer = null;
+
+        const io = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+            if (navigated) break;
+
+            const fullyContained = entry.isIntersecting && entry.intersectionRatio >= 0.999;
+            if (fullyContained) {
+                if (stableMs > 0) {
+                if (stableTimer == null) {
+                    stableTimer = setTimeout(() => {
+                    if (navigated) return;
+                    navigated = true;
+                    area.style.backgroundColor = 'blue';
+                    io.disconnect();
+                    window.location.href = url;
+                    }, stableMs);
+                }
+                } else {
+                navigated = true;
+                area.style.backgroundColor = 'blue';
+                io.disconnect();
+                window.location.href = url;
+                }
+            } else {
+                if (stableTimer) {
+                clearTimeout(stableTimer);
+                stableTimer = null;
+                }
+            }
+            }
+        }, { root, rootMargin: '0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+        io.observe(area);
+
+        return {
+            disconnect() {
+            if (stableTimer) {
+                clearTimeout(stableTimer);
+                stableTimer = null;
+            }
+            io.disconnect();
+            }
+        };
+        }
+
+
+        function viewportAlign(){
+            const viewport = document.getElementById('viewport');
+            const target_frame = document.getElementById('target-frame');
+            const TOLERANCE = 20;
+            // debounce so repeated resize events don't retrigger animation spam
+            let debounceTimer = null;
+            const DEBOUNCE_MS = 80;
+            let animating = false;
+            function rectSize(elem) {
+                const r = elem.getBoundingClientRect();
+                // use width/height from getBoundingClientRect to include transforms/layout
+                return { w: r.width, h: r.height };
+                //gets width and height of a passed element
+            }
+
+            function sizesEqual(a, b, tol = TOLERANCE) { //returns trues if the two elements are within a tolerance of each other
+                if(Math.abs(a.w - b.w) <= tol && Math.abs(a.h - b.h) <= tol){
+                // Lock the viewport size to the target frame
+                    viewport.style.width = b.w + 'px';
+                    viewport.style.height = b.h + 'px';
+
+                    // Prevent further resizing by disconnecting observers
+                    ro.disconnect();
+                    window.removeEventListener('resize', debouncedCheck);
+
+                    // Optionally force CSS so user interaction can't change it
+                    viewport.style.resize = 'none';   // disables manual resize handles
+                    viewport.style.overflow = 'hidden';
+                    return true;
+                }
+                else{
+                    return false;
+                } // prevents scrollbars changing size
+            }
+
+            function playMatchAnimation(shouldAnimate) {
+                if(shouldAnimate){
+                    if(!target_frame.classList.contains('correct-size-animate')){
+                        target_frame.classList.add('correct-size-animate');
+                    }
+                } else{
+                    if(target_frame.classList.contains('correct-size-animate')){
+                        target_frame.classList.remove('correct-size-animate');
+                    }
+                }
+            }
+
+
+            function checkAndMaybeAnimate() {
+                const a = rectSize(viewport);
+                const b = rectSize(target_frame);
+                playMatchAnimation(sizesEqual(a,b))
+
+            }
+
+            // Debounced wrapper so rapid changes don't spam everything
+            function debouncedCheck() {
+                if (debounceTimer) clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                checkAndMaybeAnimate();
+                debounceTimer = null;
+                }, DEBOUNCE_MS);
+            }
+
+            // Observe size changes for both elements
+            const ro = new ResizeObserver(debouncedCheck);
+            ro.observe(viewport);
+            ro.observe(target_frame);
+
+            // Also listen to window resize and orientation changes
+            window.addEventListener('resize', debouncedCheck);
+            //window.addEventListener('orientationchange', debouncedCheck);
+
+            // initial check once set up
+            debouncedCheck();
+
+            // return a cleanup function in case the caller wants to stop observing
+            return function cleanupGameplay() {
+                ro.disconnect();
+                window.removeEventListener('resize', debouncedCheck);
+                //window.removeEventListener('orientationchange', debouncedCheck);
+            };
+
+        }
+
+        function unfreezeViewport() {
+            const viewport = document.getElementById('viewport');
+
+            // Remove the fixed size so it can respond to layout again
+            viewport.style.width = '50px';
+            viewport.style.height = '50px';
+
+            // Restore resize behavior if you disabled it
+            viewport.style.resize = '';
+            viewport.style.overflow = '';
+
+            // Re‑attach observers and listeners
+            ro.observe(viewport);
+            ro.observe(target_frame);
+            window.addEventListener('resize', debouncedCheck);
+        }
+
+        (function () {
+            const viewport = document.getElementById('viewport');
+            const wrap = document.getElementById('img-wrap');
+            const img = document.getElementById('background-image');
+
+            // State: translation and dragging
+            let tx = 0, ty = 0;
+            let dragging = false;
+            let startX = 0, startY = 0;
+            let startTx = 0, startTy = 0;
+
+
+            function updateTransform() {
+                wrap.style.transform = `translate(${tx}px, ${ty}px)`;
+            }
+
+            function getImageDisplayedSize() {
+                const r = img.getBoundingClientRect();
+                return { width: r.width, height: r.height };
+            }
+
+            function clampTranslation() {
+                const vpRect = viewport.getBoundingClientRect();
+                const ds = getImageDisplayedSize();
+                const vw = vpRect.width, vh = vpRect.height;
+
+                const minTx = Math.min(0, vw - ds.width);
+                const maxTx = 0;
+                const minTy = Math.min(0, vh - ds.height);
+                const maxTy = 0;
+
+                if (ds.width < vw) {
+                tx = (vw - ds.width) / 2;
+                } else {
+                tx = Math.max(minTx, Math.min(maxTx, tx));
+                }
+
+                if (ds.height < vh) {
+                ty = (vh - ds.height) / 2;
+                } else {
+                ty = Math.max(minTy, Math.min(maxTy, ty));
+                }
+            }
+
+            // Pointer events for drag
+            wrap.addEventListener('pointerdown', (e) => {
+                if(e.button && e.button !== 0) return;
+                e.preventDefault();
+                try {wrap.setPointerCapture(e.pointerId); } catch (_) {}
+                dragging = true;
+                wrap.classList.add('dragging');
+                startX = e.clientX;
+                startY = e.clientY;
+                startTx = tx;
+                startTy = ty;
+            });
+
+            window.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                tx = startTx + dx;
+                ty = startTy + dy;
+                clampTranslation();
+                updateTransform();
+            }, {passive: true});
+
+            window.addEventListener('pointerup', (e) => {
+                if (!dragging) return;
+                dragging = false;
+                wrap.classList.remove('dragging');
+                try { img.releasePointerCapture(e.pointerId); } catch (_) {}
+            });
+
+            window.addEventListener('pointercancel', () => {
+                dragging = false;
+                wrap.classList.remove('dragging');
+            });
+
+            // Keep wrapper sized to the displayed image; re-clamp on layout changes
+            function syncWrapSizeAndInit() {
+                const r = img.getBoundingClientRect();
+                // ensure wrap has the same displayed size (so translate moves image correctly)
+                wrap.style.width = `${r.width}px`;
+                wrap.style.height = `${r.height}px`;
+                clampTranslation();
+                updateTransform();
+            }
+
+            const ro = new ResizeObserver(() => {
+                // image or viewport resized: re-sync and clamp
+                syncWrapSizeAndInit();
+            });
+            ro.observe(viewport);
+            ro.observe(img);
+
+            function initWhenReady() {
+                // if image loaded use its displayed size; otherwise wait for load
+                if (img.complete && img.naturalWidth !== 0) {
+                requestAnimationFrame(syncWrapSizeAndInit);
+                } else {
+                img.addEventListener('load', () => requestAnimationFrame(syncWrapSizeAndInit), { once: true });
+                img.addEventListener('error', () => requestAnimationFrame(syncWrapSizeAndInit), { once: true });
+                }
+            }
+
+            initWhenReady();
+
+            // optional cleanup helper:
+            window._cleanupPanWrapperExample = () => {
+                ro.disconnect();
+                window.removeEventListener('pointermove', this);
+                window.removeEventListener('pointerup', this);
+            };
+        })();
+
+        
+        function isVisited(key) { return localStorage.getItem(key) === 'true'; }
+
+       
+        
+        let agendaCtrl = null;
+        let notebooksCtrl = null;
+        let trinketCtrl = null;
+
+        // additional skill! LOGIC TO SWITCH BETWEEN GAME PAGES. uses localStorage to flag if a page has been visited and creates controllers to deal with viewport alignment logic for every phase of the game
+        document.addEventListener('DOMContentLoaded', () => {
+            viewportAlign();
+            const target = document.getElementById("target-frame");
+            const sensor = document.getElementById("area-sensor");
+            if(!isVisited('notebook_visited')){
+                notebooksCtrl = createAlignController({ url: 'notebooks.html' });
+                //unfreezeViewport();
+            }
+            else{
+                if(notebooksCtrl){notebooksCtrl.disconnect()};
+                //change the
+                // target 
+                target.style.height = '180px';
+                target.style.width = '260px';
+                sensor.style.left = '23%';
+                sensor.style.bottom = '5%';
+                sensor.style.height = '160px';
+                sensor.style.width = '240px';
+                if(!isVisited('agenda_visited')){
+                    agendaCtrl = createAlignController({ url: 'agenda.html' });
+                    unfreezeViewport();
+                }
+                else{
+                    if(agendaCtrl){agendaCtrl.disconnect()};
+                    target.style.height = '100px';
+                    target.style.width = '100px';
+                    sensor.style.height = '80px';
+                    sensor.style.width = '80px';
+                    sensor.style.bottom = '45%';
+                    sensor.style.left = '55%';
+                    //change for trinket
+                    if(!isVisited('trinket_visited')){
+                        trinketCtrl = createAlignController({url: 'trinket.html'});
+                    }
+                    else{
+                        if(trinketCtrl){trinketCtrl.disconnect()};
+                    }
+                }
+                
+            }
+           
+        });   
+
+        
+
+    </script>
+</body>
+
+</html>

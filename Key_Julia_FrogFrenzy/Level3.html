@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frog Frenzy</title>
+    <link rel="stylesheet" href="styles.css">
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Fugaz+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(139, 63, 193);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Frog Frenzy</h1>
+    <div class="controls-container">
+        <a href="Levels.html">
+            <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Levels</button>
+        </a>
+        <a href="HomePage.html">
+            <button data-ico="🐸" style="--slist: #ffda5f, #f9376b;">Home Page</button>
+        </a>
+        <div id="displayclicks">0</div>
+        <div id="timer">25</div>
+        <button id="muteBtn" data-ico="🔊" style="--slist: #ffda5f, #f9376b;">
+            Music
+        </button>
+        <button onclick="document.getElementById('rulesDialog').showModal()" data-ico="📋"
+            style="--slist: #ffda5f, #f9376b;">Rules</button>
+    </div>
+    <div id="frogcontainer">
+        <button id="jstest">🐸</button>
+        <div class="pond-decor">
+        <img src="CartoonRocksForFrog1.png" class="Rocks rock-left">
+        <img src="CartoonRocksForFrog2.png" class="rock rock-top">
+        <img src="LilyPadsForFrog1.png" class="lily lily-top">
+        <img src="LilyPadsForFrog5.png" class="lily lily-bottom">
+    </div>
+    </div>
+
+    <audio id="gameMusic" preload="auto">
+        <source src="Level3Music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Load player data at start of level
+        let playerData = JSON.parse(localStorage.getItem('playerData'));
+        if (!playerData) {
+            // If no player data, redirect to name entry
+            window.location.href = 'PlayerName.html';
+        }
+        let x = 0;
+        let timeLeft = 25;
+        let timerInterval;
+        let gameActive = false;
+        let gameStarted = false;
+        const PASSING_SCORE = 30;
+        const CURRENT_LEVEL = 3;
+
+        let audio;
+        let audioContext;
+        let source;
+        let isPlaying = false;
+        let gameMusic = document.getElementById("gameMusic");
+        let musicPlaying = false;
+        let musicMuted = false;
+
+        const CLICK_SOUND_SRC = "coin02.wav";
+        const muteBtn = document.getElementById("muteBtn");
+        muteBtn.addEventListener("click", toggleMusic);
+
+        function keepScore() {
+            x += 1;
+            document.getElementById("displayclicks").innerText = x;
+        }
+
+        const jstest = document.getElementById("jstest");
+        const container = document.getElementById("frogcontainer");
+        const timerDisplay = document.getElementById("timer");
+
+        window.addEventListener('load', () => {
+            centerFrog();
+        });
+          window.addEventListener('DOMContentLoaded', () => {
+            const rulesDialog = document.getElementById("rulesDialog");
+            const closeRulesBtn = document.getElementById("closeRulesBtn");
+
+            closeRulesBtn.addEventListener("click", () => {
+                rulesDialog.close();
+            });
+        });
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClickSound() {
+            const sfx = new Audio("coin02.wav");
+            sfx.volume = 0.6;
+            sfx.play();
+        }
+
+        function startMusic() {
+            initAudio();
+            audioContext.resume();
+            // Create audio element
+            audio = new Audio("Level3Music.mp3"); // Change filename for each level
+            audio.loop = true;
+            audio.volume = 1.0; // Adjust volume (0.0 to 1.0)
+
+            // Create media source
+            source = audioContext.createMediaElementSource(audio);
+            source.connect(audioContext.destination);
+
+            audio.play();
+            isPlaying = true;
+        }
+
+        function stopMusic() {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+                isPlaying = false;
+            }
+        }
+
+        function updateMusicSpeed() {
+            if (!musicPlaying) return;
+
+            const startTime = 25; // total level time
+            const minRate = 1.0;
+            const maxRate = 1.6;
+
+            const progress = 1 - (timeLeft / startTime);
+
+            // Ease-in curve (quadratic)
+            const eased = progress * progress;
+
+            const playbackRate = minRate + (maxRate - minRate) * eased;
+
+            gameMusic.playbackRate = playbackRate;
+        }
+
+        function toggleMusic() {
+            musicMuted = !musicMuted;
+
+            if (musicMuted) {
+                gameMusic.volume = 0;
+                muteBtn.innerText = "Music Off";
+                muteBtn.setAttribute("data-ico", " 🔇");
+                muteBtn.classList.add("muted"); // ✅ color change
+            } else {
+                gameMusic.volume = 0.9;
+                muteBtn.innerText = "Music On";
+                muteBtn.setAttribute("data-ico", " 🔊");
+                muteBtn.classList.remove("muted"); // ✅ restore color
+            }
+        }
+
+        function startGame() {
+            gameActive = true;
+            gameStarted = true;
+
+            if (!musicPlaying) {
+                gameMusic.currentTime = 0;
+                gameMusic.loop = true;
+                gameMusic.volume = 0.9;
+
+                gameMusic.play().then(() => {
+                    musicPlaying = true;
+                }).catch(err => {
+                    console.log("Music blocked:", err);
+                });
+            }
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = timeLeft;
+
+                updateMusicSpeed();
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+        jstest.addEventListener('click', () => {
+
+            if (!gameStarted) {
+                startGame();
+            }
+
+            if (gameActive) {
+                playClickSound();
+                keepScore();
+                moveFrogRandomly();
+            }
+        });
+
+
+        function endGame() {
+            clearInterval(timerInterval);
+            gameActive = false;
+            jstest.style.display = 'none';
+
+            if (musicPlaying) {
+                gameMusic.pause();
+                gameMusic.currentTime = 0;
+                gameMusic.playbackRate = 1.0;
+                musicPlaying = false;
+            }
+
+            // Save score for this level
+            playerData[`level${CURRENT_LEVEL}`] = x;
+            playerData.totalScore += x;
+            localStorage.setItem('playerData', JSON.stringify(playerData));
+
+            // Unlock next level if player passed
+            if (x >= PASSING_SCORE && playerData.unlockedLevels === CURRENT_LEVEL) {
+                playerData.unlockedLevels = CURRENT_LEVEL + 1;
+                localStorage.setItem('playerData', JSON.stringify(playerData));
+            }
+
+            // Add to leaderboard
+            addToLeaderboard(playerData.name, x, CURRENT_LEVEL);
+
+            document.getElementById('finalScore').innerText = x;
+            if (x >= PASSING_SCORE) {
+                document.getElementById('dialogTitle').innerText = 'Level Complete!';
+                document.getElementById('nextLevelBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('dialogTitle').innerText = 'Game Over!';
+                document.getElementById('nextLevelBtn').style.display = 'none';
+            }
+            document.getElementById('gameOverDialog').showModal();
+            // Show leaderboard button
+            document.getElementById('leaderboardBtn').style.display = 'inline-block';
+
+            document.getElementById('gameOverDialog').showModal();
+        }
+        function addToLeaderboard(playerName, score, level) {
+            // Get existing leaderboard or create new one
+            let leaderboard = JSON.parse(localStorage.getItem(`leaderboard_level${level}`)) || [];
+
+            // Add new score
+            leaderboard.push({
+                name: playerName,
+                score: score,
+                date: new Date().toLocaleDateString()
+            });
+
+            // Sort by score (highest first)
+            leaderboard.sort((a, b) => b.score - a.score);
+
+            // Keep only top 10
+            leaderboard = leaderboard.slice(0, 10);
+
+            // Save back to localStorage
+            localStorage.setItem(`leaderboard_level${level}`, JSON.stringify(leaderboard));
+        }
+
+        function playAgain() {
+            document.getElementById('gameOverDialog').close();
+
+            x = 0;
+            timeLeft = 25;
+            gameStarted = false;
+            document.getElementById("displayclicks").innerText = x;
+            timerDisplay.innerText = timeLeft;
+            jstest.style.display = 'block';
+            centerFrog();
+        }
+        function nextLevel() {
+            if (CURRENT_LEVEL === 3) {
+                window.location.href = "Level4.html";
+            } else if (CURRENT_LEVEL === 4) {
+                window.location.href = "Level5.html";
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'HomePage.html';
+        }
+
+        function centerFrog() {
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+
+            const buttonWidth = jstest.offsetWidth;
+            const buttonHeight = jstest.offsetHeight;
+
+            const centerLeft = (containerWidth - buttonWidth) / 2;
+            const centerTop = (containerHeight - buttonHeight) / 2;
+
+            jstest.style.left = centerLeft + 'px';
+            jstest.style.top = centerTop + 'px';
+        }
+
+        function moveFrogRandomly() {
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+
+            const buttonWidth = jstest.offsetWidth;
+            const buttonHeight = jstest.offsetHeight;
+
+            const padding = 10;
+            const maxLeft = containerWidth - buttonWidth - padding;
+            const maxTop = containerHeight - buttonHeight - padding;
+
+            const randomLeft = Math.random() * (maxLeft - padding) + padding;
+            const randomTop = Math.random() * (maxTop - padding) + padding;
+
+            jstest.style.left = randomLeft + 'px';
+            jstest.style.top = randomTop + 'px';
+        }
+
+        let highScores = [];
+        function loadScores() {
+            const storedScores = localStorage.getItem('gameHighScores');
+            if (storedScores) {
+                highScores = JSON.parse(storedScores);
+            } else {
+                highScores = []; // Initialize if no scores are found
+            }
+        }
+
+        function addScore(newScoreValue, playerName) {
+            const newScoreEntry = { score: newScoreValue, name: playerName, date: new Date().toISOString() };
+            highScores.push(newScoreEntry);
+            // Optional: Sort scores (e.g., highest to lowest)
+            highScores.sort((a, b) => b.score - a.score);
+            // Optional: Limit the number of scores in the array
+            if (highScores.length > 10) { // Keep only top 10 scores
+                highScores = highScores.slice(0, 10);
+            }
+        }
+
+        function saveScores() {
+            localStorage.setItem('gameHighScores', JSON.stringify(highScores));
+        }
+
+        function displayScores() {
+            const scoreboardElement = document.getElementById('scoreboard');
+            scoreboardElement.innerHTML = ''; // Clear previous entries
+
+            highScores.forEach((entry, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${index + 1}. ${entry.name}: ${entry.score}`;
+                scoreboardElement.appendChild(listItem);
+            });
+        }
+        function showLeaderboard() {
+            window.location.href = 'Leaderboard.html';
+        }
+    </script>
+    <div id="overlay"></div>
+    <dialog id="gameOverDialog">
+        <h2 id="dialogTitle">Game Over!</h2>
+        <p>Your Score: <span id="finalScore">0</span></p>
+        <button id="nextLevelBtn" onclick="nextLevel()" data-ico="⭐"
+            style="--slist: #0de517, #076020; display: none;">Next Level</button>
+        <button onclick="playAgain()" data-ico="🐸" style="--slist: #0de517, #076020;">Play Again</button>
+        <button id="leaderboardBtn" onclick="showLeaderboard()" data-ico="🏆"
+            style="--slist: #f9d423, #ff4e50; display: none;">Leaderboard</button>
+        <button onclick="goHome()" data-ico="🏠" style="--slist: #0de517, #076020;">Home</button>
+    </dialog>
+    <div class="footer">
+        <p>
+            Frog Frenzy
+        </p>
+        <p>Created for COMM 150 by Claire Key</p>
+        <p>
+            2025
+        </p>
+    </div>
+    <dialog id="rulesDialog">
+        <h2>🐸 Game Rules 🐸</h2>
+        <div class="rules-content">
+            <p><strong>How to Play:</strong></p>
+            <ul>
+                <li>Click the frog 🐸 to score points</li>
+                <li>Each frog is worth <strong>1 point</strong></li>
+                <li>The timer starts when you click the first frog</li>
+                <li>The frog moves to a new location after each click</li>
+                <li>Score as many points as you can before time runs out!</li>
+            </ul>
+
+            <p><strong>Level 5 Bonus:</strong></p>
+            <ul>
+                <li>Watch for the bonus turtle 🐢 on Level 5</li>
+                <li>Turtles are worth <strong>5 points</strong> but disappear quickly!</li>
+            </ul>
+
+            <p><strong>Progression:</strong></p>
+            <ul>
+                <li>Pass each level to unlock the next one</li>
+                <li style="color: #5d1ee7">
+                    Level 1 Passing Score: 45
+                </li>
+                <li style="color: #5d1ee7">
+                    Level 2 Passing Score: 35
+                </li>
+                <li style="color: #5d1ee7">
+                    Level 3 Passing Score: 30
+                </li>
+                <li style="color: #5d1ee7">
+                    Level 4 Passing Score: 25
+                </li>
+                <li style="color: #5d1ee7">
+                    Level 5 Passing Score: 25
+                </li>
+                <li>Your score is saved to the leaderboard</li>
+            </ul>
+        </div>
+         <button id="closeRulesBtn" data-ico="❌" style="--slist: #0de517, #076020;">Close</button>
+    </dialog>
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Big of a Red Flag Are You? – Home</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <header>
+        <h1> How Red of a flag are you? </h1>
+        <p class="subtitle"></p>
+    </header>
+
+    <section class="intro">
+        <h2>How do you ACTUALLY address your waiter?</h2>
+    </section>
+
+    <!-- ❗ FIX: removed the line that resets score -->
+    <script>
+        /* Do NOT reset score on question pages */
+        /* Leave empty or use this space for page-specific JS */
+    </script>
+
+    <style>
+        /* --- CARD FLIP ADD-ON --- */
+        .flag-card {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flag-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: center;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .card-back {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #c2002f;
+            transform: rotateY(180deg);
+        }
+
+        /* --- SCORE DISPLAY STYLE --- */
+        .score-box {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .score-btn {
+            background: #ba1a1a;
+            color: white;
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .score-btn:hover {
+            background: #fe6d88;
+            transform: translateY(-2px);
+        }
+
+        .score-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SAMPLE CARDS -->
+    <section id="samples" class="question-section">
+        <h2 class="question-title"></h2>
+
+        <div class="card-grid">
+
+            <!-- Sample 1 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="hugging.jpg" alt="">
+                        </div>
+                        <h3>I am extatic to meet the waiter, I would move heaven and earth to be their friend</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">1</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sample 2 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="pleaseandty.jpg" alt="">
+                        </div>
+                        <h3>I conciously say please and thank you to the waiter. I give a standard 20% tip everytime. Being kind to fellow humans is important to me.</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">2</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sample 3 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="customer3.jpg" alt="">
+                        </div>
+                        <h3>I consider myself a normal customer. I don't need to spark convernsation. I sometimes* say please and thank you, but not always. I tip based on how I'm feeling in the moment - the world keeps spinning.</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">3</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sample 4 -->
+            <div class="flag-card">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <div class="img-box">
+                            <img src="rudecustomer.jpg" alt="">
+                        </div>
+                        <h3>I hate waiters, they're the buffer between me and the food. They're always bitchy and entitled. I feel like they judge me for my preferences. On a confident day, I don't tip.</h3>
+                    </div>
+
+                    <div class="card-back">
+                        <span class="card-number">4</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEXT PAGE -->
+    <div class="btn-wrapper">
+        <a href="question11.html" class="next-btn">Next→</a>
+    </div>
+
+    <!-- SCORE UI -->
+    <div class="score-box">
+        Score: <span id="scoreDisplay">0</span>
+        <br>
+        <button class="score-btn" onclick="addPoint()">Score</button>
+    </div>
+
+    <!-- JS -->
+    <script>
+        document.querySelectorAll(".flag-card").forEach(card => {
+            card.addEventListener("click", () => {
+                card.classList.toggle("flipped");
+            });
+        });
+
+        // SCORE SYSTEM  
+        function addPoint() {
+            let score = Number(localStorage.getItem("score")) || 0;
+            score++;
+            localStorage.setItem("score", score);
+            document.getElementById("scoreDisplay").innerText = score;
+        }
+
+        // Display score on page load
+        document.getElementById("scoreDisplay").innerText =
+            localStorage.getItem("score") || 0;
+    </script>
+
+</body>
+</html>

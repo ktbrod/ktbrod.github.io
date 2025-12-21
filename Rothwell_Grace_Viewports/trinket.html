@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
+    <title>Trinket</title>
+</head>
+<body>
+    <div class = "container">
+        <div class="top">
+            <h1 class = "subpage-name" id="subpage-name">A trinket? A totem?</h1>
+        </div>
+        <div class = "game-page" id = "trinkets-gamepage">
+            <button class = "trink-button" id = "trink-button" onclick="trinketInformation()" ></button>
+             <div class = "notebook-page" id ="next-dialogue" style="display: none;">
+                <p class = "notebook-page-text">That's all there is, no more viewports to her world...</p>
+            </div>
+        </div>
+        <div class = "bottom">
+            <p class = "instructions" id = "trinket-instructions">Click on the trinket to discover its signficance.</p>
+        </div>
+    </div>
+
+    <script>
+        function setVisited(key, value) { localStorage.setItem(key, value ? 'true' : 'false'); }
+        const explored = {
+            trinket: false,
+        };
+
+        // optional: persist across reloads
+        const PERSIST_KEY = 'tExplored';
+        function loadPersisted() {
+            try {
+            const json = localStorage.getItem(PERSIST_KEY);
+            if (json) Object.assign(explored, JSON.parse(json));
+            } catch (e) { /* ignore */ }
+        }
+        function persist() {
+            try { localStorage.setItem(PERSIST_KEY, JSON.stringify(explored)); } catch (e) {}
+        }
+
+        function markExplored(t) {
+            if (!['trinket'].includes(t)) return;
+            if (explored[t]) return; // already counted
+            explored[t] = true;
+            persist();
+            //updateExploredUI(color);
+            checkAllExplored();
+        }
+
+        function checkAllExplored() {
+            const all = explored.trinket;
+            if (all) onAllExplored();
+        }
+
+        function onAllExplored() {
+            const next_dialogue = document.getElementById('next-dialogue');
+            const game_page = document.getElementById('trinkets-gamepage');
+            const subpage_name = document.getElementById('subpage-name');
+            const instruction = document.getElementById('trinket-instructions');
+
+            const PAGE_MS = 3000;
+            
+            pageTimer = setTimeout(() =>{
+                game_page.style.background = 'black';
+                subpage_name.style.color = 'black';
+                instruction.style.display = 'none';
+                next_dialogue.style.display = 'block';
+                localStorage.setItem('agenda_visited', 'true');
+                setTimeout(() =>{
+                    window.location.href = 'endGame.html'; //CONSIDER TRAVELING TO FINAL PAGE
+                }, PAGE_MS);
+            }, PAGE_MS);
+
+
+            // 3) fire a custom event so other code can react
+            // const evt = new CustomEvent('notebooks:allExplored', { detail: { explored: {...explored} }});
+            // document.dispatchEvent(evt);
+        }
+
+
+
+
+
+        function trinketInformation(){
+            const dialogue = document.getElementById('trinket-instructions')
+            const trink_button = document.getElementById("trink-button");
+            trink_button.style.animation = 'none';
+            trink_button.style.animation = 'grow 6s infinite forwards';
+            dialogue.style.animation = 'flash 1s infinite steps(1)';
+            setTimeout(() =>{
+                trink_button.style.display = 'none';
+                dialogue.style.animation = 'none';
+                dialogue.innerHTML = "<p>Weird, how images don't tell us what they are...They can only capture time and reality as it were, so where does that leave us...?</p>";
+                setTimeout(() => {
+                    markExplored('trinket');
+                }, 3000);
+            }, 3000);
+
+            
+           
+        }
+    </script>
+</body>
+</html>

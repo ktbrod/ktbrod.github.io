@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+
+     <link rel="stylesheet" href="styles.css">
+     <script src="scripts.js"></script>
+     
+    <style>
+
+        .percentage {
+        background-color: rgb(255, 130, 159); 
+        color: rgb(8, 8, 8);
+        border: none;
+        border-radius: 35px;
+        padding: 15px 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: Verdana;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        z-index: 2;
+        }
+
+        .percentage:hover {
+        background-color: rgb(199, 0, 66);
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    
+        .box_example {
+            display: block;
+            background-color: rgb(255, 130, 159);
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+
+        #grid {
+             display: grid; 
+             grid-template-columns: auto auto; 
+             position: static; 
+             
+        }
+        .box_example_flex {
+            display: inline;
+            width: 50%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        
+            border: 1px solid rgb(237, 255, 190) ;
+            position: static;
+            animation: firstanimation;
+            animation-duration: 4s;
+            animation-iteration-count: 5;
+                
+        }
+
+        
+        .box_example_flex {
+            display: inline;
+            width: 15%;
+            background-color: rgb(255, 130, 159);
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid black;
+            justify-content: center;   
+        }
+
+        #flex {
+             display: flex; 
+             flex-direction: row; 
+             position: static; 
+             justify-content: center;   
+        }
+
+        #gifimg {
+            justify-content: center;
+            text-align: center;
+            margin: auto;
+        }
+
+        @keyframes firstanimation {
+            from {
+                top: 0px;
+            }
+            to {
+                top: 200px;
+            }
+        }
+
+        @media screen and (max-width: 1000px){
+            #flex {
+            flex-direction: column;
+            margin: auto;
+        }
+
+        .box_example_flex {
+            width: 50%;
+            text-align: center;
+            margin: 2% auto;
+        }
+
+        #grid {
+            display: grid;
+            grid-template-rows: auto;
+            grid-auto-flow: row;
+        }
+        
+    }
+
+  </style>
+</head>
+
+ <button class = percentage onclick="calculatePercentage()">Click to calculate how excited you are to play</button>
+
+    <h1 style="text-align: center;"> New Medium: A Digital Board Game</h1>
+
+<div class="box_example">
+<p>Today's date:</p><p id="dateDisplay"></p><p></p>
+<p>Welcome to this digitalized board game, New Medium. Each board game square will ask you a multiple choice question about COMM 150 course content. Check your answer, and be sure to note on paper, a device or in your head how many questions you get correct.</p>
+</div>
+
+<div class="box_example">
+<p>Select your piece below to start. No matter which piece you choose, you will play the same game.</p>
+</div>
+<div id = "flex">
+    <div class ="box_example_flex"> <a href="piece1.html" ><p onclick="keepScore()">Pen and Paper</p></a></div>
+    <div class ="box_example_flex"> <a href="piece2.html"><p onclick="keepScore2()">Flip Phone</p></a></div>
+    <div class ="box_example_flex"> <a href="piece3.html"><p onclick="keepScore()">iPhone</p></a></div>
+</div>
+<div  id="gifimg">
+
+<img
+  src= "gif.gif"  height="250" 
+      alt="GIF of a piece of paper, flip phone and iPhone"
+>
+</div>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ethical Real Estate Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="style.css">
+</head>
+
+  <body>
+   <h1 >Ethical Real Estate Dilemma: Data Centers</h1>
+    <p>Two choices… but really one. Can a data center be built without exploiting massive energy and material resources?</p>
+
+    <div class="grid">
+      <div class="choice">
+        <h2>Choice A: Sustainable Design</h2>
+        <p>Use renewable energy and recycled materials. Costs more upfront but builds community trust.</p>
+        <button onclick="choose('A')"><a href="choicea.html">A</a></button>
+      </div>
+
+      <div class="choice">
+        <h2>Choice B: Fast Construction</h2>
+        <p>Cheaper and quicker but may harm the environment and reduce trust.</p>
+        <button onclick="choose('B')"><a href="choiceb.html">B</a></button>
+      </div>
+    </div>
+
+    <p class="result" id="resultText"></p>
+
+    <script>
+      function choose(option) {
+        let result = document.getElementById("resultText");
+
+        if (option === "A") {
+          result.textContent = "You gained community trust but lost short-term profit.";
+        } else {
+          result.textContent = "You increased profit but community trust declined.";
+        }
+      }
+    </script>
+  </body>
+</html>

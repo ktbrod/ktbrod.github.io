@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choices Flow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="title">Choices Flow</div>
+
+      <div class="status">
+        <span id="timer">Time on page: 0s</span>
+        <span id="score">Choices made: 0</span>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn ghost" id="backBtn" title="Go back" disabled>◀ Back</button>
+        <button class="btn warn" id="restartBtn" title="Restart">Restart</button>
+      </div>
+    </header>
+
+    <main class="card">
+      <div class="crumbs" id="breadcrumbs"></div>
+
+      <div class="progress" aria-hidden="true">
+        <div class="bar" id="progressBar"></div>
+      </div>
+
+      <section class="page active" id="page-start" data-page="start" data-label="Start">
+        <div class="intro-grid">
+          <div>
+            <span class="tag">Human–machine routine</span>
+            <h1>Welcome!</h1>
+            <p>Walk through a quick laptop routine and see how your choices and your feed interact.</p>
+            <div class="btns">
+              <button class="btn" data-go="open">Start</button>
+            </div>
+          </div>
+
+          <div>
+            <img src="laptop.jpeg" alt="An open laptop on a desk" class="hero-img">
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-open" data-page="open" data-label="Open Laptop">
+        <span class="tag">Prompt</span>
+        <h1>You open your laptop.</h1>
+        <h2>What’s the first thing you do?</h2>
+
+        <div class="btns">
+          <button class="btn alt" data-go="messages" data-first="true">Check Messages</button>
+          <button class="btn" data-go="play" data-first="true">Play Music</button>
+          <button class="btn accent" data-go="search" data-first="true">Search Something</button>
+          <button class="btn ghost" data-go="scroll" data-first="true">Just Scroll</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-messages" data-page="messages" data-label="Messages">
+        <span class="tag">Path</span>
+        <h1>Checking Messages</h1>
+        <p>You open your inbox and chats. A few new notifications pull your focus.</p>
+        <div class="btns">
+          <button class="btn" data-go="suggest">Continue</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-play" data-page="play" data-label="Play Music">
+        <span class="tag">Path</span>
+        <h1>Press Play</h1>
+        <p>Your favorite playlist fades in. The background noise shapes your mood.</p>
+        <div class="btns">
+          <button class="btn" data-go="suggest">Continue</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-search" data-page="search" data-label="Search">
+        <span class="tag">Path</span>
+        <h1>Quick Search</h1>
+        <p>You start typing something—but before you finish, your feed starts to pull you sideways.</p>
+
+        <div class="writein">
+          <label for="free-intent">What were you actually trying to find?</label>
+          <input id="free-intent" type="text" placeholder="Ex: research a topic, check Canvas" />
+          <button class="btn accent" type="button" id="saveIntent">Save &amp; Continue</button>
+        </div>
+        <p id="writein-confirm" class="helper"></p>
+      </section>
+
+      <section class="page" id="page-scroll" data-page="scroll" data-label="Scroll">
+        <span class="tag">Path</span>
+        <h1>Mindless Scroll</h1>
+        <p>You start scrolling without a clear plan. The feed keeps going, and so do you.</p>
+        <div class="btns">
+          <button class="btn" data-go="suggest">Continue</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-suggest" data-page="suggest" data-label="Suggestion">
+        <span class="tag">Suggestion</span>
+        <h1>Your feed steps in</h1>
+        <p>
+          Your feed suggests a short autoplay clip and a “You might like this” reel,
+          based on your past clicks and watch time.
+        </p>
+        <h2>Do you follow it?</h2>
+
+        <div class="btns">
+          <button class="btn alt" data-go="yes" data-choice="auto">Yes, I tap it</button>
+          <button class="btn warn" data-go="no" data-choice="intent">No, I ignore it</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-yes" data-page="yes" data-label="Followed Suggestion">
+        <span class="tag">Outcome</span>
+        <h1>Auto-pilot engaged</h1>
+        <p>You follow the suggestion and drift into the recommended content.</p>
+        <div class="btns">
+          <button class="btn" data-go="end">Finish</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-no" data-page="no" data-label="Ignored Suggestion">
+        <span class="tag">Outcome</span>
+        <h1>You stick to your plan ✨</h1>
+        <p>You skip the suggestion and return to what you meant to do.</p>
+        <div class="btns">
+          <button class="btn" data-go="end">Finish</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-end" data-page="end" data-label="End">
+        <span class="tag">End</span>
+        <h1>Thanks for playing!</h1>
+        <p id="summary-text">
+          Here is how your routine flowed today.
+        </p>
+        <ul>
+          <li id="summary-path"></li>
+          <li id="summary-agency"></li>
+          <li id="summary-time"></li>
+          <li id="summary-intent"></li>
+        </ul>
+        <p>
+          Notice how quickly the suggestion challenged your routine before you even realized it.
+        </p>
+        <div class="btns">
+          <button class="btn" data-go="start">Restart</button>
+          <a href="system.html"><button class="btn ghost" type="button">See system report</button></a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

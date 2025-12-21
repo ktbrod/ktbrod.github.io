@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frog Frenzy - Enter Name</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Fugaz+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(139, 63, 193);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #nameForm {
+            background: linear-gradient(to bottom right, #ffda5f, #f9376b);
+            padding: 40px 60px;
+            border-radius: 20px;
+            border: 5px solid #076020;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #nameForm input {
+            font-family: "Fugaz One", sans-serif;
+            font-size: 24px;
+            padding: 15px;
+            border: 3px solid #076020;
+            border-radius: 10px;
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        #nameForm button {
+            font-size: 28px;
+        }
+
+        #nameForm p {
+            font-family: "Fugaz One", sans-serif;
+            font-size: 24px;
+            color: white;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Frog Frenzy</h1>
+
+    <div id="nameForm">
+        <p>Enter Your Name:</p>
+        <input type="text" id="playerName" maxlength="15" placeholder="Player Name">
+        <br>
+        <button onclick="startGame()" data-ico="🐸" style="--slist: #0de517, #076020;">Start Game!</button>
+    </div>
+
+    <script>
+       function startGame() {
+    const playerName = document.getElementById('playerName').value.trim();
+    
+    if (playerName === '') {
+        alert('Please enter your name!');
+        return;
+    }
+    
+    localStorage.setItem('currentPlayer', playerName);
+    
+    let playerData = JSON.parse(localStorage.getItem('playerData'));
+    
+    if (!playerData || playerData.name !== playerName) {
+       
+        playerData = {
+            name: playerName,
+            level1: 0,
+            level2: 0,
+            level3: 0,
+            level4: 0,
+            level5: 0,
+            totalScore: 0,
+            unlockedLevels: 1 
+        };
+    }
+    
+    localStorage.setItem('playerData', JSON.stringify(playerData));
+    
+    window.location.href = 'index 2.html';
+}
+    </script>
+</body>
+
+</html>

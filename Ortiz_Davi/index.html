@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel= "stylesheet" href="css/style.css"> 
+<script src="main.js" defer></script>
+<a href="why.html" class="button2">Why Rage The Bait?</a>
+
+    <title>RAGE THE BAIT</title>
+
+</head>
+<body>
+    <div class="game-layout">
+
+
+    <aside class="directions-ig">
+        <strong>Directions</strong>
+        <p>Click <b>Roll Dice</b> to play against Rage The Bait.</p>
+        <p>If your roll is higher, you win +1 bait dollar.</p>
+        <p>If you lose, you lose −1 bait dollar.</p>
+        <p>Ties give +0.05 bait dollars.</p>
+        <p>You can end the game at any time</p>
+    </aside>
+    <h1 align="center"> RAGE THE BAIT</h1>
+
+    <div class="dice-container">
+    <div class="player-side">
+        <h3>YOU</h3>
+        <div id="player-dice"></div>
+    </div>
+
+    <div class="cpu-side">
+        <h3>player 2</h3>
+        <div id="cpu-dice"></div>
+    </div>
+</div>
+    </div>
+    <div style="width:100%">
+    <button type="button" class="btn-roll-dice" style="display: block; margin: 10px auto;"> Roll Dice</button> 
+    </div>
+<form id="myform">
+    Your name:<br>
+    <input name="player_name" maxlength="20" class="greenBut" type="text" id="player_name" placeholder="Type Your Name" required>
+   
+    <button type="submit" class="greenBut" onclick="winner()"> end game</button>
+    </form>
+    <p> Your Bait Dollars: <span id ="baitdollars">0</span></p>
+
+    <center>
+  <img src="photos/rage1.png" class="rage_pic">
+  </center>
+</body>
+</html>

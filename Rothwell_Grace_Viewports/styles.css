@@ -1,0 +1,614 @@
+*{
+    box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+h1, p {
+    margin:0;
+    padding:0;
+    color: white;
+}
+
+h2{
+    margin: 0;
+    padding: 0;
+    font-size: 35px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+}
+
+h3{
+    font-size: 20px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+}
+
+li{
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+body {
+  cursor: grab; /* Shows the grab cursor (open hand) by default */
+}
+
+body:active { /* Optional: changes to grabbing when a mouse button is pressed */
+  cursor: grabbing; /* Shows the grabbing cursor (closed hand) */
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* vertical centering */
+    align-items: center; 
+    height: 100%;
+}
+
+
+.game-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;  
+    width: 100%;  
+    min-height: 500px;
+    /* height: auto;
+    width: auto; */
+    background-color: black;
+    flex-grow: 1;
+    position: relative;
+}
+
+
+.top{
+    background-color: black;
+    text-align: center;
+    height: 150px;
+    display: table;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.bottom{
+    background-color: black;
+    height: 100px;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instructions{
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    color: white;
+    font-size: 20px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dialogue{
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    color: white;
+    font-size: 12px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.exit-button{
+    margin: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 18px;
+    font-family: "Stack Sans Notch", serif;
+}
+
+.subpage-name{
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 40px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* styles for home page */
+
+#background-image{
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    user-select: none;
+    -webkit-user-drag: none;
+    cursor: grab;
+    will-change: transform;
+}
+
+#viewport{
+    width: 50px;
+    height: 50px;
+    border: 2px solid #333;
+    resize: both;
+    overflow: hidden;
+    position: relative;
+    padding: 0; /* remove padding to avoid offset */
+    touch-action: none;
+    z-index: 1;
+}
+
+#viewport img.dragging { cursor: grabbing; }
+
+
+#target-frame{
+    border-color: white;
+    width: 260px;
+    height: 220px;
+    pointer-events: none;
+    position: absolute;
+    border: 3px dashed rgb(255, 255, 255);
+    pointer-events: none; /* let dragging pass through */
+    box-sizing: border-box;
+    z-index: 20;
+}
+
+
+.correct-size-animate {
+    animation: pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0%   { border: 5px dashed blue; }
+    50%  { border: 3px dashed aqua;}
+    100% { border: 5px dashed white; }
+
+}
+
+#area-sensor{
+    position: absolute;
+    background-color: white;
+    opacity: 30%;
+    left: 68%;
+    bottom: 30%;
+    width: 240px;
+    height: 200px;
+}
+
+#index-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.title{
+    color: white;
+    text-align: center;
+    font-size: 100px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+    flex-grow: 1;
+    margin: 10px;
+}
+
+#how-to-button{
+    margin: 25px;
+    padding: 8px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    border-color: white;
+
+}
+
+#index-bottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#reset-button{
+    padding: 8px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    border-color: white;
+}
+
+#index-instructions{
+    flex-grow: 1;
+    margin: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+#game-instructions{
+    display: none; /* Hidden by default */
+    position: fixed; /* Position relative to the viewport */
+    width: 80%;
+    height: 60%;
+    z-index: 9999; /* Ensure it's on top of everything */
+    display: flex; /* Center content */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+
+/* begin styles for notebooks */
+#notebooks-gamepage{
+    background: url(images/notebooks.png);
+}
+
+.notebook-button{
+    width: 760px;
+    height: 70px;
+    border-radius: 30px;
+    background-color: transparent;
+    position: fixed;
+}
+
+#purple-notebook{
+    right: 27%;
+    top: 61%;
+    border-color: purple;
+}
+
+#white-notebook{
+    top: 70%;
+    border-color: white;
+}
+
+#blue-notebook{
+    top: 52%;
+    left: 71%;
+    border-color: aqua;
+}
+
+.notebook-page{
+    background-color: beige;
+    height: 300px;
+    width: 600px;
+    align-self: center;
+    position: relative;
+    border-radius: 10px;
+    
+}
+
+.notebook-page-text{
+    color: black;
+    font-size: 20px;
+    font-family: "Stack Sans Notch", serif;
+    font-weight: 400;
+    font-style: normal;
+    align-self: center;
+    position: relative;
+    margin: 10px;
+}
+
+#notebook-page-text{
+    font-family: sans-serif;
+    color: black;
+}
+
+.explored{
+    display: none;
+    border-color: transparent;
+}
+
+#next-dialogue{
+    position: relative;
+    align-self: center;
+}
+
+/* be styles for agenda */
+#agenda-gamepage{
+    background: url(images/agenda.png);
+}
+
+.agenda-button{
+    height: 60px;
+    width: 650px;
+    transform: skew(35deg, -8deg);
+    background-color: transparent;
+    border-color: #afa69e;
+    border-radius: 10px;
+}
+
+#monday{
+    position: absolute;
+    top: 58%;
+}
+#tuesday{
+    position: absolute;
+    top: 70%;
+    left: 33%;
+}
+
+.display-agenda{
+    height: 150px;
+    width: 600px;
+    transform: skew(40deg, -8deg);
+    background-color: beige;
+    border-color: #afa69e;
+    border-radius: 10px;
+}
+
+/* begin styles for trinkets */
+#trinkets-gamepage{
+    background: url(images/buddha.png);
+    background-position: bottom;
+}
+
+.trink-button{
+    height: 300px;
+    width: 250px;
+    position: absolute;
+    top: 2%;
+    left: 40%;
+    display: block;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 3px solid green;
+    animation: trinket-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes trinket-pulse{
+    0%   { border:10px solid rgba(30, 76, 61, 0.1); }
+    50%  { border: 10px solid rgba(66, 147, 113, 0.1);}
+    100% { border: 10px solid rgba(181, 239, 163, 0.1); }
+}
+
+@keyframes grow {
+    0% {transform: scale(.75); border:10px solid rgba(30, 76, 61, 0.1); border-radius: 25px;}
+    50% {transform: scale(.5); border: 10px solid rgba(66, 147, 113, 0.35); border-radius: 30px;}
+    100% {transform: scale(.25); border: 10px solid rgba(181, 239, 163, 0.6); border-radius: 35px;} 
+}
+
+@keyframes flash {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    50% {opacity: 0;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+.grow-animation{
+    display: block;
+    animation: grow 6s infinite forwards;
+}
+
+/* end game styles */
+#play-again-button{
+    display: block;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 25px;
+    font-family: "Stack Sans Notch", serif;
+    color: white;
+    border-color: aqua;
+}
+
+#end-game-bottom{
+    flex-direction: column;
+    
+}
+
+#end-game-dialogue{
+    color: white;
+    margin: 2px;
+}
+
+.end-game-paragraph{
+    margin: 10px;
+    color: black;
+    font-family:  sans-serif;
+    font-size: 18px;
+}
+
+#end-game-page{
+    width: 60%;
+    height: 100%;
+    display: flex; /* Center content */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    padding: 10px;
+    /* text-align: center; */
+}
+
+#back-button{
+    margin: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 18px;
+    font-family: "Stack Sans Notch", serif;
+}
+
+
+
+
+
+
+
+
+/* media query for half size */
+@media screen and (max-width: 1000px) {
+    /* notebooks */
+    #notebooks-gamepage{
+        background: url(images/notebooks.png);
+        background-position: right center;
+        background-size: cover;
+    }
+
+    .notebook-button{
+        width: 480px;
+        height: 35px;
+        border-radius: 30px;
+        background-color: transparent;
+        position: fixed;
+    }
+
+    #purple-notebook{
+        right: 43%;
+        top: 44%;
+        border-color: purple;
+    }
+
+    #white-notebook{
+        top: 50%;
+        right: 40%;
+        border-color: white;
+    }
+
+    #blue-notebook{
+        top: 38%;
+        left: 57%;
+        border-color: aqua;
+    }
+
+    .agenda-button{
+        height: 60px;
+        width: 650px;
+        transform: skew(35deg, -8deg);
+        background-color: transparent;
+        border-color: #afa69e;
+        border-radius: 10px;
+    }
+
+    #monday{
+        position: absolute;
+        top: 65%;
+        left: 35%;
+    }
+    #tuesday{
+        position: absolute;
+        top: 80%;
+        left: 43%;
+    }
+
+    .trink-button{
+        height: 300px;
+        width: 250px;
+        position: absolute;
+        top: 2%;
+        left: 35%;
+        display: block;
+        border-radius: 20px;
+        background-color: transparent;
+        border: 3px solid green;
+        animation: trinket-pulse 3s ease-in-out infinite alternate;
+    }
+
+    @media screen and (max-width: 600px) {
+    /* notebooks */
+        #notebooks-gamepage{
+            background: url(images/notebooks.png);
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .notebook-button{
+            width: 480px;
+            height: 35px;
+            border-radius: 30px;
+            background-color: transparent;
+            position: fixed;
+        }
+
+        #purple-notebook{
+            right: 28%;
+            top: 44%;
+            border-color: purple;
+        }
+
+        #white-notebook{
+            top: 50%;
+            right: 24%;
+            border-color: white;
+        }
+
+        #blue-notebook{
+            top: 39%;
+            left: 73%;
+            border-color: aqua;
+        }
+
+        .agenda-button{
+            height: 62px;
+            width: 150px;
+            transform: skew(35deg, -8deg);
+            background-color: transparent;
+            border-color: #afa69e;
+            border-radius: 10px;
+        }
+
+        #monday{
+            position: absolute;
+            top: 65%;
+            left: 63%;
+        }
+        #tuesday{
+            position: absolute;
+            top: 80%;
+            left: 70%;
+        }
+
+        .trink-button{
+            height: 300px;
+            width: 250px;
+            position: absolute;
+            top: 2%;
+            left: 25%;
+            display: block;
+            border-radius: 20px;
+            background-color: transparent;
+            border: 3px solid green;
+            animation: trinket-pulse 3s ease-in-out infinite alternate;
+        }
+
+    }
+
+}

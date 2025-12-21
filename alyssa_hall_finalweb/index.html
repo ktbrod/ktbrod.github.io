@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Operation Equilibrium — Start</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="startPage" role="main" aria-labelledby="title">
+  <img src="tansparentcordspng.png" alt="Broken connection" class="start-float start-cords">
+  <img src="transparentgear.png"  alt="Gear icon"        class="start-float start-gear">
+
+  <h1 id="title" class="title">Operation Equilibrium</h1>
+  <p class="subtitle">Start Menu</p>
+
+    <div class="buttons" aria-hidden="false">
+      <button class="big-btn start" id="startBtn" aria-label="Start game (Enter)">
+        ▶ Start Game
+      </button>
+
+      <a href="page2.html" class="big-btn instructions">Instructions</a>
+
+    </div>
+
+    <p class="help">Tip: Press <strong>Enter</strong> to start. Press <strong>I</strong> for instructions.</p>
+
+    <footer>
+      <div>Inspired by Haraway, McLuhan, Wardrip-Fruin</div>
+      <div>Developed by Alyssa Hall, 2025</div>
+    </footer>
+  </main>
+<section id="gameScreen" aria-hidden="true" class="hidden">
+  <div class="game-header">
+    <h1 class="game-title">OPERATION EQUILIBRIUM</h1>
+    <p class="game-subtitle">Keep emotion and logic in balance!</p>
+  </div>
+
+  <div class="game-status-row">
+    <div class="status-item">
+      <span class="status-label">Time</span>
+      <span id="timerValue" class="status-value">0.0 s</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">Balance</span>
+      <span class="status-value"><span id="balanceValue">50</span>/100</span>
+    </div>
+  </div>
+
+  <div class="game-main">
+    <div class="game-meter-panel">
+      <div class="labels-row">
+  <span class="label emotion-label">Emotion</span>
+  <span class="label logic-label">Logic</span>
+  <span class="label emotion-label">Emotion</span>
+</div>
+
+<div class="meter-track glow">
+  <div id="meterFill" class="meter-fill"></div>
+  <div class="meter-center-line"></div>
+</div>
+
+<p class="label equilibrium-label">Equilibrium</p>
+
+<p id="statusText" class="status-text">System stable.</p>
+
+
+      <div class="meter-buttons">
+        <button id="emotionBtn" class="meter-btn emotion-btn">E</button>
+        <button id="logicBtn" class="meter-btn logic-btn">L</button>
+      </div>
+    </div>
+
+    <div class="game-controls-panel">
+      <h2>Controls</h2>
+      <p><strong>E</strong> = increase emotion (move left)</p>
+      <p><strong>L</strong> = increase logic (move right)</p>
+      <p>Keep the meter close to the center for a full 30 seconds to avoid overload.</p>
+        <p>Try to keep your balance less than 60 and more than 40 for a perfect score!</p>
+      <p>Click "Restart" to start game.</p>
+
+      <div class="game-buttons">
+        <button id="restartBtn" class="big-btn start">Restart</button>
+        <button id="backToMenuBtn" class="big-btn instructions">Back to Menu</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="endingOverlay" class="overlay hidden">
+  <div class="ending-card">
+    <img id="endingImage" class="ending-image" src="" alt="Ending image" />
+    <h2 id="endingTitle" class="ending-title">You are…</h2>
+    <p id="endingMessage" class="ending-message">
+    </p>
+
+    <div class="ending-buttons">
+      <button id="playAgainBtn" class="big-btn start">Play Again</button>
+      <button id="endingBackBtn" class="big-btn instructions">Back to Menu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const startPage = document.getElementById("startPage");
+  const gameScreen = document.getElementById("gameScreen");
+  const startBtn = document.getElementById("startBtn");
+  const restartBtn = document.getElementById("restartBtn");
+  const backToMenuBtn = document.getElementById("backToMenuBtn");
+  const meterFill = document.getElementById("meterFill");
+  const balanceValueSpan = document.getElementById("balanceValue");
+  const statusText = document.getElementById("statusText");
+  const timerValueSpan = document.getElementById("timerValue");
+  const emotionBtn = document.getElementById("emotionBtn");
+  const logicBtn = document.getElementById("logicBtn");
+  const endingOverlay = document.getElementById("endingOverlay");
+  const endingTitle = document.getElementById("endingTitle");
+  const endingMessage = document.getElementById("endingMessage");
+  const endingImage = document.getElementById("endingImage");
+  const playAgainBtn = document.getElementById("playAgainBtn");
+  const endingBackBtn = document.getElementById("endingBackBtn");
+  const GAME_DURATION = 30; 
+  const DRIFT_STRENGTH = 0.6;
+
+  let balance = 50;
+  let gameOver = false;
+  let elapsedTime = 0;
+  let timerInterval = null;
+  let neverUnstable = true;
+
+
+  function onStartGame() {
+  balance = 50;
+  gameOver = false;
+  elapsedTime = 0;
+  neverUnstable = true;   
+  updateMeter();
+
+  statusText.textContent = "System stable.";
+  timerValueSpan.textContent = "0.0 s";
+
+  if (timerInterval) clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+    if (gameOver) return;
+
+    elapsedTime += 0.1;
+    timerValueSpan.textContent = elapsedTime.toFixed(1) + " s";
+
+    if (elapsedTime >= GAME_DURATION) {
+      elapsedTime = GAME_DURATION;
+      timerValueSpan.textContent = GAME_DURATION.toFixed(1) + " s";
+
+      if (neverUnstable) {
+        showEnding("robot");     
+      } else {
+        showEnding("cyborg");    
+      }
+      return;
+    }
+
+    autoDrift();
+  }, 100);
+
+  startPage.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  gameScreen.setAttribute("aria-hidden", "false");
+}
+
+ 
+
+  const difficultyFactor = 1 + (elapsedTime / GAME_DURATION); 
+  autoDrift(difficultyFactor);
+
+
+
+  startPage.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  gameScreen.setAttribute("aria-hidden", "false");
+
+  startPage.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  gameScreen.setAttribute("aria-hidden", "false");
+
+
+  function adjustBalance(delta) {
+    if (gameOver) return;
+
+    balance += delta;
+    if (balance < 0) balance = 0;
+    if (balance > 100) balance = 100;
+
+    updateMeter();
+    checkStability();
+  }
+
+  function updateMeter() {
+    meterFill.style.left = balance + "%";
+    balanceValueSpan.textContent = balance.toFixed(2);
+  }
+
+  function checkStability() {
+  if (balance <= 15) {
+    statusText.textContent = "System overload! Too much emotion.";
+    triggerBoom();
+    setTimeout(() => showEnding("human"), 350);
+    return;
+  }
+
+  if (balance >= 85) {
+    statusText.textContent = "System overload! Too much logic.";
+    triggerBoom();
+    setTimeout(() => showEnding("human"), 350);
+    return;
+  }
+
+  if (balance < 40 || balance > 60) {
+    statusText.textContent = "Warning: system unstable…";
+    neverUnstable = false;
+  } else {
+    statusText.textContent = "System stable.";
+  }
+}
+
+
+
+
+
+  function handleKeyPress(event) {
+  if (!startPage.classList.contains("hidden")) {
+    if (event.key === "Enter") {
+      onStartGame();
+    }
+    return;
+  }
+
+  if (event.key === "e" || event.key === "E") {
+    adjustBalance(-3);  
+  } else if (event.key === "l" || event.key === "L") {
+    adjustBalance(+3); 
+  }
+}
+
+function autoDrift(multiplier = 1) {
+  if (gameOver) return;
+
+  let direction;
+
+  if (balance > 50) {
+    direction = 1;
+  } else if (balance < 50) {
+    direction = -1;
+  } else {
+    direction = Math.random() < 0.5 ? -1 : 1;
+  }
+
+  const delta = direction * DRIFT_STRENGTH * multiplier;
+  adjustBalance(delta);
+}
+
+
+
+function onRestart() {
+  balance = 50;
+  gameOver = false;
+  elapsedTime = 0;
+  neverUnstable = true;   
+  updateMeter();
+
+  statusText.textContent = "System stable.";
+  timerValueSpan.textContent = "0.0 s";
+
+  if (timerInterval) clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+    if (gameOver) return;
+
+    elapsedTime += 0.1;
+    timerValueSpan.textContent = elapsedTime.toFixed(1) + " s";
+
+   
+    if (elapsedTime >= GAME_DURATION) {
+      elapsedTime = GAME_DURATION;
+      timerValueSpan.textContent = GAME_DURATION.toFixed(1) + " s";
+
+      if (neverUnstable) {
+        showEnding("robot");   
+      } else {
+        showEnding("cyborg");  
+      }
+      return;
+    }
+
+    const difficultyFactor = 1 + (elapsedTime / GAME_DURATION);
+    autoDrift(difficultyFactor);
+
+  }, 100);
+}
+
+function showEnding(type) {
+  gameOver = true;
+  if (timerInterval) clearInterval(timerInterval);
+
+  gameScreen.classList.add("hidden");
+
+  if (type === "human") {
+    endingTitle.textContent = "YOU ARE HUMAN!";
+    endingMessage.textContent =
+      "You lost equilibrium and the system crashed. You react, feel, and sometimes lose control making you fully human.";
+    endingImage.src = "human.png";
+    endingImage.alt = "Human figure";
+  } else if (type === "robot") {
+    endingTitle.textContent = "YOU ARE A ROBOT!";
+    endingMessage.textContent =
+      "You kept the meter at perfect equilibrium for the entire 30 seconds! Precise, controlled, and unrelentingly logical.";
+    endingImage.src = "robot.png";
+    endingImage.alt = "Robot figure";
+  } else if (type === "cyborg") {
+    endingTitle.textContent = "YOU ARE A CYBORG!";
+    endingMessage.textContent =
+      "You survived and won the game facing some chaos along the way! A cyborg is known for mixing human emotion with machine logic and discipline.";
+    endingImage.src = "cyborg.png";
+    endingImage.alt = "Cyborg figure";
+  }
+
+  endingOverlay.classList.remove("hidden");
+}
+
+
+
+function triggerBoom() {
+  gameScreen.classList.add("boom-effect");
+
+  setTimeout(() => {
+    gameScreen.classList.remove("boom-effect");
+  }, 400);
+}
+
+
+  function backToMenu() {
+  gameScreen.classList.add("hidden");
+  startPage.classList.remove("hidden");
+  gameScreen.setAttribute("aria-hidden", "true");
+
+  if (timerInterval) clearInterval(timerInterval);
+}
+  startBtn.addEventListener("click", onStartGame);
+  restartBtn.addEventListener("click", onRestart);
+  backToMenuBtn.addEventListener("click", backToMenu);
+  document.addEventListener("keydown", handleKeyPress);
+
+  emotionBtn.addEventListener("click", () => adjustBalance(-3));
+  logicBtn.addEventListener("click", () => adjustBalance(+3));
+
+
+  startBtn.addEventListener("click", onStartGame);
+  restartBtn.addEventListener("click", onRestart);
+  backToMenuBtn.addEventListener("click", backToMenu);
+  document.addEventListener("keydown", handleKeyPress);
+  startBtn.addEventListener("click", onStartGame);
+  restartBtn.addEventListener("click", onRestart);
+  backToMenuBtn.addEventListener("click", backToMenu);
+  document.addEventListener("keydown", handleKeyPress);
+  emotionBtn.addEventListener("click", () => adjustBalance(-3));
+  logicBtn.addEventListener("click", () => adjustBalance(+3));      
+  playAgainBtn.addEventListener("click", () => {
+  endingOverlay.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  onRestart();
+});
+
+  endingBackBtn.addEventListener("click", () => {
+  endingOverlay.classList.add("hidden");
+  backToMenu();
+});
+
+
+</script>
+
+
+</body>
+</html>

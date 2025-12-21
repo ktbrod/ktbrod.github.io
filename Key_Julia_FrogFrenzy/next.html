@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+        #displayclicks{
+            background-color: red;
+            padding: 50px;
+            margin: 100px;
+            border-radius: 9em;
+            
+        }
+        
+    </style>
+    <script src ="scripts.js">
+    </script>
+</head>
+<body>
+    <h1>Second Page</h1>
+    <div id="displayclicks">
+    </div>
+    <p><a href="index.html">First page</a></p>
+    <div>Your score: <span id="scoreresult">0</span></div>
+<script>
+    document.getElementById("scoreresult").innerText = localStorage.getItem("score");
+    if (localStorage.getItem("score") > 15){
+        document.getElementById("displayclicks").innerText = "Take a rest"
+    }   else {
+        document.getElementById("displayclicks").innerText = "Keep working"
+    }
+    
+</script>
+
+</body>
+</html>

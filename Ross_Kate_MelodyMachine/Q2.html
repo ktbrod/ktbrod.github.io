@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body>
+  <header id="main-header">
+    <h1>Melody Machine</h1> 
+  </header>
+
+  
+  <div class="topnav">
+    <a href="index.html">Home</a>
+    <a class="active" href="play.html">Play</a>
+    <a href="help.html">Help</a>
+  </div>
+
+  
+   <div class="game">
+      <h2>Question 2</h2>
+
+    <div class="audio-container">
+      <audio controls>
+        <source src="game audio/Q2-trimmed-audio.mp3">
+      </audio>
+    </div>
+
+      <div class="quiz">
+        <h3 id="question">Which of the following images matches the audio clip?</h3>
+
+        <div id="answer-choices">
+          <a href ="Q3.html"><button class="btn" onclick=keepScore2();>
+            <img src="Q-Images/Q2-A-Correct.jpeg"></button></a>
+
+          <a href ="Q3.html"><button class="btn">
+            <img src="Q-Images/Q2-B-Incorrect.jpeg"></button></a>
+
+          <a href ="Q3.html"><button class="btn">
+            <img src="Q-Images/Q2-C-Incorrect.jpeg"></button></a>
+
+          <a href ="Q3.html"><button class="btn">
+            <img src="Q-Images/Q2-D-Incorrect.jpeg"></button></a>
+
+        </div>
+      </div>
+   </div>
+
+   <script>
+      x = localStorage.getItem("score");
+      console.log(Number(x));
+   </script>
+
+
+</body>
+</html>

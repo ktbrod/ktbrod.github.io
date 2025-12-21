@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Song</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #7f5aff; 
+      font-family: 'Fredoka One', cursive;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .result-box {
+      background-color: #ffc4eb;
+      border: 5px solid #f47fcb;
+      border-radius: 20px;
+      padding: 50px 60px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      max-width: 700px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #ff901a;
+      margin-bottom: 20px;
+      font-family: 'Fredoka One', cursive;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: #ff925c;
+      margin-bottom: 30px;
+      font-family: 'Fredoka One', cursive;
+    }
+
+    .song {
+      font-size: 1.8rem;
+      color: #db2f88;
+      font-weight: bold;
+      margin-top: 20px;
+      font-family: 'Fredoka One', cursive;
+    }
+
+    .restart-button {
+      background-color: #db2f88;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      font-family: 'Fredoka One', cursive;
+    }
+
+    .restart-button:hover {
+      background-color: #ffa268;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="result-box">
+    <h1>Your Song</h1>
+    <p>based on your answers, i picked a song for you:</p>
+    <div id="song" class="song">Loading...</div>
+
+    <button class="restart-button" onclick="restartQuiz()">Restart Quiz</button>
+  </div>
+
+  <script>
+   
+    const clicks = JSON.parse(localStorage.getItem("clicks")) || {option1:0, option2:0, option3:0, option4:0};
+
+    
+    let maxClicks = 0;
+    let topOption = 1;
+
+    for (let i = 1; i <= 4; i++) {
+      if (clicks["option" + i] > maxClicks) {
+        maxClicks = clicks["option" + i];
+        topOption = i;
+      }
+    }
+
+    
+    const songs = {
+      1: "Paul by Big Thief",
+      2: "Guabansexxx by Rauw Alejandro",
+      3: "Second Nature by Clairo",
+      4: "Be Sweet by Japanese Breakfast"
+    };
+
+    
+    document.getElementById("song").innerText = songs[topOption];
+
+    
+    function restartQuiz() {
+      localStorage.removeItem("clicks");
+      window.location.href = "index.html"; 
+    }
+  </script>
+</body>
+</html>

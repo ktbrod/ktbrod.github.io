@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
+    <title>Notebook</title>
+</head>
+<body>
+    <div class = "container">
+        <div class="top">
+            <h1 class = "subpage-name" id="subpage-name">It's her notebooks...</h1>
+        </div>
+        <div class = "game-page" id = "notebooks-gamepage">
+            <button class = "notebook-button" id = "purple-notebook" onclick="purpleButton()"></button>
+            <button class = "notebook-button" id = "white-notebook" onclick="whiteButton()"></button>
+            <button class = "notebook-button" id = "blue-notebook" onclick="blueButton()"></button>
+            <div class = "notebook-page" id="notebook-page" style="display: none;">
+                <p class = "notebook-page-text" id = "notebook-page-text" style ="display: none;"></p>
+                <button class = "exit-button" onclick="exitPage()">EXIT</button>
+            </div>
+            <div class = "notebook-page" id ="next-dialogue" style="display: none;">
+                <p class = "notebook-page-text">You've read all of her notebooks, it's time to keep exploring the viewports of her world...</p>
+            </div>
+        </div>
+        <div class = "bottom">
+            <p class = "instructions" id = "notebooks-instructions">Click the notebooks to read.</p>
+        </div>
+    </div>
+
+    <script>
+        function setVisited(key, value) { localStorage.setItem(key, value ? 'true' : 'false'); }
+        // state
+        const explored = {
+            purple: false,
+            white: false,
+            blue: false,
+        };
+
+        // optional: persist across reloads
+        const PERSIST_KEY = 'notebooksExplored';
+        function loadPersisted() {
+            try {
+            const json = localStorage.getItem(PERSIST_KEY);
+            if (json) Object.assign(explored, JSON.parse(json));
+            } catch (e) { /* ignore */ }
+        }
+        function persist() {
+            try { localStorage.setItem(PERSIST_KEY, JSON.stringify(explored)); } catch (e) {}
+        }
+
+        function markExplored(color) {
+            if (!['purple','white','blue'].includes(color)) return;
+            if (explored[color]) return; // already counted
+            explored[color] = true;
+            persist();
+            //updateExploredUI(color);
+            checkAllExplored();
+        }
+
+        function checkAllExplored() {
+            const all = explored.purple && explored.white && explored.blue;
+            if (all) onAllExplored();
+        }
+
+        function onAllExplored() {
+            const next_dialogue = document.getElementById('next-dialogue');
+            const game_page = document.getElementById('notebooks-gamepage');
+            const subpage_name = document.getElementById('subpage-name');
+            const instruction = document.getElementById('notebooks-instructions');
+
+            const PAGE_MS = 3000;
+            
+            pageTimer = setTimeout(() =>{
+                game_page.style.background = 'black';
+                subpage_name.style.color = 'black';
+                instruction.style.color = 'black';
+                next_dialogue.style.display = 'block';
+                localStorage.setItem('notebook_visited', 'true');
+                setTimeout(() =>{
+                    window.location.href = 'index.html';
+                }, PAGE_MS);
+            }, PAGE_MS);
+
+
+            // 3) fire a custom event so other code can react
+            // const evt = new CustomEvent('notebooks:allExplored', { detail: { explored: {...explored} }});
+            // document.dispatchEvent(evt);
+        }
+
+        // function resetExplored() {
+        //     explored.purple = explored.white = explored.blue = false;
+        //     persist();
+        //     // ['purple','white','blue'].forEach(c => {
+        //     // const b = document.getElementById(`${c}-notebook`);
+        //     // if (b) { b.classList.remove('explored'); b.removeAttribute('aria-pressed'); }
+        //     // });
+        //     const instructions = document.getElementById('notebooks-instructions');
+        //     if (instructions) instructions.innerText = "It's her notebooks...";
+        // }
+
+
+        function exitPage(){
+            const notebook_page = document.getElementById("notebook-page");
+            notebook_page.style.display = 'none';
+        }
+
+        function purpleButton(){
+            const button = document.getElementById('purple-notebook');
+            const notebook_page = document.getElementById("notebook-page");
+            const text = document.getElementById("notebook-page-text");
+            notebook_page.style.display = 'block';
+            text.style.display = 'block';
+            text.innerHTML = "<p class = 'notebook-page-text' id = 'notebook-page-text'><b>scrap metal dreams story</b><br><br>This is it. He’ll pull the blaster and the whole gig will be up. Con over before it can even begin.<br>Here, you don’t have to be an engineer or a mechanic. Those folks are all long dead, their sympathies for a higher level of intelligence killed them off. No. Here. All you need to do is be able to break things, and break them well.<br>And I happen to be the best at it.</p>";
+            text.style.color = 'black';
+            button.classList.add('explored');
+            markExplored('purple');
+        }
+        function whiteButton(){
+            const button = document.getElementById('white-notebook');
+            const notebook_page = document.getElementById("notebook-page");
+            const text = document.getElementById("notebook-page-text");
+            notebook_page.style.display = 'block';
+            text.style.display = 'block';
+            text.innerHTML = "<p class = 'notebook-page-text' id = 'notebook-page-text'><b>movies to watch!!!</b></p><ul><li>Django unchained</li><li>No country for old men</li><li>Black Klansman</li><li>Parasite</li><li>The Northman</li><li>The grand Budapest Hotel</li><li>Midsommar</li><li>Atonement</li><li>Meet Joe Black</li><li>Before sunrise</li></ul>"; 
+            button.classList.add('explored');   
+            markExplored('white');    
+        }
+        function blueButton(){
+            const button = document.getElementById('blue-notebook');
+            const notebook_page = document.getElementById("notebook-page");
+            const text = document.getElementById("notebook-page-text");
+            notebook_page.style.display = 'block';
+            text.style.display = 'block';
+            text.innerHTML = "<p class = 'notebook-page-text' id = 'notebook-page-text'>I mean, what even is a 'talk'??? I feel like the word is stupid. Why could it not have been a chat or something? Chat implies less, no I can't focus on a thing. They knew that they would throw me off, I swear they did...but if they didn't, somehow that makes this all worse.<br><br>god and NOW there's all these group projects and my quiz. I've gotta skip some of those, hopefully my group will understand. Maybe I'll just say I'm sick, close enough to the truth I guess</p>";  
+            button.classList.add('explored');
+            markExplored('blue');          
+        }
+
+        // const PAGE_MS = 3000;
+        // let pageTimer = null;
+        // if(pageTimer==null){
+        //     pageTimer = setTimeout(() =>{
+        //         const instructions = document.getElementById('notebooks-instructions');
+        //         instructions.classList.add('instructions-animate');
+        //         instructions.innerText = "Click the buttons to read her notebooks";
+        //         setTimeout(() => {
+        //             instructions.classList.remove('instructions-animate');
+        //         }, 3000);
+        //     }, PAGE_MS);
+        // }
+
+    </script>
+    
+</body>
+</html>

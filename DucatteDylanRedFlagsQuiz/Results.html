@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Red Flag Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .results-container {
+            background: #fff;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .live-score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+
+        .red {
+            color: #c2002f;
+        }
+
+        .yellow {
+            color: #f0ad4e;
+        }
+
+        .green {
+            color: #28a745;
+        }
+
+        .btn-wrapper {
+            margin-top: 2rem;
+        }
+
+        .btn-wrapper a {
+            text-decoration: none;
+            background: #c2002f;
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-wrapper a:hover {
+            background: #a10024;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="results-container">
+        <h1>Your Red Flag Results</h1>
+
+        <p>Score so far: <span class="live-score" id="liveScore">0</span></p>
+
+        <p id="resultMessage"></p>
+
+        <p class="final-score" id="finalScore"></p>
+
+        <div class="btn-wrapper">
+            <a href="index.html">Try Again</a>
+        </div>
+    </div>
+
+    <script>
+        // Get score from localStorage
+        const score = parseInt(localStorage.getItem("score")) || 0;
+
+        const liveScore = document.getElementById("liveScore");
+        const resultMessage = document.getElementById("resultMessage");
+        const finalScore = document.getElementById("finalScore");
+
+        // live score
+        let displayedScore = 0;
+        const interval = setInterval(() => {
+            if(displayedScore < score) {
+                displayedScore++;
+                liveScore.textContent = displayedScore;
+            } else {
+                clearInterval(interval);
+
+                // Determine result based on score ranges - ADDITIONAL SKILL*
+                let message = "";
+                if (score >= 37) {
+                    message = `Wow, you're pretty terrible. Couldn't be more <span class='red'>bright red</span> 🚩`;
+                } else if (score >= 28) {
+                    message = `You're kinda red flag leaning. Be <span class='yellow'>careful</span> ⚠️, maybe ask a friend for help?`;
+                } else if (score >= 18) {
+                    message = `You're a pretty <span class='green'>green flag</span> ✅, keep up the good work and continue to be a decent citizen`;
+                } else if (score >= 10) {
+                    message = `You're leaning red because you're a little too perfect... 😶‍🌫️`;
+                } else {
+                    message = `Wow… almost zero red flags? Did you lie? Suspicious...<span class='green'></span> 🤨`;
+                }
+
+                resultMessage.innerHTML = message;
+                finalScore.textContent = `Final Score: ${score}`;
+            }
+        }, 50); // animates score count-up
+    </script>
+
+</body>
+</html>

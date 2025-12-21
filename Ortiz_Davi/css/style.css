@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Eater&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+h1{
+  font-family: "Eater" , serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+body {
+  background-image: url('../photos/ER\ MOTION.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.dice-container{
+  display: flex;
+}
+
+.dice {
+  display: block;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  margin: 10px auto;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+.dice-dot{
+  --top: 0%;
+  --left: 0%;
+
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  border-radius: 50%;
+  
+  position: absolute;
+  top: var(--top);
+  left: var(--left);
+  transform: translateX(calc(var(--left) * -1)) translateY(calc(var(--top) * -1));
+}
+
+.btn-roll-dice {
+  margin-top: 10px;
+}
+.directions-ig {
+  border: 2px solid black;  
+  padding: 15px;
+  width: 240px;
+  background-color: rgba(100, 128, 141, 0); 
+}
+
+
+.rage_pic {
+  width: 200px;
+  animation: swayRage 2s ease-in-out infinite;
+}
+
+/* Animation for credit... bow bow */
+@keyframes swayRage {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(9px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.button2 {
+  display: block;
+  margin: 12px auto;
+  padding: 10px 16px;
+  background-color: #ef94f9;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  width: max-content;
+}
+.dice-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 67%;
+  margin: 23px auto;
+}
+
+.player-side,
+.cpu-side {
+  width: 20%;
+  text-align: center;
+}

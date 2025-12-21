@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Boundary Conditions – Play</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="dark">
+  <header class="site-header">
+    <h1>Boundary Conditions</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  </header>
+
+  <main class="play-layout">
+    <!-- Status card: mood + identity readout -->
+    <section class="status-panel card">
+      <h2>Interface Mood: <span id="mood-label">neutral</span></h2>
+      <p id="status-text">
+        Hover, click, draw, and press H or M. The interface is watching how you decide.
+      </p>
+      <p id="identity-readout">
+        Identity drift: <span id="identity-value">0</span> (−100 = human, +100 = machine)
+      </p>
+    </section>
+
+    <!-- Drawing panel: human–machine trace -->
+    <section class="drawing-panel card">
+      <h2>Trace the Boundary</h2>
+      <p class="drawing-subtitle">
+        Draw freely. The system quietly reads your speed and style as “human” or “machine.”
+      </p>
+
+      <!-- additional skill! drawing canvas affecting identity drift -->
+      <div class="canvas-wrapper">
+        <canvas id="draw-area" width="420" height="260"></canvas>
+      </div>
+
+      <p class="drawing-hint">
+        Slow, wandering strokes feel human to the system. Fast, straight swipes feel machine-like.
+      </p>
+      <button class="btn" id="clear-drawing">Clear drawing</button>
+    </section>
+
+    <!-- Choice cards: click decisions -->
+    <section class="choice-grid">
+      <article class="choice-card card human-choice">
+        <h3>Hesitate & Reflect</h3>
+        <p>Pause before choosing. Consider what the system wants from you.</p>
+        <button onclick="handleChoice('human')">Choose reflection</button>
+      </article>
+
+      <article class="choice-card card machine-choice">
+        <h3>Optimize & Submit</h3>
+        <p>Act quickly and efficiently. Treat this like a form to complete.</p>
+        <button onclick="handleChoice('machine')">Choose optimization</button>
+      </article>
+    </section>
+
+    <!-- Prompt / branching text -->
+    <section class="prompt-panel card">
+      <h2>Current Prompt</h2>
+      <p id="prompt-text">
+        The UI highlights the “efficient” path. Is that your choice or its?
+      </p>
+      <a id="end-link" href="reflection.html" class="btn hidden">
+        See what the system thinks you’ve become
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Press H (human) or M (machine) to declare your bias while you draw and choose.</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+<audio id="snd-brush-slow" src="assets/sounds/brush-soft.mp3"></audio>
+<audio id="snd-brush-fast" src="assets/sounds/brush-fast.mp3"></audio>
+
+<audio id="snd-human-choice" src="assets/sounds/ui-chime.mp3"></audio>
+<audio id="snd-machine-choice" src="assets/sounds/ui-beep.mp3"></audio>
+
+<audio id="snd-glitch" src="assets/sounds/glitch.mp3"></audio>
+<audio id="snd-toggle" src="assets/sounds/toggle.mp3"></audio>
+<audio id="snd-reveal" src="assets/sounds/reveal.mp3"></audio>
+
+</body>
+</html>
