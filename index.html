@@ -6,288 +6,387 @@
   <title>New Media Track Work</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #12100f;
-      --paper: #f7f1e8;
-      --acid: #f7ff00;
-      --royal: #2b2bf6;
-      --brick: #e2472d;
-      --mint: #a6f7d2;
-      --shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      --unc-navy: #13294b;
+      --unc-blue: #4b9cd3;
+      --ink: #0b0f14;
+      --paper: #f5f8fc;
+      --line: #bfd7ea;
+      --panel: #ffffff;
+      --max: 1180px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
+      font-family: "Space Grotesk", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(1200px 500px at 20% -10%, #ffffff 0%, transparent 60%),
-        radial-gradient(800px 400px at 90% 10%, #ffe1ee 0%, transparent 55%),
-        repeating-linear-gradient(135deg, rgba(18,16,15,0.05) 0 2px, transparent 2px 10px),
+        linear-gradient(90deg, rgba(19,41,75,0.04) 1px, transparent 1px) 0 0 / 24px 24px,
+        linear-gradient(rgba(19,41,75,0.04) 1px, transparent 1px) 0 0 / 24px 24px,
         var(--paper);
-      font-family: "Space Grotesk", sans-serif;
     }
 
-    header {
-      padding: 48px 6vw 24px;
-      position: relative;
-      overflow: hidden;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .banner {
+    .frame {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.1rem;
+    }
+
+    .top {
+      border: 2px solid var(--unc-navy);
+      background: var(--panel);
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 24px;
-      align-items: center;
-      border: 4px solid var(--ink);
-      background: white;
-      padding: 28px;
-      box-shadow: var(--shadow);
+      grid-template-columns: 1.5fr 0.5fr;
+      min-height: 280px;
     }
 
-    .title {
-      font-family: "Archivo Black", sans-serif;
-      font-size: clamp(2.4rem, 4.4vw, 4.8rem);
-      line-height: 0.95;
-      letter-spacing: -0.02em;
+    .hero {
+      padding: 1.6rem;
+      border-right: 2px solid var(--unc-navy);
+      display: grid;
+      align-content: space-between;
+      gap: 1rem;
+      background: linear-gradient(125deg, #ffffff 0%, #eaf4fb 100%);
+    }
+
+    .kicker {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
       text-transform: uppercase;
-    }
-
-    .subtitle {
-      font-family: "Instrument Serif", serif;
-      font-size: clamp(1.1rem, 1.6vw, 1.5rem);
-      margin-top: 10px;
-    }
-
-    .sticker-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .sticker {
-      padding: 6px 10px;
-      border: 2px solid var(--ink);
-      font-size: 0.8rem;
-      font-weight: 600;
-      background: var(--acid);
-      transform: rotate(-1.5deg);
-    }
-
-    .sticker.alt {
-      background: var(--mint);
-      transform: rotate(1.2deg);
-    }
-
-    .sticker.alt2 {
-      background: var(--brick);
-      color: white;
-      transform: rotate(-2deg);
-    }
-
-    .side-note {
-      border-left: 4px solid var(--ink);
-      padding-left: 18px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    .marquee {
-      margin: 28px 0 0;
-      border-top: 3px solid var(--ink);
-      border-bottom: 3px solid var(--ink);
-      background: var(--royal);
-      color: white;
-      font-weight: 600;
       letter-spacing: 0.08em;
+      color: var(--unc-navy);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 0.95;
       text-transform: uppercase;
-      padding: 10px 0;
+      letter-spacing: -0.02em;
+      max-width: 11ch;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 62ch;
+      color: #1b2635;
+    }
+
+    .meta {
+      padding: 1rem;
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 0.6rem;
+      background: var(--unc-navy);
+      color: #e8f2fa;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .meta div {
+      border: 1px solid rgba(255,255,255,0.35);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 0.4rem;
+    }
+
+    .ticker {
+      margin-top: 0.8rem;
+      border: 2px solid var(--unc-navy);
+      background: var(--unc-blue);
+      color: #051a2f;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
       overflow: hidden;
       white-space: nowrap;
     }
 
-    .marquee span {
+    .ticker span {
       display: inline-block;
+      padding: 0.55rem 0;
       padding-left: 100%;
-      animation: marquee 18s linear infinite;
+      animation: move 20s linear infinite;
+      letter-spacing: 0.05em;
     }
 
-    main {
-      padding: 36px 6vw 90px;
-    }
-
-    .grid {
+    .layout {
+      margin-top: 0.8rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: 0.42fr 1.58fr;
+      gap: 0.8rem;
+    }
+
+    .rail {
+      border: 2px solid var(--unc-navy);
+      background: var(--panel);
+      min-height: 520px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .rail-box {
+      border-bottom: 2px solid var(--unc-navy);
+      padding: 0.9rem;
+    }
+
+    .rail-box:last-child {
+      border-bottom: 0;
+    }
+
+    .rail h2 {
+      margin: 0 0 0.35rem;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--unc-navy);
+    }
+
+    .rail p {
+      margin: 0;
+      font-size: 0.88rem;
+    }
+
+    .content {
+      border: 2px solid var(--unc-navy);
+      background: var(--panel);
+      padding: 0.8rem;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      border: 2px solid var(--unc-navy);
+      margin-bottom: 0.8rem;
+      background: #eff6fc;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      padding: 0.65rem 0.8rem;
+      border-right: 2px solid var(--unc-navy);
+    }
+
+    .section-head span {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      padding: 0.65rem 0.8rem;
+      color: var(--unc-navy);
+    }
+
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 0.8rem;
     }
 
     .course {
-      border: 3px solid var(--ink);
-      background: white;
-      box-shadow: var(--shadow);
-      padding: 20px 18px;
-      position: relative;
+      border: 2px solid var(--unc-navy);
+      background: #fff;
     }
 
-    .course::after {
-      content: "";
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 28px;
-      height: 28px;
-      background: var(--acid);
-      border: 3px solid var(--ink);
-      transform: rotate(6deg);
-    }
-
-    .coursename {
-      font-family: "Archivo Black", sans-serif;
-      font-size: 1.1rem;
+    .course-title {
+      margin: 0;
+      padding: 0.8rem;
+      background: var(--unc-navy);
+      color: #f8fbff;
+      font-size: 0.95rem;
       text-transform: uppercase;
-      margin: 0 0 16px;
+      letter-spacing: 0.02em;
     }
 
     .student-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .student-list li {
+      border-top: 1px solid var(--line);
+    }
+
+    .student-list a {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .student {
-      display: flex;
+      grid-template-columns: auto 1fr;
+      gap: 0.6rem;
       align-items: center;
-      gap: 10px;
-      border: 2px solid var(--ink);
-      padding: 10px 12px;
-      background: var(--paper);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      padding: 0.58rem 0.72rem;
+      font-size: 0.92rem;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .student::before {
-      content: "•";
-      font-size: 1.4rem;
-      line-height: 1;
-      color: var(--royal);
+    .student-list a::before {
+      content: ">";
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--unc-blue);
+      font-weight: 500;
     }
 
-    .student a {
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .student:hover {
-      transform: translateY(-2px) rotate(-0.2deg);
-      background: var(--acid);
-      box-shadow: 6px 6px 0 var(--ink);
+    .student-list a:hover {
+      background: #e6f1fa;
+      color: #031a31;
     }
 
     footer {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      margin-top: 0.8rem;
+      border: 2px solid var(--unc-navy);
+      background: var(--unc-navy);
+      color: #e6f1fa;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .footer-inner {
       display: flex;
-      gap: 12px;
-      align-items: center;
       justify-content: space-between;
-      padding: 10px 6vw;
-      background: white;
-      border-top: 3px solid var(--ink);
-      font-size: 0.9rem;
+      gap: 1rem;
+      padding: 0.65rem 0.9rem;
     }
 
-    .footer-tag {
-      background: var(--royal);
-      color: white;
-      padding: 4px 8px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    @keyframes marquee {
+    @keyframes move {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
 
-    @media (max-width: 800px) {
-      .banner {
+    @media (max-width: 920px) {
+      .top {
         grid-template-columns: 1fr;
       }
 
-      footer {
-        position: static;
+      .hero {
+        border-right: 0;
+        border-bottom: 2px solid var(--unc-navy);
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .rail {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head h2 {
+        border-right: 0;
+        border-bottom: 2px solid var(--unc-navy);
+      }
+
+      .courses {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
         flex-direction: column;
-        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="banner">
-      <div>
-        <div class="title">New Media Track</div>
-        <div class="subtitle">Student Web Projects · Department of Communication · UNC Chapel Hill</div>
-        <div class="sticker-row">
-          <div class="sticker">Media Studies</div>
-          <div class="sticker alt">Critical Practice</div>
-          <div class="sticker">Studio Energy</div>
-          <div class="sticker alt">Experimental</div>
-          <div class="sticker alt2">2025–2024</div>
-        </div>
-      </div>
-      <div class="side-note">
-        A living index of student work in New Media. Browse projects by course, explore the range, and follow the links to full sites.
-      </div>
-    </div>
-    <div class="marquee"><span>New Media · Interaction · Experiment · Visual Systems · Sound · Space · Code · Play · New Media · Interaction · Experiment · Visual Systems · Sound · Space · Code · Play · </span></div>
-  </header>
+  <div class="frame">
+    <header class="top">
+      <section class="hero">
+        <div class="kicker">Department of Communication / UNC Chapel Hill</div>
+        <h1>New Media Track Projects</h1>
+        <p>MIT Media Lab-inspired modular layout with UNC color mapping. Browse live student web projects from COMM 150 and COMM 636.</p>
+      </section>
+      <aside class="meta">
+        <div>Fall 2025</div>
+        <div>Fall 2024</div>
+        <div>Live Links</div>
+      </aside>
+    </header>
 
-  <main>
-    <div class="grid">
-      <section class="course">
-        <p class="coursename">Fall 2025, COMM 150: Introduction to New Media</p>
-        <div class="student-list">
-          <div class="student"><a href="COMM150Fall2025/Santiago_Amari/">Santiago Amari</a></div>
-          <div class="student"><a href="COMM150Fall2025/Crouse_Aiden_Billionaire_Playground/">Aiden Crouse</a></div>
-          <div class="student"><a href="COMM150Fall2025/DucatteDylanRedFlagsQuiz/index.html">Dylan Ducatte</a></div>
-          <div class="student"><a href="COMM150Fall2025/Firestein_Talya_WhosInControl/index.html">Talya Firestein</a></div>
-          <div class="student"><a href="COMM150Fall2025/alyssa_hall_finalweb/index.html">Alyssa Hall</a></div>
-          <div class="student"><a href="COMM150Fall2025/Han_Sydney/index.html">Sydney Han</a></div>
-          <div class="student"><a href="COMM150Fall2025/Harutunian_Claire_NewMedium/index.html">Claire Hurutunian</a></div>
-          <div class="student"><a href="COMM150Fall2025/Key_Julia_FrogFrenzy/index 2.html">Julia Key</a></div>
-          <div class="student"><a href="COMM150Fall2025/Kutchens_Lauren_DigitalFortuneTeller/index.html">Lauren Kutchens</a></div>
-          <div class="student"><a href="COMM150Fall2025/Kutchens_Lauren_DigitalFortuneTeller/index.html">Darlene Lara-Morales</a></div>
-          <div class="student"><a href="COMM150Fall2025/prendivillekatie_72650_13569444_Prendiville,Katie - The Ethics of Data Center Development/">Katie Prendiville</a></div>
-          <div class="student"><a href="COMM150Fall2025/Ortiz_Davi/index.html">Davi Ortiz</a></div>
-          <div class="student"><a href="COMM150Fall2025/Rothwell_Grace_Viewports/index.html">Grace Rothwell</a></div>
-          <div class="student"><a href="COMM150Fall2025/Ross_Kate_MelodyMachine/index.html">Kate Ross</a></div>
-          <div class="student"><a href="COMM150Fall2025/Souders_Riley_DayInTheLife/start-page.html">Riley Sounders</a></div>
-          <div class="student"><a href="COMM150Fall2025/Tanner_AnnaClayton/index.html">Anna Clayton Tanner</a></div>
-          <div class="student"><a href="COMM150Fall2025/Wu_Meiqian_Cyborg Boundary Lab/index.html">Meiqian Wu</a></div>
+    <div class="ticker">
+      <span>Interaction Design / Story Systems / Web Experiments / Interfaces / Code + Communication / Interaction Design / Story Systems / Web Experiments / Interfaces / Code + Communication / </span>
+    </div>
+
+    <main class="layout">
+      <aside class="rail">
+        <div class="rail-box">
+          <h2>Program</h2>
+          <p>New Media</p>
+        </div>
+        <div class="rail-box">
+          <h2>School</h2>
+          <p>UNC Chapel Hill</p>
+        </div>
+        <div class="rail-box">
+          <h2>Catalog</h2>
+          <p>Student-built web work across two cohorts.</p>
+        </div>
+      </aside>
+
+      <section class="content" id="course-list">
+        <div class="section-head">
+          <h2>Course Collections</h2>
+          <span>Updated 2025</span>
+        </div>
+
+        <div class="courses">
+          <article class="course">
+            <h3 class="course-title">Fall 2025, COMM 150: Introduction to New Media</h3>
+            <ul class="student-list">
+              <li><a href="COMM150Fall2025/Santiago_Amari/">Santiago Amari</a></li>
+              <li><a href="COMM150Fall2025/Crouse_Aiden_Billionaire_Playground/">Aiden Crouse</a></li>
+              <li><a href="COMM150Fall2025/DucatteDylanRedFlagsQuiz/index.html">Dylan Ducatte</a></li>
+              <li><a href="COMM150Fall2025/Firestein_Talya_WhosInControl/index.html">Talya Firestein</a></li>
+              <li><a href="COMM150Fall2025/alyssa_hall_finalweb/index.html">Alyssa Hall</a></li>
+              <li><a href="COMM150Fall2025/Han_Sydney/index.html">Sydney Han</a></li>
+              <li><a href="COMM150Fall2025/Harutunian_Claire_NewMedium/index.html">Claire Hurutunian</a></li>
+              <li><a href="COMM150Fall2025/Key_Julia_FrogFrenzy/index 2.html">Julia Key</a></li>
+              <li><a href="COMM150Fall2025/Kutchens_Lauren_DigitalFortuneTeller/index.html">Lauren Kutchens</a></li>
+              <li><a href="COMM150Fall2025/Kutchens_Lauren_DigitalFortuneTeller/index.html">Darlene Lara-Morales</a></li>
+              <li><a href="COMM150Fall2025/prendivillekatie_72650_13569444_Prendiville,Katie - The Ethics of Data Center Development/">Katie Prendiville</a></li>
+              <li><a href="COMM150Fall2025/Ortiz_Davi/index.html">Davi Ortiz</a></li>
+              <li><a href="COMM150Fall2025/Rothwell_Grace_Viewports/index.html">Grace Rothwell</a></li>
+              <li><a href="COMM150Fall2025/Ross_Kate_MelodyMachine/index.html">Kate Ross</a></li>
+              <li><a href="COMM150Fall2025/Souders_Riley_DayInTheLife/start-page.html">Riley Sounders</a></li>
+              <li><a href="COMM150Fall2025/Tanner_AnnaClayton/index.html">Anna Clayton Tanner</a></li>
+              <li><a href="COMM150Fall2025/Wu_Meiqian_Cyborg Boundary Lab/index.html">Meiqian Wu</a></li>
+            </ul>
+          </article>
+
+          <article class="course">
+            <h3 class="course-title">Fall 2024, COMM 636: Interactive Media</h3>
+            <ul class="student-list">
+              <li><a href="COMM6362024/Zoe/index.html">Zoe Anderson</a></li>
+              <li><a href="COMM6362024/GUO-Shanshan.github.io/index.html">Guo Shanshan</a></li>
+            </ul>
+          </article>
         </div>
       </section>
+    </main>
 
-      <section class="course">
-        <p class="coursename">Fall 2024, COMM 636: Interactive Media</p>
-        <div class="student-list">
-          <div class="student"><a href="COMM6362024/Zoe/index.html">Zoe Anderson</a></div>
-          <div class="student"><a href="COMM6362024/GUO-Shanshan.github.io/index.html">Guo Shanshan</a></div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer>
-    <div>UNC Chapel Hill Department of Communication</div>
-    <div class="footer-tag">&copy; 2025</div>
-  </footer>
+    <footer>
+      <div class="footer-inner">
+        <span>UNC Chapel Hill Department of Communication</span>
+        <span>&copy; 2025</span>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
