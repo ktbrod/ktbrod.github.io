@@ -11,7 +11,7 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(640,480);
+  createCanvas(windowWidth,windowHeight);
   pixelDensity(3);
   video = createCapture(VIDEO);
   video.size(width/vScale,height/vScale);
@@ -50,7 +50,7 @@ function draw() {
       rectMode(CENTER);
       micLevel = mic.getLevel();
       //console.log(micLevel);
-      micMap = map(micLevel, 0, 0.1, 0, 20)
+      micMap = map(micLevel, 0, 0.1, 0, 30)
       ellipse(x*vScale, y*vScale, micMap);
 
       
