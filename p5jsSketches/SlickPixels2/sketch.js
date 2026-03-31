@@ -14,6 +14,8 @@ function setup() {
   slider =createSlider(0,255,80);
   //video.hide();
   
+  colorMode(HSL);
+  
   mic = new p5.AudioIn()
   mic.start();
   
@@ -31,6 +33,8 @@ function setup() {
 function draw() {
   video.loadPixels();
   rando = random(0,1);
+  let c = random(0,50);
+  console.log(c);
   for(x=0;x<video.width;x++){
     for(y=0;y<video.height;y++){
       var index = (x + y * video.width)*4; //gets particular index, skips to the 4th pixel
@@ -42,8 +46,8 @@ function draw() {
       var threshold = slider.value();
       
       if (bright > threshold){
-        stroke(100,100,200);
-        fill(255,0,0,0.5);}
+        stroke(c,c,50);
+        fill(c,c,50);}
         else {
           stroke(0);
           fill(0);        
