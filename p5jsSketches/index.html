@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>p5.js Sketchbook</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
+
+      :root {
+        color-scheme: light;
+        --paper: #070448;
+        --ink: #e3f031;
+        --accent: #0033ff;
+        --edge: #06383f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Shadows Into Light", "Comic Sans MS", "Trebuchet MS", sans-serif;
+        color: var(--ink);
+        background: linear-gradient(135deg, var(--paper) 0%, var(--paper) 100%);
+      }
+
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 64px 24px 80px;
+      }
+
+      header {
+        border-bottom: 2px dashed var(--edge);
+        padding-bottom: 24px;
+        margin-bottom: 32px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        letter-spacing: 0.02em;
+      }
+
+      p {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .sketches {
+        display: grid;
+        gap: 16px;
+      }
+
+      .sketch-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border: 2px solid var(--edge);
+        border-radius: 16px;
+        background: var(--paper);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .sketch-card:hover,
+      .sketch-card:focus-visible {
+        transform: translateY(-3px);
+        border-color: var(--accent);
+        outline: none;
+      }
+
+      .sketch-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      .sketch-note {
+        font-size: 0.95rem;
+        opacity: 0.75;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #0033ff;
+        color: var(--ink);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Code Paintings and Poems</h1>
+        <p>Kelsey Brod, written over the years</p>
+      </header>
+
+      <section class="sketches">
+        <a class="sketch-card" href="ArticApiDemo/index.html">
+          <div>
+            <div class="sketch-title">Art Institute API Demo</div>
+            <div class="sketch-note">p5.js + public API + live artwork data</div>
+          </div>
+          <span class="tag">Enter</span>
+        </a>
+        <a class="sketch-card" href="Artificial/index.html">
+          <div>
+            <div class="sketch-title">Artificial</div>
+            <div class="sketch-note">memories that define a word</div>
+          </div>
+          <span class="tag">Enter</span>
+        </a>
+        <a class="sketch-card" href="CandyHearts/index.html">
+          <div>
+            <div class="sketch-title">Candy Hearts</div>
+            <div class="sketch-note">suggestions for valentine's day</div>
+          </div>
+          <span class="tag">Enter</span>
+        </a>
+        <a class="sketch-card" href="ColorSunset/index.html">
+          <div>
+            <div class="sketch-title">Color Sunset</div>
+            <div class="sketch-note">color fields at dusk</div>
+          </div>
+          <span class="tag">Enter</span>
+        </a>
+      </section>
+    </div>
+  </body>
+</html>

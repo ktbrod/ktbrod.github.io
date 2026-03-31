@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lazy Agent Cover</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f5f1e8;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<script>
+// Lazy Agent — p5.js generative LinkedIn-style cover
+// Wide banner composition with agents that drift, pause, avoid work,
+// and only occasionally engage nearby tasks.
+
+const COVER_W = 1584;
+const COVER_H = 396;
+
+let agents = [];
+let tasks = [];
+let grain = [];
+
+function setup() {
+  createCanvas(COVER_W, COVER_H);
+  pixelDensity(2);
+  noStroke();
+
+  for (let i = 0; i < 42; i++) {
+    agents.push(new LazyAgent(random(width), random(height)));
+  }
+
+  for (let i = 0; i < 14; i++) {
+    tasks.push(new TaskNode(random(120, width - 120), random(70, height - 70)));
+  }
+
+  for (let i = 0; i < 1200; i++) {
+    grain.push({
+      x: random(width),
+      y: random(height),
+      a: random(12, 28),
+      s: random(1, 2.5)
+    });
+  }
+}
+
+function draw() {
+  drawBackground();
+  drawTaskField();
+
+  for (let t of tasks) {
+    t.update();
+    t.display();
+  }
+
+  for (let a of agents) {
+    a.update();
+    a.display();
+  }
+
+  drawOverlayTrails();
+  drawGrain();
+}
+
+function drawBackground() {
+  for (let y = 0; y < height; y++) {
+    let amt = map(y, 0, height, 0, 1);
+    let c = lerpColor(color(244, 239, 228), color(231, 227, 217), amt);
+    stroke(c);
+    line(0, y, width, y);
+  }
+  noStroke();
+
+  fill(255, 160);
+  ellipse(width * 0.20, height * 0.25, 320, 320);
+  fill(255, 110);
+  ellipse(width * 0.77, height * 0.62, 420, 420);
+}
+
+function drawTaskField() {
+  noFill();
+  stroke(60, 70, 90, 24);
+  for (let i = 0; i < tasks.length; i++) {
+    for (let j = i + 1; j < tasks.length; j++) {
+      let d = dist(tasks[i].x, tasks[i].y, tasks[j].x, tasks[j].y);
+      if (d < 240) {
+        strokeWeight(map(d, 0, 240, 0.8, 0.2));
+        line(tasks[i].x, tasks[i].y, tasks[j].x, tasks[j].y);
+      }
+    }
+  }
+  noStroke();
+}
+
+function drawOverlayTrails() {
+  noFill();
+  stroke(40, 50, 70, 18);
+  for (let a of agents) {
+    beginShape();
+    for (let p of a.history) {
+      curveVertex(p.x, p.y);
+    }
+    endShape();
+  }
+  noStroke();
+}
+
+function drawGrain() {
+  noStroke();
+  for (let g of grain) {
+    fill(80, g.a);
+    rect(g.x, g.y, g.s, g.s);
+  }
+}
+
+class TaskNode {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.phase = random(TWO_PI);
+    this.r = random(12, 20);
+  }
+
+  update() {
+    this.phase += 0.012;
+  }
+
+  display() {
+    let pulse = sin(this.phase) * 0.5 + 0.5;
+
+    noFill();
+    stroke(70, 88, 120, 32);
+    strokeWeight(1);
+    ellipse(this.x, this.y, this.r * 2 + pulse * 10);
+    ellipse(this.x, this.y, this.r * 3.8 + pulse * 18);
+
+    noStroke();
+    fill(88, 108, 145, 80);
+    ellipse(this.x, this.y, this.r * 1.2);
+    fill(55, 72, 104, 135);
+    ellipse(this.x, this.y, this.r * 0.58);
+  }
+}
+
+class LazyAgent {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = p5.Vector.random2D().mult(random(0.15, 0.45));
+    this.acc = createVector(0, 0);
+    this.baseR = random(8, 15);
+    this.energy = random(0.15, 0.55);     // lower energy = lazier
+    this.commitment = random(0.02, 0.18); // probability of engaging task
+    this.pauseBias = random(0.82, 0.96);  // high pause bias = frequent hesitation
+    this.phase = random(TWO_PI);
+    this.history = [];
+    this.idleTilt = random(-1, 1);
+  }
+
+  applyForce(f) {
+    this.acc.add(f);
+  }
+
+  update() {
+    this.phase += 0.02;
+
+    let nearest = this.findNearestTask();
+    let d = nearest ? p5.Vector.dist(this.pos, nearest) : 9999;
+
+    // Most of the time the agent chooses a tiny drift over purposeful action.
+    let drift = p5.Vector.fromAngle(noise(this.pos.x * 0.003, this.pos.y * 0.003, frameCount * 0.004) * TAU * 2);
+    drift.mult(0.035 + this.energy * 0.04);
+    this.applyForce(drift);
+
+    // Occasional micro-collapse into idleness.
+    if (random() < this.pauseBias * 0.045) {
+      this.vel.mult(0.82);
+    }
+
+    if (nearest && d < 170) {
+      let toward = p5.Vector.sub(nearest, this.pos);
+      let desire = toward.copy().normalize();
+
+      // Lazy logic: approach weakly, often sidestep, sometimes retreat.
+      if (random() < this.commitment) {
+        desire.mult(0.05 + this.energy * 0.09);
+        this.applyForce(desire);
+      } else {
+        let sideStep = createVector(-desire.y, desire.x).mult(random([-1, 1]) * 0.06);
+        this.applyForce(sideStep);
+
+        if (d < 65) {
+          let retreat = toward.mult(-1).normalize().mult(0.08);
+          this.applyForce(retreat);
+        }
+      }
+    }
+
+    // Friction keeps the agents feeling slow and unmotivated.
+    this.vel.mult(0.975);
+    this.vel.add(this.acc);
+    this.vel.limit(1.25);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+
+    this.wrapEdges();
+
+    this.history.push(this.pos.copy());
+    if (this.history.length > 28) this.history.shift();
+  }
+
+  findNearestTask() {
+    let closest = null;
+    let best = Infinity;
+    for (let t of tasks) {
+      let tv = createVector(t.x, t.y);
+      let d = p5.Vector.dist(this.pos, tv);
+      if (d < best) {
+        best = d;
+        closest = tv;
+      }
+    }
+    return closest;
+  }
+
+  wrapEdges() {
+    if (this.pos.x < -20) this.pos.x = width + 20;
+    if (this.pos.x > width + 20) this.pos.x = -20;
+    if (this.pos.y < -20) this.pos.y = height + 20;
+    if (this.pos.y > height + 20) this.pos.y = -20;
+  }
+
+  display() {
+    let speed = this.vel.mag();
+    let squash = map(speed, 0, 1.25, 1.22, 0.92);
+    let stretch = map(speed, 0, 1.25, 0.88, 1.1);
+    let wobble = sin(this.phase) * 2.4;
+
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(this.vel.heading() + this.idleTilt * 0.15 + wobble * 0.01);
+
+    // soft shadow
+    fill(30, 24);
+    ellipse(0, this.baseR + 7, this.baseR * 2.2, this.baseR * 0.8);
+
+    // body
+    fill(38, 48, 68, 205);
+    ellipse(0, 0, this.baseR * 2.2 * squash, this.baseR * 1.7 * stretch);
+
+    // halo of weak intention
+    noFill();
+    stroke(80, 100, 140, 34);
+    strokeWeight(1);
+    ellipse(0, 0, this.baseR * 3.1 + wobble, this.baseR * 3.1 + wobble);
+    noStroke();
+
+    // eye / directional marker
+    fill(248, 244, 238, 230);
+    ellipse(this.baseR * 0.35, -1, this.baseR * 0.58, this.baseR * 0.58);
+    fill(35, 35, 35, 220);
+    ellipse(this.baseR * 0.47, -1, this.baseR * 0.2, this.baseR * 0.2);
+
+    pop();
+  }
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('lazy-agent-linkedin-cover', 'png');
+  }
+}
+</script>
+</body>
+</html>
