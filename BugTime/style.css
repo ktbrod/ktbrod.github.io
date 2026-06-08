@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  color: #aaa;
+  font-family: sans-serif;
+  font-size: 14px;
+  padding: 16px;
+}
+
+#title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+/* ── Layout ─────────────────────────────── */
+
+#main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#canvas-container {
+  width: 100%;
+  height: 80vh;
+  background: #000;
+}
+
+#canvas-container canvas {
+  display: block;
+}
+
+/* ── Sidebar / Controls ─────────────────── */
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+}
+
+.control-value {
+  color: #cc2200;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #cc2200;
+  cursor: pointer;
+}
+
+.control-placeholder {
+  border: 1px dashed #1e1e1e;
+  border-radius: 4px;
+  padding: 14px 12px;
+  min-height: 52px;
+  color: #2a2a2a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Description ────────────────────────── */
+
+#description {
+  margin-top: 48px;
+  padding-top: 24px;
+  min-height: 160px;
+  border-top: 1px solid #111;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ── Desktop ────────────────────────────── */
+
+@media (min-width: 768px) {
+  #main {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  #canvas-container {
+    flex: 1;
+    height: 80vh;
+  }
+
+  #sidebar {
+    width: 180px;
+    flex-shrink: 0;
+    padding-left: 20px;
+    padding-top: 4px;
+  }
+}

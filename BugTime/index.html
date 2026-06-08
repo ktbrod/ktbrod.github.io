@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Time</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1 id="title">Bug Time</h1>
+
+  <div id="main">
+
+    <div id="canvas-container"></div>
+
+    <div id="sidebar">
+
+      <!-- Frame Rate -->
+      <div class="control-group">
+        <span class="control-label">
+          Frame Rate: <span class="control-value" id="fr-display">10</span> fps
+        </span>
+        <input type="range" id="fr-slider" min="1" max="60" value="10">
+      </div>
+
+      <!-- Placeholder: Frequency Range -->
+      <div class="control-group">
+        <span class="control-label">Frequency Range</span>
+        <div class="control-placeholder">coming soon</div>
+      </div>
+
+      <!-- Placeholder: Mute -->
+      <div class="control-group">
+        <span class="control-label">Mute</span>
+        <div class="control-placeholder">coming soon</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Description (blank for now) -->
+  <div id="description"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/addons/p5.sound.min.js"></script>
+  <script src="sketch.js"></script>
+
+</body>
+</html>
