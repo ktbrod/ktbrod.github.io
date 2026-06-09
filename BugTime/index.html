@@ -29,20 +29,20 @@
 
     <div id="sidebar">
 
+      <!-- Detail / History -->
+      <div class="control-group">
+        <span class="control-label">
+          Time Resolution: <span class="control-value" id="zoom-display">1</span>
+        </span>
+        <input type="range" id="zoom-slider" min="1" max="32" step="1" value="1">
+      </div>
+
       <!-- Frame Rate -->
       <div class="control-group">
         <span class="control-label">
           Frame Rate: <span class="control-value" id="fr-display">10</span> fps
         </span>
         <input type="range" id="fr-slider" min="1" max="60" value="10">
-      </div>
-
-      <!-- Smoothing -->
-      <div class="control-group">
-        <span class="control-label">
-          Smoothing: <span class="control-value" id="smooth-display">0.8</span>
-        </span>
-        <input type="range" id="smooth-slider" min="0" max="1" step="0.01" value="0.8">
       </div>
 
       <!-- FFT Bins -->
