@@ -70,9 +70,9 @@ body {
 }
 
 #mode-buttons button.active {
-  border-color: #cc2200;
-  color: #cc2200;
-  background: #1a0000;
+  border-color: hsl(0, 100%, 52%);
+  background: hsl(0, 100%, 52%);
+  color: #000;
 }
 
 /* ── Layout ─────────────────────────────── */

@@ -11,10 +11,6 @@ const bands = [
   { name: "Treble",   key: "treble",  s: 100, l: 52 },
 ];
 
-// Rolling history: each entry is an object { wave, energies }
-let history = [];
-let columnsPerSnapshot = 1;
-
 function preload() {
   cic = loadSound('cicada.mp3');
 }
@@ -40,68 +36,46 @@ function setup() {
     frameRate(currentFR);
   });
 
-  // FFT Bins slider (powers of 2: 32, 64, 128, 256, 512, 1024)
-  const binSteps = [32, 64, 128, 256, 512, 1024];
-  let binsSlider = document.getElementById('bins-slider');
-  let binsDisplay = document.getElementById('bins-display');
-  binsSlider.addEventListener('input', function () {
-    let bins = binSteps[int(this.value)];
-    binsDisplay.textContent = bins;
-    fft = new p5.FFT(0.1, bins);
-    if (mode === 'record') fft.setInput(mic);
-    if (mode === 'test')   fft.setInput(cic);
-    history = [];
-  });
-
-  // Detail / History zoom slider
+  // Time resolution slider (display bins: 1–2048)
   let zoomSlider = document.getElementById('zoom-slider');
   let zoomDisplay = document.getElementById('zoom-display');
   zoomSlider.addEventListener('input', function () {
-    columnsPerSnapshot = int(this.value);
-    zoomDisplay.textContent = columnsPerSnapshot;
-    history = [];
+    zoomDisplay.textContent = int(this.value);
   });
-
 }
 
 function draw() {
   background(0, 0, 0);
 
-  // ── Capture current frame ────────────────
   fft.analyze();
   let wave = fft.waveform();
   let energies = bands.map(b => fft.getEnergy(b.key));
 
-  // Store a downsampled snapshot (every 4th sample keeps it manageable)
-  let snapshot = [];
-  for (let i = 0; i < wave.length; i += 4) {
-    snapshot.push(wave[i]);
+  // Use exactly 1024 samples so gaps appear when displayBins > 1024
+  const SAMPLES = 1024;
+  let displayBins = int(document.getElementById('zoom-slider').value);
+  let slots = new Array(displayBins).fill(null);
+  for (let s = 0; s < SAMPLES; s++) {
+    let slot = floor(s * displayBins / SAMPLES);
+    if (slot < displayBins) slots[slot] = wave[s];
   }
-  history.push({ wave: snapshot, energies });
-  let maxHistory = floor(width / columnsPerSnapshot);
-  if (history.length > maxHistory) history.shift();
 
-  // ── Draw ─────────────────────────────────
-  let bandH = height / bands.length;
+  let totalLanes = bands.length + 1;
+  let bandH = height / totalLanes;
 
+  // ── Individual bands ─────────────────────
   for (let b = 0; b < bands.length; b++) {
     let band = bands[b];
     let centerY = bandH * b + bandH / 2;
+    let amp = map(energies[b], 0, 255, 2, bandH * 0.44);
 
     noStroke();
     fill(0, band.s, band.l, 88);
-
-    for (let i = 0; i < history.length; i++) {
-      let snap = history[i];
-      let amp = map(snap.energies[b], 0, 255, 2, bandH * 0.44);
-      let x0 = i * columnsPerSnapshot;
-
-      // Spread samples across columnsPerSnapshot columns
-      for (let s = 0; s < snap.wave.length; s++) {
-        let x = x0 + map(s, 0, snap.wave.length, 0, columnsPerSnapshot);
-        let y = centerY + snap.wave[s] * amp * 20;
-        ellipse(x, y, 2, 2);
-      }
+    for (let i = 0; i < displayBins; i++) {
+      if (slots[i] === null) continue; // gap — skip
+      let x = map(i, 0, displayBins, 0, width);
+      let y = centerY + slots[i] * amp * 20;
+      ellipse(x, y, 2, 2);
     }
 
     // Energy bar (left edge)
@@ -122,6 +96,41 @@ function draw() {
     strokeWeight(1);
     line(0, bandH * b, width, bandH * b);
   }
+
+  // ── Combined lane — all bands overlaid ──
+  let combinedCenterY = bandH * bands.length + bandH / 2;
+
+  for (let b = 0; b < bands.length; b++) {
+    let band = bands[b];
+    let amp = map(energies[b], 0, 255, 2, bandH * 0.44);
+    noStroke();
+    fill(0, band.s, band.l, 70);
+    for (let i = 0; i < displayBins; i++) {
+      if (slots[i] === null) continue;
+      let x = map(i, 0, displayBins, 0, width);
+      let y = combinedCenterY + slots[i] * amp * 20;
+      ellipse(x, y, 2, 2);
+    }
+  }
+
+  // Combined lane divider
+  stroke(0, 0, 12, 100);
+  strokeWeight(1);
+  line(0, bandH * bands.length, width, bandH * bands.length);
+
+  // Combined label
+  let avgEnergy = energies.reduce((a, b) => a + b, 0) / energies.length;
+  fill(0, 60, 40, 60);
+  noStroke();
+  textSize(10);
+  textAlign(LEFT, TOP);
+  text('All  ' + floor(avgEnergy), 12, bandH * bands.length + 8);
+
+  // Combined energy bar
+  let combinedBarH = map(avgEnergy, 0, 255, 0, bandH * 0.75);
+  noStroke();
+  fill(0, 60, 40, 75);
+  rect(0, combinedCenterY - combinedBarH / 2, 5, combinedBarH);
 }
 
 function setActiveButton(id) {
@@ -134,7 +143,6 @@ function startRecord() {
   if (mode === 'record') {
     mic.stop();
     mode = null;
-    history = [];
     document.getElementById('btn-record').classList.remove('active');
     return;
   }
@@ -143,7 +151,6 @@ function startRecord() {
   mic.start();
   fft.setInput(mic);
   mode = 'record';
-  history = [];
   setActiveButton('btn-record');
 }
 
@@ -151,7 +158,6 @@ function startTest() {
   if (mode === 'test' && cic.isPlaying()) {
     cic.stop();
     mode = null;
-    history = [];
     document.getElementById('btn-test').classList.remove('active');
     return;
   }
@@ -160,12 +166,10 @@ function startTest() {
   fft.setInput(cic);
   cic.loop();
   mode = 'test';
-  history = [];
   setActiveButton('btn-test');
 }
 
 function windowResized() {
   let container = document.getElementById('canvas-container');
   resizeCanvas(container.offsetWidth, container.offsetHeight);
-  history = [];
 }
