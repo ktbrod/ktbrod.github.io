@@ -20,6 +20,41 @@ body {
   margin-bottom: 14px;
 }
 
+/* ── Mode Buttons ───────────────────────── */
+
+#mode-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+#mode-buttons button {
+  background: transparent;
+  border: 1px solid #2a0000;
+  color: #993300;
+  font-family: sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#mode-buttons button:hover {
+  border-color: #cc2200;
+  color: #cc2200;
+}
+
+#mode-buttons button.active {
+  border-color: #cc2200;
+  color: #cc2200;
+  background: #1a0000;
+}
+
 /* ── Layout ─────────────────────────────── */
 
 #main {
