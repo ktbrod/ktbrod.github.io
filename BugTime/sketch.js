@@ -11,6 +11,26 @@ const bands = [
   { name: "Treble",   key: "treble",  s: 100, l: 52 },
 ];
 
+// Makes custom-styled range sliders work on iOS Safari
+function makeSliderTouchFriendly(slider) {
+  function handleTouch(e) {
+    e.stopPropagation();
+    let touch = e.touches[0];
+    let rect = slider.getBoundingClientRect();
+    let ratio = (touch.clientX - rect.left) / rect.width;
+    let min = parseFloat(slider.min);
+    let max = parseFloat(slider.max);
+    let step = parseFloat(slider.step) || 1;
+    let value = min + ratio * (max - min);
+    value = Math.round(value / step) * step;
+    value = Math.max(min, Math.min(max, value));
+    slider.value = value;
+    slider.dispatchEvent(new Event('input'));
+  }
+  slider.addEventListener('touchstart', handleTouch, { passive: false });
+  slider.addEventListener('touchmove', handleTouch, { passive: false });
+}
+
 function preload() {
   cic = loadSound('cicada.mp3');
 }
@@ -26,6 +46,11 @@ function setup() {
 
   fft = new p5.FFT(0.1, 1024);
   mic = new p5.AudioIn();
+
+  // Make all sliders touch-friendly on mobile
+  ['fr-slider', 'zoom-slider'].forEach(id => {
+    makeSliderTouchFriendly(document.getElementById(id));
+  });
 
   // Frame rate slider
   let frSlider = document.getElementById('fr-slider');
