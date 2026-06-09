@@ -36,14 +36,33 @@ function setup() {
     frDisplay.textContent = currentFR;
     frameRate(currentFR);
   });
+
+  // FFT Bins slider (powers of 2: 32, 64, 128, 256, 512, 1024)
+  const binSteps = [32, 64, 128, 256, 512, 1024];
+  let binsSlider = document.getElementById('bins-slider');
+  let binsDisplay = document.getElementById('bins-display');
+  binsSlider.addEventListener('input', function () {
+    let bins = binSteps[int(this.value)];
+    binsDisplay.textContent = bins;
+    fft = new p5.FFT(parseFloat(document.getElementById('smooth-slider').value), bins);
+    if (mode === 'record') fft.setInput(mic);
+    if (mode === 'test')   fft.setInput(cic);
+  });
+
+  // Smoothing slider
+  let smoothSlider = document.getElementById('smooth-slider');
+  let smoothDisplay = document.getElementById('smooth-display');
+  smoothSlider.addEventListener('input', function () {
+    let val = parseFloat(this.value);
+    smoothDisplay.textContent = val.toFixed(2);
+    fft.smooth(val);
+  });
 }
 
 function draw() {
   noStroke();
   fill(0, 0, 0, 18);
   rect(0, 0, width, height);
-
-  if (mode === null) return;
 
   // ── Visualize ───────────────────────────
   fft.analyze();
@@ -56,17 +75,14 @@ function draw() {
     let centerY = bandH * b + bandH / 2;
     let amp = map(energy, 0, 255, 2, bandH * 0.44);
 
-    // Waveform line
-    stroke(0, band.s, band.l, 88);
-    strokeWeight(1.5);
-    noFill();
-    beginShape();
+    // Waveform dots
+    noStroke();
+    fill(0, band.s, band.l, 88);
     for (let i = 0; i < wave.length; i++) {
       let x = map(i, 0, wave.length, 0, width);
-      let y = centerY + wave[i] * amp;
-      vertex(x, y);
+      let y = centerY + wave[i] * amp * 2.5;
+      ellipse(x, y, 3, 3);
     }
-    endShape();
 
     // Energy bar (left edge)
     let barH = map(energy, 0, 255, 0, bandH * 0.75);
@@ -96,6 +112,7 @@ function setActiveButton(id) {
 
 function startRecord() {
   if (getAudioContext().state !== 'running') userStartAudio();
+  if (cic.isPlaying()) cic.stop();
   mic.start();
   fft.setInput(mic);
   mode = 'record';

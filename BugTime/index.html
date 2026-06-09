@@ -8,7 +8,15 @@
 </head>
 <body>
 
-  <h1 id="title">Bug Time</h1>
+  <div id="title-container">
+    <svg id="title-wave" preserveAspectRatio="none" viewBox="0 0 800 60" xmlns="http://www.w3.org/2000/svg">
+      <path id="wave-path" fill="none" stroke="white" stroke-width="1.5" opacity="0.25"
+        d="M0,30 C25,10 50,50 75,30 C100,10 125,50 150,30 C175,10 200,50 225,30 C250,10 275,50 300,30 C325,10 350,50 375,30 C400,10 425,50 450,30 C475,10 500,50 525,30 C550,10 575,50 600,30 C625,10 650,50 675,30 C700,10 725,50 750,30 C775,10 800,50 800,30"/>
+    </svg>
+    <h1 id="title">Bug Time</h1>
+  </div>
+
+  <div id="description">Many bugs like cicadas and crickets have higher frequency processing than humans. A frequency is the measurement of a phenomena over time. Frequencies measure not just the production of a phenomena, such as sound, but the perception of the phenomena, such as hearing the sound. Computers measure the frequency of a sound with its own frequency of recording that sound called the "sampling rate." Humans and other beings have their own subconscious sampling rate that help them process perceived information like light and sound. Sound frequency processing is often called "temporal resolution," but the frequency across beings differ. Described another way, time is resolved at different rates across beings. Since bugs like cicadas and crickets can measure frequency (both in the production and perception of a phenomena like sound) at a higher rate than humans, they can also deliver and perceive information at this rate faster. Since the information is delivered beyond human perception, it can often be perceived as "noise" (an unintelligible frequency) to humans. Here, you can play with different parameters of the frequencies, so that pattern information of bug communication emerges.</div>
 
   <div id="mode-buttons">
     <button id="btn-record" onclick="startRecord()">Record</button>
@@ -29,6 +37,22 @@
         <input type="range" id="fr-slider" min="1" max="60" value="10">
       </div>
 
+      <!-- Smoothing -->
+      <div class="control-group">
+        <span class="control-label">
+          Smoothing: <span class="control-value" id="smooth-display">0.8</span>
+        </span>
+        <input type="range" id="smooth-slider" min="0" max="1" step="0.01" value="0.8">
+      </div>
+
+      <!-- FFT Bins -->
+      <div class="control-group">
+        <span class="control-label">
+          FFT Bins: <span class="control-value" id="bins-display">1024</span>
+        </span>
+        <input type="range" id="bins-slider" min="0" max="5" step="1" value="5">
+      </div>
+
       <!-- Placeholder: Frequency Range -->
       <div class="control-group">
         <span class="control-label">Frequency Range</span>
@@ -44,8 +68,6 @@
     </div>
   </div>
 
-  <!-- Description (blank for now) -->
-  <div id="description"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/addons/p5.sound.min.js"></script>
