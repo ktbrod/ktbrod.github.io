@@ -133,6 +133,34 @@ function draw() {
   rect(0, combinedCenterY - combinedBarH / 2, 5, combinedBarH);
 }
 
+function toggleSound() {
+  if (getAudioContext().state !== 'running') userStartAudio();
+  if (mode === 'test') {
+    if (cic.isPlaying()) cic.pause(); else cic.loop();
+  }
+}
+
+function mousePressed() {
+  let container = document.getElementById('canvas-container');
+  let rect = container.getBoundingClientRect();
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    toggleSound();
+  }
+}
+
+function touchStarted() {
+  let container = document.getElementById('canvas-container');
+  let rect = container.getBoundingClientRect();
+  let tx = touches[0].x;
+  let ty = touches[0].y;
+
+  if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
+    toggleSound();
+    return false; // prevent scroll/zoom only when touching canvas
+  }
+  // all other touches (sliders, buttons) pass through normally
+}
+
 function setActiveButton(id) {
   document.getElementById('btn-record').classList.remove('active');
   document.getElementById('btn-test').classList.remove('active');
