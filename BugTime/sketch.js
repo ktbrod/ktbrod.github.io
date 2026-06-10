@@ -174,12 +174,12 @@ function mousePressed() {
 }
 
 function touchStarted() {
-  let container = document.getElementById('canvas-container');
-  let rect = container.getBoundingClientRect();
+  if (touches.length === 0) return;
   let tx = touches[0].x;
   let ty = touches[0].y;
 
-  if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
+  // touches[].x/y are canvas-relative, so compare directly to canvas bounds
+  if (tx >= 0 && tx <= width && ty >= 0 && ty <= height) {
     toggleSound();
     return false; // prevent scroll/zoom only when touching canvas
   }
