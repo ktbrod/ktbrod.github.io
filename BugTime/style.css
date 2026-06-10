@@ -69,10 +69,70 @@ body {
   color: #cc2200;
 }
 
+#sample-sounds-heading {
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: hsl(0, 100%, 52%);
+  margin-top: 4px;
+}
+
+#frequency-bands-heading {
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: hsl(0, 100%, 52%);
+  text-align: left;
+  margin-bottom: 14px;
+}
+
 #mode-buttons button.active {
   border-color: hsl(0, 100%, 52%);
   background: hsl(0, 100%, 52%);
   color: #000;
+}
+
+/* ── Record button — inverted by default ─── */
+
+#mode-buttons #btn-record {
+  background: hsl(0, 100%, 52%);
+  border-color: hsl(0, 100%, 52%);
+  color: #000;
+}
+
+#mode-buttons #btn-record:hover {
+  background: #cc2200;
+  border-color: #cc2200;
+  color: #000;
+}
+
+#mode-buttons #btn-record.active {
+  background: hsl(0, 100%, 52%);
+  border-color: hsl(0, 100%, 52%);
+  color: #000;
+}
+
+#mode-buttons #btn-record:focus,
+#mode-buttons #btn-record:active {
+  background: hsl(0, 100%, 52%);
+  border-color: hsl(0, 100%, 52%);
+  color: #000;
+  outline: none;
+}
+
+#record-icon {
+  display: inline-block;
+}
+
+#btn-record.active #record-icon {
+  animation: record-blink 1s steps(1) infinite;
+}
+
+@keyframes record-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 /* ── Layout ─────────────────────────────── */
