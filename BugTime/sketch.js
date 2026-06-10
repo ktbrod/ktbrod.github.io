@@ -2,6 +2,9 @@ let fft, mic;
 let currentFR = 10;
 let mode = null; // null | 'record' | 'cicada' | 'katydid' | 'grasshopper' | 'cricket'
 
+// Fixed notches for the Temporal Resolution slider
+const resolutionLevels = [8, 16, 128, 256, 512, 1024];
+
 let sounds = {}; // key -> p5.SoundFile
 const soundFiles = {
   cicada:      'cicada.mp3',
@@ -71,11 +74,11 @@ function setup() {
     frameRate(currentFR);
   });
 
-  // Time resolution slider (display bins: 1–2048)
+  // Temporal resolution slider — fixed notches via resolutionLevels
   let zoomSlider = document.getElementById('zoom-slider');
   let zoomDisplay = document.getElementById('zoom-display');
   zoomSlider.addEventListener('input', function () {
-    zoomDisplay.textContent = int(this.value);
+    zoomDisplay.textContent = resolutionLevels[int(this.value)];
   });
 }
 
@@ -88,7 +91,7 @@ function draw() {
 
   // Use exactly 1024 samples so gaps appear when displayBins > 1024
   const SAMPLES = 1024;
-  let displayBins = int(document.getElementById('zoom-slider').value);
+  let displayBins = resolutionLevels[int(document.getElementById('zoom-slider').value)];
   let slots = new Array(displayBins).fill(null);
   for (let s = 0; s < SAMPLES; s++) {
     let slot = floor(s * displayBins / SAMPLES);
@@ -127,7 +130,7 @@ function draw() {
     // Band label + energy value
     fill(0, band.s, band.l, 60);
     noStroke();
-    textSize(10);
+    textSize(20);
     textAlign(LEFT, TOP);
     text(band.name + '  ' + floor(energies[b]), 12, bandH * b + 8);
 
@@ -162,7 +165,7 @@ function draw() {
   let avgEnergy = energies.reduce((a, b) => a + b, 0) / energies.length;
   fill(0, 60, 40, 60);
   noStroke();
-  textSize(10);
+  textSize(20);
   textAlign(LEFT, TOP);
   text('All  ' + floor(avgEnergy), 12, bandH * bands.length + 8);
 

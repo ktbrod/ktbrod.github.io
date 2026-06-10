@@ -16,7 +16,36 @@
     <h1 id="title">Bug Time</h1>
   </div>
 
-  <div id="description">Many bugs like cicadas and crickets have higher frequency processing than humans. A frequency is the measurement of a phenomena over time. Frequencies measure not just the production of a phenomena, such as sound, but the perception of the phenomena, such as hearing the sound. Computers measure the frequency of a sound with its own frequency of recording that sound called the "sampling rate." Humans and other beings have their own subconscious sampling rate that help them process perceived information like light and sound. Sound frequency processing is often called "temporal resolution," but the frequency across beings differ. Described another way, time is resolved at different rates across beings. Since bugs like cicadas and crickets can measure frequency (both in the production and perception of a phenomena like sound) at a higher rate than humans, they can also deliver and perceive information at this rate faster. Since the information is delivered beyond human perception, it can often be perceived as "noise" (an unintelligible frequency) to humans. Here, you can play with different parameters of the frequencies, so that pattern information of bug communication emerges.</div>
+  <div id="description"> <cite>"In contrast to vertebrates, almost everything of the processing of auditory information in an insect auditory pathway has to do with time" (Hennig et al. 2004).</cite>
+    <br>
+    <br>
+
+
+I’m always interested in how everyday computing and computers are optimized toward a specific understanding of human and human perception. Bug Time takes the recording (computational audio sampling) of bug sounds and asks if there are gaps in these recordings because the hardware used to sample the bugs are optimized for an understanding of human hearing. 
+<br>
+<br>
+
+Frequency bands (pitch):
+
+A user of Bug Time can click on the different sample sounds to see which frequency a particular bug prefers. This preference might have something to do with the “acoustic niche hypothesis” (Krause 1993; Ríos-Chelén 2025) where a given species in an ecosystem chooses a unique pitch to communicate in that is different from other sounds. A user of Bug Time can also record their own surrounding and see what frequencies are being used. “Infrasonic” and “ultrasonic” pitches aren’t recorded and represented here (because they are below and above human hearing and therefore most recording devices do not acknowledge their presence).
+<br>
+<br>
+
+Temporal resolution and frame rate:
+
+I called the project “Bug Time” because I am most interested in what is called “temporal resolution” of hearing. Temporal resolution is the ability to detect amplitude difference over time. The higher “resolution” the more difference (or detail) may be perceived. 
+<br>
+<br>
+
+A user of Bug Time can visualize different temporal resolutions by using the slider, effectively visualizing different sampling rates of the sound. What is interesting is that the same sound appears to be noisy or have a pattern depending on the temporal resolution. 
+<br>
+<br>
+
+
+I’ve also included a frame rate slider which helps slow down the higher temporal resolution which helps to visualize the amplitude difference over time. 
+<br>
+<br>
+</div>
 
   <div id="mode-buttons">
     <button id="btn-record" onclick="startRecord()">Record <span id="record-icon">&#9679;</span></button>
@@ -42,7 +71,15 @@
         <span class="control-label">
           Temporal Resolution: <span class="control-value" id="zoom-display">1024</span>
         </span>
-        <input type="range" id="zoom-slider" min="1" max="10000" step="1" value="1024">
+        <input type="range" id="zoom-slider" min="0" max="5" step="1" value="5" list="zoom-notches">
+        <datalist id="zoom-notches">
+          <option value="0" label="8"></option>
+          <option value="1" label="16"></option>
+          <option value="2" label="128"></option>
+          <option value="3" label="256"></option>
+          <option value="4" label="512"></option>
+          <option value="5" label="1024"></option>
+        </datalist>
       </div>
 
       <!-- Frame Rate -->
