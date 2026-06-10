@@ -20,7 +20,10 @@
 
   <div id="mode-buttons">
     <button id="btn-record" onclick="startRecord()">Record</button>
-    <button id="btn-test" onclick="startTest()">Use Test Sound (Cicadas)</button>
+    <button id="btn-cicada" onclick="startTest('cicada')">Cicadas</button>
+    <button id="btn-katydid" onclick="startTest('katydid')">Katydids</button>
+    <button id="btn-grasshopper" onclick="startTest('grasshopper')">Grasshoppers</button>
+    <button id="btn-cricket" onclick="startTest('cricket')">Crickets</button>
   </div>
 
   <div id="main">
@@ -29,12 +32,14 @@
 
     <div id="sidebar">
 
+      <h2 id="sidebar-heading">Adjust the below sliding parameters to change your device's sound perception</h2>
+
       <!-- Detail / History -->
       <div class="control-group">
         <span class="control-label">
-          Time Resolution: <span class="control-value" id="zoom-display">1024</span>
+          Temporal Resolution: <span class="control-value" id="zoom-display">1024</span>
         </span>
-        <input type="range" id="zoom-slider" min="1" max="2048" step="1" value="1024">
+        <input type="range" id="zoom-slider" min="1" max="10000" step="1" value="1024">
       </div>
 
       <!-- Frame Rate -->

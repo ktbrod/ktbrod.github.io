@@ -1,10 +1,18 @@
-let cic, fft, mic;
+let fft, mic;
 let currentFR = 10;
-let mode = null; // null | 'record' | 'test'
+let mode = null; // null | 'record' | 'cicada' | 'katydid' | 'grasshopper' | 'cricket'
+
+let sounds = {}; // key -> p5.SoundFile
+const soundFiles = {
+  cicada:      'cicada.mp3',
+  katydid:     'katydids.mp3',
+  grasshopper: 'grasshoppers.mp3',
+  cricket:     'Crickets.mp3',
+};
 
 // Infrared palette — same red hue, increasing saturation toward treble
 const bands = [
-  { name: "Bass",     key: "bass",    s: 18,  l: 22 },
+  { name: "Bass",     key: "bass",    s: 12,  l: 35 },
   { name: "Low Mid",  key: "lowMid",  s: 38,  l: 28 },
   { name: "Mid",      key: "mid",     s: 58,  l: 35 },
   { name: "High Mid", key: "highMid", s: 80,  l: 42 },
@@ -32,7 +40,9 @@ function makeSliderTouchFriendly(slider) {
 }
 
 function preload() {
-  cic = loadSound('cicada.mp3');
+  for (let key in soundFiles) {
+    sounds[key] = loadSound(soundFiles[key]);
+  }
 }
 
 function setup() {
@@ -85,6 +95,11 @@ function draw() {
     if (slot < displayBins) slots[slot] = wave[s];
   }
 
+  // Dots stay full-size up to 2048, then shrink as displayBins grows
+  // further, so gaps between real samples become visible instead of
+  // being masked by overlapping dots.
+  let dotSize = displayBins <= 2048 ? 2 : constrain((2 * 2048) / displayBins, 0.6, 2);
+
   let totalLanes = bands.length + 1;
   let bandH = height / totalLanes;
 
@@ -100,7 +115,7 @@ function draw() {
       if (slots[i] === null) continue; // gap — skip
       let x = map(i, 0, displayBins, 0, width);
       let y = centerY + slots[i] * amp * 20;
-      ellipse(x, y, 2, 2);
+      ellipse(x, y, dotSize, dotSize);
     }
 
     // Energy bar (left edge)
@@ -134,7 +149,7 @@ function draw() {
       if (slots[i] === null) continue;
       let x = map(i, 0, displayBins, 0, width);
       let y = combinedCenterY + slots[i] * amp * 20;
-      ellipse(x, y, 2, 2);
+      ellipse(x, y, dotSize, dotSize);
     }
   }
 
@@ -160,8 +175,9 @@ function draw() {
 
 function toggleSound() {
   if (getAudioContext().state !== 'running') userStartAudio();
-  if (mode === 'test') {
-    if (cic.isPlaying()) cic.pause(); else cic.loop();
+  if (mode && mode !== 'record') {
+    let snd = sounds[mode];
+    if (snd.isPlaying()) snd.pause(); else snd.loop();
   }
 }
 
@@ -186,40 +202,48 @@ function touchStarted() {
   // all other touches (sliders, buttons) pass through normally
 }
 
+const allButtonIds = ['btn-record', 'btn-cicada', 'btn-katydid', 'btn-grasshopper', 'btn-cricket'];
+
 function setActiveButton(id) {
-  document.getElementById('btn-record').classList.remove('active');
-  document.getElementById('btn-test').classList.remove('active');
-  document.getElementById(id).classList.add('active');
+  allButtonIds.forEach(b => document.getElementById(b).classList.remove('active'));
+  if (id) document.getElementById(id).classList.add('active');
+}
+
+function stopCurrent() {
+  if (mode === 'record') {
+    mic.stop();
+  } else if (mode && sounds[mode]) {
+    sounds[mode].stop();
+  }
+  mode = null;
+  setActiveButton(null);
 }
 
 function startRecord() {
   if (mode === 'record') {
-    mic.stop();
-    mode = null;
-    document.getElementById('btn-record').classList.remove('active');
+    stopCurrent();
     return;
   }
+  stopCurrent();
   if (getAudioContext().state !== 'running') userStartAudio();
-  if (cic.isPlaying()) cic.stop();
   mic.start();
   fft.setInput(mic);
   mode = 'record';
   setActiveButton('btn-record');
 }
 
-function startTest() {
-  if (mode === 'test' && cic.isPlaying()) {
-    cic.stop();
-    mode = null;
-    document.getElementById('btn-test').classList.remove('active');
+function startTest(key) {
+  if (mode === key) {
+    stopCurrent();
     return;
   }
+  stopCurrent();
   if (getAudioContext().state !== 'running') userStartAudio();
-  if (mic) mic.stop();
-  fft.setInput(cic);
-  cic.loop();
-  mode = 'test';
-  setActiveButton('btn-test');
+  let snd = sounds[key];
+  fft.setInput(snd);
+  snd.loop();
+  mode = key;
+  setActiveButton('btn-' + key);
 }
 
 function windowResized() {
