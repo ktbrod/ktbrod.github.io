@@ -231,7 +231,6 @@ function startTest(key) {
 // user gesture, and starting a sound before it's "running" can
 // silently fail. Wait for it to actually resume before playing.
 function ensureAudioStarted(callback) {
-  unlockIOSAudio();
   if (getAudioContext().state === 'running') {
     callback();
     return;
@@ -239,22 +238,6 @@ function ensureAudioStarted(callback) {
   userStartAudio().then(() => {
     callback();
   });
-}
-
-// iOS Safari treats Web Audio output as "ambient" sound, which is
-// silenced by the phone's hardware mute switch even when the
-// AudioContext is "running". Playing a normal HTML <audio> element
-// once on a user gesture switches the page's audio session to
-// "playback" category, which bypasses the mute switch and lets
-// p5.sound's Web Audio output through too.
-let iosAudioUnlocked = false;
-function unlockIOSAudio() {
-  if (iosAudioUnlocked) return;
-  iosAudioUnlocked = true;
-  let silence = new Audio(
-    'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//tQxAADB8AhSmxhIIEVCSiJrDCQBTcu3UrAIwUdkRgQbFAZC7k1qmLXQXKW4G2ko1q0wGq6/tT9UGCRsUyaWqjbBQ8EFZkjxIXzh3oJVyW8LbVMG/qmyxQwrUe1gQ6OXGShqLjOlkXCf3Yb7M7Ngwu9k2rL/tT9LSrL8mMUjgOWfwcGd5+0PQu3MtBjW6XPCK0n5fK0pOQ4CVB3Ip4KRBAQ7wqKDQEEX//tQxBQDB8AhSGwhIIEMCCWdiYwAQGmHYU2K0gQQqIHASGTMhJyqDhFxJVCk4D0Ek//tQxCEDB8AhSGwhIIESCCadiYwAQ='
-  );
-  silence.play().catch(() => {});
 }
 
 function windowResized() {
