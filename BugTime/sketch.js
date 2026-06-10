@@ -225,11 +225,16 @@ function startRecord() {
     return;
   }
   stopCurrent();
-  if (getAudioContext().state !== 'running') userStartAudio();
-  mic.start();
-  fft.setInput(mic);
   mode = 'record';
   setActiveButton('btn-record');
+  ensureAudioStarted(() => {
+    mic.start();
+    // Mobile mics often apply automatic gain control / noise
+    // suppression, which makes their output much quieter than a
+    // desktop mic. Boost the signal to compensate.
+    mic.amp(4);
+    fft.setInput(mic);
+  });
 }
 
 function startTest(key) {
@@ -238,12 +243,26 @@ function startTest(key) {
     return;
   }
   stopCurrent();
-  if (getAudioContext().state !== 'running') userStartAudio();
-  let snd = sounds[key];
-  fft.setInput(snd);
-  snd.loop();
   mode = key;
   setActiveButton('btn-' + key);
+  ensureAudioStarted(() => {
+    let snd = sounds[key];
+    fft.setInput(snd);
+    snd.loop();
+  });
+}
+
+// On mobile, the audio context may take a moment to resume after a
+// user gesture, and starting a sound before it's "running" can
+// silently fail. Wait for it to actually resume before playing.
+function ensureAudioStarted(callback) {
+  if (getAudioContext().state === 'running') {
+    callback();
+    return;
+  }
+  userStartAudio().then(() => {
+    callback();
+  });
 }
 
 function windowResized() {
