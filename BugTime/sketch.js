@@ -176,35 +176,6 @@ function draw() {
   rect(0, combinedCenterY - combinedBarH / 2, 5, combinedBarH);
 }
 
-function toggleSound() {
-  if (getAudioContext().state !== 'running') userStartAudio();
-  if (mode && mode !== 'record') {
-    let snd = sounds[mode];
-    if (snd.isPlaying()) snd.pause(); else snd.loop();
-  }
-}
-
-function mousePressed() {
-  let container = document.getElementById('canvas-container');
-  let rect = container.getBoundingClientRect();
-  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    toggleSound();
-  }
-}
-
-function touchStarted() {
-  if (touches.length === 0) return;
-  let tx = touches[0].x;
-  let ty = touches[0].y;
-
-  // touches[].x/y are canvas-relative, so compare directly to canvas bounds
-  if (tx >= 0 && tx <= width && ty >= 0 && ty <= height) {
-    toggleSound();
-    return false; // prevent scroll/zoom only when touching canvas
-  }
-  // all other touches (sliders, buttons) pass through normally
-}
-
 const allButtonIds = ['btn-record', 'btn-cicada', 'btn-katydid', 'btn-grasshopper', 'btn-cricket'];
 
 function setActiveButton(id) {
