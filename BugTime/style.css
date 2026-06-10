@@ -9,7 +9,7 @@ body {
   color: #aaa;
   font-family: sans-serif;
   font-size: 14px;
-  padding: 16px;
+  padding: 16px 32px;
 }
 
 #title-container {
@@ -188,6 +188,10 @@ input[type="range"]::-moz-range-thumb {
 /* ── Desktop ────────────────────────────── */
 
 @media (min-width: 768px) {
+  body {
+    padding: 16px;
+  }
+
   #main {
     flex-direction: row;
     align-items: flex-start;
