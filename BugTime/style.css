@@ -256,6 +256,31 @@ input[type="range"]::-moz-range-thumb {
   padding: 14px;
 }
 
+/* ── References ─────────────────────────── */
+
+#references {
+  margin-top: 56px;
+  margin-bottom: 14px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #555;
+}
+
+#references-heading {
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: hsl(0, 100%, 52%);
+  margin-bottom: 8px;
+}
+
+#references p {
+  margin-bottom: 8px;
+  text-indent: -1.5em;
+  padding-left: 1.5em;
+}
+
 /* ── Desktop ────────────────────────────── */
 
 @media (min-width: 768px) {

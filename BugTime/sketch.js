@@ -161,9 +161,10 @@ function draw() {
   strokeWeight(1);
   line(0, bandH * bands.length, width, bandH * bands.length);
 
-  // Combined label
+  // Combined label — colored to match the Treble band
   let avgEnergy = energies.reduce((a, b) => a + b, 0) / energies.length;
-  fill(0, 60, 40, 60);
+  let trebleBand = bands[bands.length - 1];
+  fill(0, trebleBand.s, trebleBand.l, 60);
   noStroke();
   textSize(20);
   textAlign(LEFT, TOP);
@@ -172,7 +173,7 @@ function draw() {
   // Combined energy bar
   let combinedBarH = map(avgEnergy, 0, 255, 0, bandH * 0.75);
   noStroke();
-  fill(0, 60, 40, 75);
+  fill(0, trebleBand.s, trebleBand.l, 75);
   rect(0, combinedCenterY - combinedBarH / 2, 5, combinedBarH);
 }
 
