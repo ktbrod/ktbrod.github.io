@@ -12,6 +12,10 @@ body {
   padding: 16px 32px 120px;
 }
 
+b {
+  color:hsl(0, 100%, 52%);
+}
+
 #title-container {
   position: relative;
   text-align: center;
