@@ -132,7 +132,7 @@ function draw() {
     noStroke();
     textSize(20);
     textAlign(LEFT, TOP);
-    text(band.name + '  ' + floor(energies[b]), 12, bandH * b + 8);
+    text(band.name, 12, bandH * b + 8);
 
     // Lane divider
     stroke(0, 0, 12, 100);
@@ -168,7 +168,7 @@ function draw() {
   noStroke();
   textSize(20);
   textAlign(LEFT, TOP);
-  text('All  ' + floor(avgEnergy), 12, bandH * bands.length + 8);
+  text('All', 12, bandH * bands.length + 8);
 
   // Combined energy bar
   let combinedBarH = map(avgEnergy, 0, 255, 0, bandH * 0.75);
