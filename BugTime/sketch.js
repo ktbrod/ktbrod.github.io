@@ -3,7 +3,7 @@ let currentFR = 10;
 let mode = null; // null | 'record' | 'cicada' | 'katydid' | 'grasshopper' | 'cricket'
 
 // Fixed notches for the Temporal Resolution slider
-const resolutionLevels = [8, 16, 128, 256, 512, 1024];
+const resolutionLevels = [8, 16, 32, 64, 128, 256, 512, 1024];
 
 let sounds = {}; // key -> p5.SoundFile
 const soundFiles = {
